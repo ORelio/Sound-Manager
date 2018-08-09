@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundManager", "SoundManager\SoundManager.csproj", "{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Debug|Win32.ActiveCfg = Debug|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Debug|x86.ActiveCfg = Debug|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Debug|x86.Build.0 = Debug|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|Win32.ActiveCfg = Release|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|x86.ActiveCfg = Release|x86
+		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

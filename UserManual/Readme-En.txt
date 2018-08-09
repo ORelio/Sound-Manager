@@ -1,0 +1,84 @@
+========================================================
+==== SoundManager v3.0.0 - By ORelio - Microzoom.fr ====
+========================================================
+
+Thanks for dowloading SoundManager!
+
+SoundManager is a free software allowing to easily create and share Windows sound schemes.
+All Windows versions from Windows XP SP3 to Windows 10 are supported.
+
+Main features are the following:
+ - Load and test sound files for each event
+ - Define metadata such as thumbnail, author, description
+ - Export and import sound schemes using archive files
+ - Import sound schemes created with the Sound applet
+ - Auto-convert sounds to WAV format (Windows 7+)
+ - Patch Windows Vista/7 startup sound (Admin required)
+ - Play startup/shutdown sounds on Windows 8 and 10
+
+============
+ How to use
+============
+
+Setup:
+ - Extract the archive in a fixed place such as C:\Program Files\SoundManager or Documents\SoundManager
+ - Run SoundManager.exe, go to Settings and enable the desired features under System integration
+ - Optionally create a Desktop shortcut for SoundManager.exe ;)
+
+Uninstall:
+ - Run SoundManager.exe, go to Settings and click Uninstall under Maintenance section
+ - Delete the SoundManager directory, such as C:\Program Files\SoundManager or Documents\SoundManager
+ - Optionally delete the previously created Desktop shortcut
+
+Create a sound scheme
+ - Prepare sound files, preferably in WAV format, using an audio editor such as Audacity
+ - It is recommended to have a consistent loudness between all your audio files
+ - Load a sound scheme or click Reset to start from the system sound scheme
+ - Change sounds using Drag & Drop or right click > Replace
+ - Set metadata such as image, name, author and description
+ - Click Export when you are satisfied with the result :)
+
+Download sound schemes
+ - Get some sound schemes from https://github.com/ORelio/Sound-Manager-Schemes
+ - Do not hesitate to submit your own sound schemes to be added into the repository :)
+
+===========
+ Changelog
+===========
+
+ - 1.0  : Initial version for Windows XP SP2 FR, replacing files in C:\Windows\Media
+ - 1.1  : Add support for Windows Vista, different file names in C:\Windows\Media
+ - 1.1b : Bugfix on theme loading
+ - 1.1c : New icon, improve UI font
+ - 1.2  : Add a built-in scheme editor
+ - 2.0  : Add support for Windows 7, using a dedicated sound scheme in registry
+ - 2.1  : Ability to load a .ths file directly by clicking on it
+ - 3.0  : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
+
+=====
+ FAQ
+=====
+
+Q: On Windows 7, the startup sound is not always properly updated?
+R: DLL files may be in use, you may need to reboot and reapply the sound scheme.
+
+Q: On Windows 8 and 10, the startup sound takes time to play?
+R: These Windows versions will launch startup apps with a delay.
+
+Q: Is there any source code for versions 1.x and 2.x ?
+R: No, these versions were created using Game Maker and a bunch of batch files.
+
+=========
+ Credits
+=========
+
+The SoundManager program has been created using the following resources:
+
+ - Privilege20 library from MSDN magazine, March 2005
+ - Windows Media Player icon, by Microsoft Corporation
+ - Resource Hacker by Angus Johnson
+ - Clipping Sound Icon by RAD.E8
+
++--------------------+
+| © 2009-2018 ORelio |
++--------------------+

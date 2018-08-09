@@ -1,0 +1,28 @@
+*.suo
+/SoundManager/obj/*
+/SoundManager/bin/*
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+Schemes/
+Other/
+
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
