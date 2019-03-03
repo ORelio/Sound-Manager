@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.0.0 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.0.1 - Par ORelio - Microzoom.fr ====
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -59,11 +59,8 @@ Télécharger des thèmes
  FAQ
 =====
 
-Q: Sur Windows 7, le son de démarrage n'est pas toujours mis à jour?
+Q: Sur Windows 7, le son de démarrage n'est pas toujours mis à jour ?
 R: Les fichiers DLL peuvent être en cours d'utilisation, redémarrez Windows et re-chargez le thème.
-
-Q: Sur Windows 8 et 10, le son de démarrage met du temps à être lu?
-R: Ces versions de Windows ajoutent un délai avant de lancer les applications au démarrage.
 
 Q: Y a-t-il un code source pour les versions 1.x et 2.x ?
 R: Non, les premières versions étaient conçues avec Game Maker et plein de scripts batch.
@@ -80,5 +77,5 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
  - Icône Clipping Sound par RAD.E8
 
 +--------------------+
-| © 2009-2018 ORelio |
+| © 2009-2019 ORelio |
 +--------------------+

@@ -18,7 +18,9 @@ namespace SoundManager
     {
         private static readonly string LastBootFile = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+        private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
         private static readonly string StartupCommand = String.Concat("\"", Application.ExecutablePath, "\" ", Program.ArgumentBgSoundPlayer);
+        private const string StartupDelayInMSec = "StartupDelayInMSec";
 
         /// <summary>
         /// Check if the background sound player is required for the current Windows version
@@ -46,10 +48,12 @@ namespace SoundManager
                 if (value)
                 {
                     SystemStartup.SetValue(Program.InternalName, StartupCommand);
+                    StartupDelay.SetValue(StartupDelayInMSec, 0, RegistryValueKind.DWord);
                 }
                 else
                 {
                     SystemStartup.DeleteValue(Program.InternalName, false);
+                    StartupDelay.DeleteValue(StartupDelayInMSec, false);
                 }
             }
         }
@@ -60,7 +64,7 @@ namespace SoundManager
         [DllImport("user32.dll")]
         private static extern bool ShutdownBlockReasonCreate(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] string pwszReason);
 
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool ShutdownBlockReasonDestroy(IntPtr wndHandle);
 
         /// <summary>

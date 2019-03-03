@@ -106,7 +106,7 @@ namespace SoundManager
 
             foreach (SoundEvent soundEvent in SoundEvent.GetAll())
             {
-                string iconName = Path.GetFileNameWithoutExtension(soundEvent.FilePath);
+                string iconName = Path.GetFileNameWithoutExtension(soundEvent.FileName);
                 Bitmap icon = soundIcons.GetObject(iconName, SoundManager.SoundIcons.Culture) as Bitmap;
                 if (icon != null)
                     soundList.LargeImageList.Images.Add(iconName, icon);

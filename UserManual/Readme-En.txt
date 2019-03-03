@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.0.0 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.0.1 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for dowloading SoundManager!
@@ -62,10 +62,7 @@ Download sound schemes
 Q: On Windows 7, the startup sound is not always properly updated?
 R: DLL files may be in use, you may need to reboot and reapply the sound scheme.
 
-Q: On Windows 8 and 10, the startup sound takes time to play?
-R: These Windows versions will launch startup apps with a delay.
-
-Q: Is there any source code for versions 1.x and 2.x ?
+Q: Is there any source code for versions 1.x and 2.x?
 R: No, these versions were created using Game Maker and a bunch of batch files.
 
 =========
@@ -80,5 +77,5 @@ The SoundManager program has been created using the following resources:
  - Clipping Sound Icon by RAD.E8
 
 +--------------------+
-| © 2009-2018 ORelio |
+| © 2009-2019 ORelio |
 +--------------------+

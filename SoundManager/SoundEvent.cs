@@ -89,7 +89,7 @@ namespace SoundManager
         /// <remarks>
         /// Windows 7 startup sound is embedded in imageres.dll which requires patching to update the sound resource, see ImageresPatcher.cs for more details
         /// Windows 7 balloon sound is mistakenly read from Explorer instead of .Default, see https://winaero.com/blog/fix-windows-plays-no-sound-for-tray-balloon-tips-notifications/
-        /// Windows 8 and greater does not read the startup and shutdown sounds at all, these need to be reimplemented, see BgSoundPlayer.cs
+        /// Windows 8 and greater does not play the startup and shutdown sounds at all, these need to be reimplemented, see BgSoundPlayer.cs
         /// Windows 10 has various notification sounds and no more "balloon" sound, the sound event is associated with default notification
         /// </remarks>
         static SoundEvent()
