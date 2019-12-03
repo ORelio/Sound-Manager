@@ -46,24 +46,25 @@ Download sound schemes
  Changelog
 ===========
 
- - 1.0  : Initial version for Windows XP SP2 FR, replacing files in C:\Windows\Media
- - 1.1  : Add support for Windows Vista, different file names in C:\Windows\Media
- - 1.1b : Bugfix on theme loading
- - 1.1c : New icon, improve UI font
- - 1.2  : Add a built-in scheme editor
- - 2.0  : Add support for Windows 7, using a dedicated sound scheme in registry
- - 2.1  : Ability to load a .ths file directly by clicking on it
- - 3.0  : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
+ - 1.0   : Initial version for Windows XP SP2 FR, replacing files in C:\Windows\Media
+ - 1.1   : Add support for Windows Vista, different file names in C:\Windows\Media
+ - 1.1b  : Bugfix on theme loading
+ - 1.1c  : New icon, improve UI font
+ - 1.2   : Add a built-in scheme editor
+ - 2.0   : Add support for Windows 7, using a dedicated sound scheme in registry
+ - 2.1   : Ability to load a .ths file directly by clicking on it
+ - 3.0   : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
+ - 3.0.1 : Reduce startup sound delay on Windows 8+, Fix some sounds not playing on Windows 10
 
 =====
  FAQ
 =====
 
 Q: On Windows 7, the startup sound is not always properly updated?
-R: DLL files may be in use, you may need to reboot and reapply the sound scheme.
+A: DLL files may be in use, you may need to reboot and reapply the sound scheme.
 
 Q: Is there any source code for versions 1.x and 2.x?
-R: No, these versions were created using Game Maker and a bunch of batch files.
+A: No, these versions were created using Game Maker and a bunch of batch files.
 
 =========
  Credits

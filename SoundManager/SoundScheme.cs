@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using NAudio.Wave;
 using SharpTools;
+using System.Security.AccessControl;
+using System.Security.Principal;
 
 namespace SoundManager
 {
@@ -268,6 +270,15 @@ namespace SoundManager
             //Windows 7 : Also patch imageres.dll when updating startup sound
             if (soundEvent.Imageres && ImageresPatcher.IsWindowsVista7 && FileSystemAdmin.IsAdmin())
                 ImageresPatcher.Patch(soundEvent.FilePath);
+
+            //Windows 10 : Also make sure file read access is set for All Application Packages, otherwise UWP UI parts will not be able to play the sound event
+            if (File.Exists(soundEvent.FilePath) && WindowsVersion.WinMajorVersion >= 10)
+            {
+                FileInfo fileInfo = new FileInfo(soundEvent.FilePath);
+                FileSecurity fileSecurity = fileInfo.GetAccessControl();
+                fileSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier("S-1-15-2-1"), FileSystemRights.ReadAndExecute, AccessControlType.Allow));
+                fileInfo.SetAccessControl(fileSecurity);
+            }
         }
 
         /// <summary>

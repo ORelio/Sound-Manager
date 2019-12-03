@@ -46,14 +46,15 @@ Télécharger des thèmes
  Notes de versions
 ===================
 
- - 1.0  : Version initiale du programme pour Windows XP SP2 FR, remplaçant les fichiers dans C:\Windows\Media
- - 1.1  : Prise en charge de Windows Vista, noms de fichiers différents dans C:\Windows\Media
- - 1.1b : Correction de bug sur le chargement de thèmes
- - 1.1c : Nouvelle icône et amélioration de la police d'écriture
- - 1.2  : Ajout de l'éditeur de thèmes directement dans le programme
- - 2.0  : Prise en charge de Windows 7, utilisation d'un thème sonore dédié dans le registre
- - 2.1  : Possibilité d'appliquer un fichier .ths directement en cliquant dessus
- - 3.0  : Réécriture en C#, passage en open source, traduction anglaise, prise en charge de Windows 8 et 10
+ - 1.0   : Version initiale du programme pour Windows XP SP2 FR, remplaçant les fichiers dans C:\Windows\Media
+ - 1.1   : Prise en charge de Windows Vista, noms de fichiers différents dans C:\Windows\Media
+ - 1.1b  : Correction de bug sur le chargement de thèmes
+ - 1.1c  : Nouvelle icône et amélioration de la police d'écriture
+ - 1.2   : Ajout de l'éditeur de thèmes directement dans le programme
+ - 2.0   : Prise en charge de Windows 7, utilisation d'un thème sonore dédié dans le registre
+ - 2.1   : Possibilité d'appliquer un fichier .ths directement en cliquant dessus
+ - 3.0   : Réécriture en C#, passage en open source, traduction anglaise, prise en charge de Windows 8 et 10
+ - 3.0.1 : Réduction du délai du son de démarrage sous Win 8+, correction de sons ne se lisant pas sous Win 10
 
 =====
  FAQ

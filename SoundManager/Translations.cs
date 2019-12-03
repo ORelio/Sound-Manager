@@ -175,7 +175,7 @@ namespace SharpTools
                 translations["tab_about"] = "À propos...";
                 translations["help_file"] = "Readme-Fr.txt";
                 translations["help_file_not_found_title"] = "Fichier d'aide non trouvé";
-                translations["help_file_not_found_text"] = "Le fichier d'aide est manquant.\nEssayez de consulter le site Internet pour l'obtenir.";
+                translations["help_file_not_found_text"] = "Le fichier d'aide est manquant. Essayez de consulter le site Internet pour l'obtenir.";
                 translations["button_help"] = "Consulter l'aide";
                 translations["button_website"] = "Voir mon site";
                 translations["box_system_info"] = "Informations système";
@@ -293,7 +293,7 @@ namespace SharpTools
                 translations["tab_about"] = "About...";
                 translations["help_file"] = "Readme-En.txt";
                 translations["help_file_not_found_title"] = "Missing help file";
-                translations["help_file_not_found_text"] = "The help file is missing.\nTry visiting the website to grab it.";
+                translations["help_file_not_found_text"] = "The help file is missing. Try visiting the website to grab it.";
                 translations["button_help"] = "View Help";
                 translations["button_website"] = "Visit my website";
                 translations["box_system_info"] = "System information";
