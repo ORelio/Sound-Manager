@@ -159,6 +159,7 @@ namespace SoundManager
             if (e.Reason == SessionEndReasons.SystemShutdown && File.Exists(soundShutdown.FilePath))
             {
                 ShutdownBlockReasonCreate(this.Handle, Translations.Get("playing_shutdown_sound"));
+                File.Delete(LastBootFile); // Force Startup sound next time
                 PlaySound(soundShutdown);
             }
             else
