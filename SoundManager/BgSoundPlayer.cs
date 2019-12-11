@@ -149,6 +149,7 @@ namespace SoundManager
             else PlaySound(soundLogon);
 
             SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
         }
 
         /// <summary>
@@ -168,6 +169,21 @@ namespace SoundManager
                 PlaySound(soundLogoff);
             }
             ShutdownBlockReasonDestroy(this.Handle);
+        }
+
+        /// <summary>
+        /// Detect user leaving and resuming session
+        /// </summary>
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock && File.Exists(soundLogoff.FilePath))
+            {
+                PlaySound(soundLogoff);
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock && File.Exists(soundLogon.FilePath))
+            {
+                PlaySound(soundLogon);
+            }
         }
     }
 }
