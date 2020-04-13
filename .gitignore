@@ -1,4 +1,6 @@
 *.suo
+/DownloadSchemes/obj/*
+/DownloadSchemes/bin/*
 /SoundManager/obj/*
 /SoundManager/bin/*
 

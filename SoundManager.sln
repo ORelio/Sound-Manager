@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundManager", "SoundManager\SoundManager.csproj", "{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadSchemes", "DownloadSchemes\DownloadSchemes.csproj", "{F826208A-4C27-4E7C-A1E2-ED572E345DD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -23,6 +25,16 @@ Global
 		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|Win32.ActiveCfg = Release|x86
 		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|x86.ActiveCfg = Release|x86
 		{9EAE6B62-AADA-43C6-ADAB-4A48A46DAF6E}.Release|x86.Build.0 = Release|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Debug|Win32.ActiveCfg = Debug|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Debug|x86.ActiveCfg = Debug|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Debug|x86.Build.0 = Debug|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Release|Win32.ActiveCfg = Release|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Release|x86.ActiveCfg = Release|x86
+		{F826208A-4C27-4E7C-A1E2-ED572E345DD4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
