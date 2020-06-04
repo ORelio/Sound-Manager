@@ -13,6 +13,14 @@ namespace SoundManager
     /// </summary>
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// Holds path to the Uninstall program when this application is installed using a Setup program
+        /// </summary>
+        private static readonly string UninstallProgram = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Uninstall.exe");
+
+        /// <summary>
+        /// Holds GUI icons for each sound event
+        /// </summary>
         private ResourceManager soundIcons = new ResourceManager("SoundManager.SoundIcons", typeof(SoundManager.SoundIcons).Assembly);
 
         /// <summary>
@@ -695,16 +703,28 @@ namespace SoundManager
         /// </summary>
         private void buttonUninstall_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(
-                    Translations.Get("uninstall_confirm_text"),
-                    Translations.Get("uninstall_confirm_title"),
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning
-                ) == DialogResult.OK
-            )
+            if (File.Exists(UninstallProgram))
             {
-                Program.Uninstall();
-                Close();
+                try
+                {
+                    Process.Start(UninstallProgram);
+                    Close();
+                }
+                catch { /* Failed to start or user cancelled UAC prompt */ }
+            }
+            else
+            {
+                if (MessageBox.Show(
+                        Translations.Get("uninstall_confirm_text"),
+                        Translations.Get("uninstall_confirm_title"),
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning
+                    ) == DialogResult.OK
+                )
+                {
+                    Program.Uninstall();
+                    Close();
+                }
             }
         }
 
