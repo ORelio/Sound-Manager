@@ -733,7 +733,7 @@ namespace SoundManager
         /// </summary>
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            string helpFile = Translations.Get("help_file");
+            string helpFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), Translations.Get("help_file"));
             if (File.Exists(helpFile))
             {
                 Process.Start("notepad", "\"" + helpFile + "\"");

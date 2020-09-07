@@ -67,7 +67,7 @@ SoundManager can optionally [patch imageres.dll](https://www.sevenforums.com/tut
 * Existing `imageres.dll` is moved to `imageres.dll.old` since it is in use by the system
 * `imageres.dll.bak` is copied to `imageres.dll` and its `WAV` resourse is updated
 
-This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on startup. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot.
+This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on launch. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot.
 
 ### Windows 8/10 startup and shutdown sounds
 
@@ -88,7 +88,7 @@ As such, this feature can be disabled entierely in the SoundManager settings.
 
 ## License
 
-Easy Macros is provided under
+SoundManager is provided under
 [CDDL-1.0](http://opensource.org/licenses/CDDL-1.0)
 ([Why?](http://qstuff.blogspot.fr/2007/04/why-cddl.html)).
 

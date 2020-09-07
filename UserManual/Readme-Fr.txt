@@ -22,7 +22,7 @@ Les principales fonctionnalités sont :
 
 Installation :
  - Extraire l'archive dans un endroit fixe tel que C:\Program Files\SoundManager ou Documents\SoundManager
- - Lancer SoundManager.exe, et activier les intégrations avec le système de votre choix dans l'onglet Paramètres
+ - Lancer SoundManager.exe, et activer les intégrations avec le système de votre choix dans l'onglet Paramètres
  - Si vous le souhaitez, créez un raccourci vers SoundManager.exe et placez-le sur votre Bureau
 
 Désinstallation :
