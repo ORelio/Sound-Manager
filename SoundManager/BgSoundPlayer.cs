@@ -112,6 +112,22 @@ namespace SoundManager
         }
 
         /// <summary>
+        /// Check if the user has not reached the Desktop yet
+        /// </summary>
+        private static bool IsScreenLocked()
+        {
+            switch (WindowManager.GetActiveWindowExeName().ToLower())
+            {
+                case "idle.exe":
+                case "lockapp.exe":
+                case "logonui.exe":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// Play the specified system event sound.
         /// The sound currently associated with the event is played, which is not necessarily from the SoundManager scheme.
         /// </summary>
@@ -176,12 +192,15 @@ namespace SoundManager
             string lastBootTime = "";
             if (File.Exists(LastBootFile))
                 lastBootTime = File.ReadAllText(LastBootFile);
+            SoundEvent soundToPlay = soundLogon;
             if (bootTime != lastBootTime && File.Exists(soundStartup.FilePath))
             {
                 File.WriteAllText(LastBootFile, bootTime);
-                PlaySound(soundStartup);
+                soundToPlay = soundStartup;
             }
-            else PlaySound(soundLogon);
+            while (IsScreenLocked())
+                Thread.Sleep(100);
+            PlaySound(soundToPlay);
 
             SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
