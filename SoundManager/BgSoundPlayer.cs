@@ -3,14 +3,15 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Media;
 using System.IO;
-using SharpTools;
-using Microsoft.Win32;
 using System.Drawing;
+using System.Threading;
+using Microsoft.Win32;
+using SharpTools;
 
 namespace SoundManager
 {
     /// <summary>
-    /// Hidden form for playing login/logoff sound events.
+    /// Hidden form for playing login, logoff, lock, unlock, shutdown sound events.
     /// Builtin playback of these sound events was removed in Windows 8 so we need a background process for that.
     /// This class is NOT useful on Windows XP/Vista/7 and not compatible with Windows XP (No ShutdownBlockReason API).
     /// </summary>
@@ -19,7 +20,8 @@ namespace SoundManager
         private static readonly string LastBootFile = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
-        private static readonly string StartupCommand = String.Concat("\"", Application.ExecutablePath, "\" ", Program.ArgumentBgSoundPlayer);
+        private static readonly string StartupCommandExe = String.Concat("\"", Application.ExecutablePath, "\"");
+        private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", Program.ArgumentBgSoundPlayer);
         private const string StartupDelayInMSec = "StartupDelayInMSec";
 
         /// <summary>
@@ -41,20 +43,53 @@ namespace SoundManager
         {
             get
             {
-                return StartupCommand == (SystemStartup.GetValue(Program.InternalName) as string);
+                bool registryKeyPresent = (StartupCommand == (SystemStartup.GetValue(Program.InternalName) as string));
+                bool taskPresent = false;
+
+                try
+                {
+                    TaskScheduler.TaskScheduler ts = new TaskScheduler.TaskScheduler();
+                    ts.Connect();
+                    taskPresent = (ts.GetFolder("\\").GetTask(Program.InternalName) != null);
+                }
+                catch (FileNotFoundException) { /* Task not present */ }
+
+                return registryKeyPresent || taskPresent;
             }
             set
             {
+                TaskScheduler.TaskScheduler ts = new TaskScheduler.TaskScheduler();
+                ts.Connect();
+
                 if (value)
                 {
-                    SystemStartup.SetValue(Program.InternalName, StartupCommand);
-                    StartupDelay.SetValue(StartupDelayInMSec, 0, RegistryValueKind.DWord);
+                    //Create registry keys - Currently disabled due to startup delay on registry keys, replaced by scheduled task
+                    //SystemStartup.SetValue(Program.InternalName, StartupCommand);
+                    //StartupDelay.SetValue(StartupDelayInMSec, 0, RegistryValueKind.DWord);
+
+                    //Create scheduled task - Runs sooner on logon compared to registry keys
+                    TaskScheduler.ITaskDefinition task = ts.NewTask(0);
+                    TaskScheduler.ILogonTrigger trigger = (TaskScheduler.ILogonTrigger)task.Triggers.Create(TaskScheduler._TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
+                    trigger.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+                    TaskScheduler.IExecAction action = (TaskScheduler.IExecAction)task.Actions.Create(TaskScheduler._TASK_ACTION_TYPE.TASK_ACTION_EXEC);
+                    action.Path = StartupCommandExe;
+                    action.Arguments = Program.ArgumentBgSoundPlayer;
+                    task.Settings.DisallowStartIfOnBatteries = false;
+                    task.Settings.StopIfGoingOnBatteries = false;
+                    task.Settings.ExecutionTimeLimit = "PT0S";
+                    task.Settings.Priority = 5; // Normal
+                    ts.GetFolder("\\").RegisterTaskDefinition(Program.InternalName, task, (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
                 }
                 else
                 {
-                    SystemStartup.DeleteValue(Program.InternalName, false);
-                    StartupDelay.DeleteValue(StartupDelayInMSec, false);
+                    //Remove scheduled task
+                    try { ts.GetFolder("\\").DeleteTask(Program.InternalName, 0); }
+                    catch (FileNotFoundException) { /* Task was not present */ }
                 }
+
+                //Remove registry keys set by previous versions
+                SystemStartup.DeleteValue(Program.InternalName, false);
+                StartupDelay.DeleteValue(StartupDelayInMSec, false);
             }
         }
 
