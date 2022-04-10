@@ -1,20 +1,24 @@
 ﻿using Microsoft.Win32;
+using System.Management;
 
 namespace SharpTools
 {
     /// <summary>
     /// Retrieve information about the current Windows version
+    /// By ORelio - (c) 2018-2022 - Available under the CDDL-1.0 license
     /// </summary>
     /// <remarks>
-    /// Environment.OSVersion does not work with Windows 10.
-    /// It returns 6.2 which is Windows 8
+    /// Environment.OSVersion does not work with Windows 10, it returns 6.2 which is Windows 8
+    /// Querying the registry returns Windows 10 on Windows 11, so WMI is used for FriendlyName property
     /// </remarks>
     /// <seealso>
     /// https://stackoverflow.com/a/37755503
+    /// https://docs.microsoft.com/en-us/answers/questions/464971/
     /// </seealso>
     class WindowsVersion
     {
         private const string CurrentVersionRegKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+        private static string FriendlyNameCache = null;
 
         /// <summary>
         /// Try retrieving a registry key
@@ -130,16 +134,44 @@ namespace SharpTools
         {
             get
             {
-                dynamic ProductName;
-                dynamic CSDVersion;
-                TryGetRegistryKey(CurrentVersionRegKey, "ProductName", out ProductName);
-                TryGetRegistryKey(CurrentVersionRegKey, "CSDVersion", out CSDVersion);
-                if (ProductName != null)
+                // Retrieve Friendly Name from WMI (Works on Windows 11, but has small latency, hence caching)
+                if (FriendlyNameCache == null)
                 {
-                    return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName.ToString() +
-                                (CSDVersion != null ? " " + CSDVersion.ToString() : "");
+                    try
+                    {
+                        ManagementClass osClass = new ManagementClass("Win32_OperatingSystem");
+                        foreach (ManagementObject queryObj in osClass.GetInstances())
+                        {
+                            foreach (PropertyData prop in queryObj.Properties)
+                            {
+                                if (prop.Name == "Caption")
+                                {
+                                    FriendlyNameCache = prop.Value.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    catch (ManagementException) { }
                 }
-                return "";
+
+                // Fallback method: Build Friendly Name from Registry (But Windows 11 will report itself as Windows 10)
+                if (FriendlyNameCache == null)
+                {
+                    dynamic ProductName;
+                    dynamic CSDVersion;
+                    TryGetRegistryKey(CurrentVersionRegKey, "ProductName", out ProductName);
+                    TryGetRegistryKey(CurrentVersionRegKey, "CSDVersion", out CSDVersion);
+                    if (ProductName != null)
+                    {
+                        FriendlyNameCache
+                            = (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ")
+                            + ProductName.ToString()
+                            + (CSDVersion != null ? " " + CSDVersion.ToString() : "");
+                    }
+                }
+
+                return FriendlyNameCache;
             }
         }
 

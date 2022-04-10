@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +90,7 @@
     <Compile Include="SoundScheme.cs" />
     <Compile Include="SoundEvent.cs" />
     <Compile Include="Translations.cs" />
+    <Compile Include="WindowManager.cs" />
     <Compile Include="WindowsVersion.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

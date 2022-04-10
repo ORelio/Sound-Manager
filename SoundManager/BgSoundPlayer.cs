@@ -7,22 +7,29 @@ using System.Drawing;
 using System.Threading;
 using Microsoft.Win32;
 using SharpTools;
+using System.Security.AccessControl;
 
 namespace SoundManager
 {
     /// <summary>
-    /// Hidden form for playing login, logoff, lock, unlock, shutdown sound events.
+    /// Hidden form for playing startup, login, logoff, lock, unlock, shutdown sound events.
     /// Builtin playback of these sound events was removed in Windows 8 so we need a background process for that.
+    /// Although built-in startup sound can be played on Windows 10+, it is not modifiable and other events are still missing.
     /// This class is NOT useful on Windows XP/Vista/7 and not compatible with Windows XP (No ShutdownBlockReason API).
     /// </summary>
     public class BgSoundPlayer : Form
     {
         private static readonly string LastBootFile = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
+        private static readonly RegistryKey RegistryHKLM64bits = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
+        private static readonly RegistryKey BootAnimation = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\BootAnimation", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
+        private static readonly RegistryKey EditionOverrides = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EditionOverrides", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
         private static readonly string StartupCommandExe = String.Concat("\"", Application.ExecutablePath, "\"");
         private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", Program.ArgumentBgSoundPlayer);
-        private const string StartupDelayInMSec = "StartupDelayInMSec";
+        private const string StartupDelay_StartupDelayInMSec = "StartupDelayInMSec";
+        private const string BootAnimation_DisableStartupSound = "DisableStartupSound";
+        private const string EditionOverrides_DisableStartupSound = "UserSetting_DisableStartupSound";
 
         /// <summary>
         /// Check if the background sound player is required for the current Windows version
@@ -33,6 +40,17 @@ namespace SoundManager
             {
                 return (WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion >= 2)
                     || WindowsVersion.WinMajorVersion >= 10;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version has a built-in startup sound enabled by default that we need to toggle
+        /// </summary>
+        private static bool ShouldToggleBuiltinStartupSound
+        {
+            get
+            {
+                return WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
             }
         }
 
@@ -79,17 +97,31 @@ namespace SoundManager
                     task.Settings.ExecutionTimeLimit = "PT0S";
                     task.Settings.Priority = 5; // Normal
                     ts.GetFolder("\\").RegisterTaskDefinition(Program.InternalName, task, (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
+
+                    if (ShouldToggleBuiltinStartupSound)
+                    {
+                        //Disable built-in startup sound
+                        BootAnimation.SetValue(BootAnimation_DisableStartupSound, 1);
+                        EditionOverrides.SetValue(EditionOverrides_DisableStartupSound, 1);
+                    }
                 }
                 else
                 {
                     //Remove scheduled task
                     try { ts.GetFolder("\\").DeleteTask(Program.InternalName, 0); }
                     catch (FileNotFoundException) { /* Task was not present */ }
+
+                    if (ShouldToggleBuiltinStartupSound)
+                    {
+                        //Re-Enable built-in startup sound
+                        BootAnimation.SetValue(BootAnimation_DisableStartupSound, 0);
+                        EditionOverrides.SetValue(EditionOverrides_DisableStartupSound, 0);
+                    }
                 }
 
-                //Remove registry keys set by previous versions
+                //Remove registry keys set by previous versions of this program
                 SystemStartup.DeleteValue(Program.InternalName, false);
-                StartupDelay.DeleteValue(StartupDelayInMSec, false);
+                StartupDelay.DeleteValue(StartupDelay_StartupDelayInMSec, false);
             }
         }
 

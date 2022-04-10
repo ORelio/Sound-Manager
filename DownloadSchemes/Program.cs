@@ -17,7 +17,8 @@ namespace DownloadSchemes
         const string SoundSchemeIcon = "SoundScheme.ico";
 
         static readonly string TempListFile = Path.Combine(Path.GetTempPath(), "schemes-list.html");
-        static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion);
+        static readonly bool RunningWindows11 = WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
+        static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (RunningWindows11 ? "_11" : "");
         static readonly string SchemesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), Translations.Get("app_name"));
 
         static readonly Dictionary<string, string> SchemesPerNtVersion = new Dictionary<string, string>
@@ -29,6 +30,7 @@ namespace DownloadSchemes
             { "6.2", "Windows-8.ths" },
             { "6.3", "Windows-8.ths" },
             { "10.0", "Windows-10.ths" },
+            { "10.0_11", "Windows-11.ths" },
         };
 
         /// <summary>
