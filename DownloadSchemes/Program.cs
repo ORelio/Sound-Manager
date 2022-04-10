@@ -9,6 +9,10 @@ using System.Diagnostics;
 
 namespace DownloadSchemes
 {
+    /// <summary>
+    /// Download utility for retrieving Sound Schemes from the GitHub repository
+    /// By ORelio - (c) 2020-2022 - Available under the CDDL-1.0 license
+    /// </summary>
     static class Program
     {
         const string RepoUrl = "https://github.com/ORelio/Sound-Manager-Schemes/";
@@ -39,19 +43,31 @@ namespace DownloadSchemes
         [STAThread]
         static void Main()
         {
-            // Enable TLS 1.0, 1.1, 1.2, by default .NET 4.0 will enable TLS 1.0 only
-            // https://stackoverflow.com/questions/47269609/
-            ServicePointManager.SecurityProtocol = (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            try
+            {
+                // Enable TLS 1.0, 1.1, 1.2, by default .NET 4.0 will enable TLS 1.0 only
+                // https://stackoverflow.com/questions/47269609/
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
+            }
+            catch (NotSupportedException)
+            {
+                FailureOfferWebpage("download_schemes_no_tls_title", "download_schemes_no_tls_text", RepoUrl);
+                return;
+            }
 
             // Retrieve HTML listing
             FormDownload formDownload = new FormDownload(RepoUrl, TempListFile);
             Application.Run(formDownload);
 
+            // Failure? Open in web browser?
             if (!formDownload.Success)
+            {
+                FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RepoUrl);
                 return;
+            }
 
             // Create destination Folder
             if (!Directory.Exists(SchemesFolder))
@@ -88,8 +104,12 @@ namespace DownloadSchemes
             formDownload = new FormDownload(schemes);
             Application.Run(formDownload);
 
+            // Failure? Open in web browser?
             if (!formDownload.Success)
+            {
+                FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RepoUrl);
                 return;
+            }
 
             // Offer to apply the default sound scheme for the current OS
             if (SchemesPerNtVersion.ContainsKey(WindowsNtVersion))
@@ -99,6 +119,24 @@ namespace DownloadSchemes
                 {
                     Process.Start(SoundManagerExe, String.Format("\"{0}\"", schemeFile));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Offer to open an URL using a Warning Yes/No dialog if an error occurs
+        /// </summary>
+        /// <param name="title_translation">name of dialog title translation</param>
+        /// <param name="text_translation">name of dialog text translation</param>
+        /// <param name="url">Url to show in web browser</param>
+        static void FailureOfferWebpage(string title_translation, string text_translation, string url)
+        {
+            if (MessageBox.Show(
+                Translations.Get(text_translation),
+                Translations.Get(title_translation),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                Process.Start(url);
             }
         }
     }

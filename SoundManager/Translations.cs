@@ -185,6 +185,10 @@ namespace SharpTools
                 translations["drag_drop_no_target_sound_text"] = "Veuillez sélectionner un son avant de déposer un fichier.";
                 translations["drag_drop_sound_confirm_title"] = "Confirmer le remplacement du son";
                 translations["drag_drop_sound_confirm_text"] = "Remplacer ce son ?";
+                translations["download_schemes_no_tls_title"] = "Configuration TLS/HTTPS insuffisante";
+                translations["download_schemes_no_tls_text"] = "La configuration HTTPS ne permet pas le téléchargement des thèmes. Afficher la liste dans votre navigateur ?";
+                translations["download_schemes_failed_title"] = "Échec du téléchargement";
+                translations["download_schemes_failed_text"] = "Le téléchargement des thèmes a échoué. Afficher la liste dans votre navigateur ?";
                 //Ajouter de nouvelles traductions ici
             }
             //Add new languages here as 'else if' blocks
@@ -303,6 +307,10 @@ namespace SharpTools
                 translations["drag_drop_no_target_sound_text"] = "Please select a target sound before dropping a file.";
                 translations["drag_drop_sound_confirm_title"] = "Confirm sound replacement";
                 translations["drag_drop_sound_confirm_text"] = "Replace this sound?";
+                translations["download_schemes_no_tls_title"] = "TLS/HTTPS configuration is inadequate";
+                translations["download_schemes_no_tls_text"] = "The current HTTPS configuration does not allow downloading. View scheme list in your web browser?";
+                translations["download_schemes_failed_title"] = "Download failed";
+                translations["download_schemes_failed_text"] = "Failed to download sound schemes. View scheme list in your web browser?";
                 //Add new translations here
             }
         }
