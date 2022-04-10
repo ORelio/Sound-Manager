@@ -9,13 +9,13 @@ namespace SoundManager
 {
     /// <summary>
     /// Application allowing to create, load and share Windows sound schemes
-    /// By ORelio - (c) 2009-2019 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2009-2022 - Available under the CDDL-1.0 license
     /// </summary>
     public static class Program
     {
         public static readonly string DisplayName = Translations.Get("app_name");
         public static readonly string InternalName = typeof(Program).Namespace;
-        public const string Version = "3.0.1";
+        public const string Version = "3.0.2";
 
         public const string WindowsVersionMin = "5.1";
         public const string WindowsVersionMax = "10.0";

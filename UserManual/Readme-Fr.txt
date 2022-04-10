@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.0.1 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.0.2 - Par ORelio - Microzoom.fr ====
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -55,6 +55,7 @@ Télécharger des thèmes
  - 2.1   : Possibilité d'appliquer un fichier .ths directement en cliquant dessus
  - 3.0   : Réécriture en C#, passage en open source, traduction anglaise, prise en charge de Windows 8 et 10
  - 3.0.1 : Réduction du délai du son de démarrage sous Win 8+, correction de sons ne se lisant pas sous Win 10
+ - 3.0.2 : Suppression du délai du son de démarrage sous Win 8+, et prise en charge de Windows 11
 
 =====
  FAQ
@@ -78,5 +79,5 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
  - Icône Clipping Sound par RAD.E8
 
 +--------------------+
-| © 2009-2019 ORelio |
+| © 2009-2022 ORelio |
 +--------------------+

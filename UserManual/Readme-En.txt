@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.0.1 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.0.2 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for dowloading SoundManager!
@@ -55,6 +55,7 @@ Download sound schemes
  - 2.1   : Ability to load a .ths file directly by clicking on it
  - 3.0   : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
  - 3.0.1 : Reduce startup sound delay on Windows 8+, Fix some sounds not playing on Windows 10
+ - 3.0.2 : Remove startup sound delay on Windows 8+, Add support for Windows 11
 
 =====
  FAQ
@@ -78,5 +79,5 @@ The SoundManager program has been created using the following resources:
  - Clipping Sound Icon by RAD.E8
 
 +--------------------+
-| © 2009-2019 ORelio |
+| © 2009-2022 ORelio |
 +--------------------+

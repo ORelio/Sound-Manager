@@ -1,6 +1,6 @@
 # SoundManager
 
-SoundManager is a free software allowing to easily create and share Windows sound schemes. All Windows versions from Windows XP SP3 to Windows 10 are supported. Requires [.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17718) or greater.
+SoundManager is a free software allowing to easily create and share Windows sound schemes. All Windows versions from Windows XP SP3 to Windows 11 are supported. Requires [.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17718) or greater.
 
 * **Download:** Have a look at the [releases section](https://github.com/ORelio/Sound-Manager/releases) to get a build.
 * **Sound schemes:** Check out the [sound schemes repository](https://github.com/ORelio/Sound-Manager-Schemes) :)
@@ -19,7 +19,7 @@ Main features are the following:
 * Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
 * Auto-convert sounds to WAV format (Windows 7+)
 * Patch Windows Vista/7 startup sound (Admin required)
-* Play startup/shutdown sounds on Windows 8 and 10
+* Play startup/shutdown sounds on Windows 8 to 11
 
 ## User Manual
 
@@ -39,7 +39,7 @@ C:\Users\<USER>\AppData\Roaming\SoundManager\Media\
 ````
 Sound files such as `Startup.wav`, `Shutdown.wav` and so on are placed here. Since they are automatically played by the system, the SoundManager app is not required to run once the sound scheme has been set, except if you want to restore the startup/shutdown sounds on Windows 8+ (see below).
 
-SoundManager handles registry differences between Windows versions, such as the balloon sound which [does not play by default](https://winaero.com/blog/fix-windows-plays-no-sound-for-tray-balloon-tips-notifications/) on Windows 7/8, and changes again on Windows 10.
+SoundManager handles registry differences between Windows versions, such as the balloon sound which [does not play by default](https://winaero.com/blog/fix-windows-plays-no-sound-for-tray-balloon-tips-notifications/) on Windows 7/8 and changes again on Windows 10.
 
 ### Sound Archives
 
@@ -69,7 +69,7 @@ SoundManager can optionally [patch imageres.dll](https://www.sevenforums.com/tut
 
 This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on launch. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot.
 
-### Windows 8/10 startup and shutdown sounds
+### Windows 8+ startup and shutdown sounds
 
 On Windows 8, the startup and shutdown sounds where removed for further [performance reasons](https://winaero.com/blog/how-to-play-the-logon-or-startup-sound-in-windows-8-1-or-windows-8/). SoundManager can emulate the playback of these sounds by launching a background process on logon:
 
@@ -79,12 +79,9 @@ On Windows 8, the startup and shutdown sounds where removed for further [perform
 * Process determines if the Logoff or Shutdown sound should be played
 * Sound is played, then ShutdownBlockReason is removed and the process exits
 
-This is typically how `explorer.exe` was handling the thing on Windows 7, with some drawbacks:
+This is typically how `explorer.exe` was handling the thing on Windows 7, but you'll get yet another process sleeping in background, separate from `explorer.exe`. As such, this feature can be disabled entierely in the SoundManager settings.
 
-* Startup sound is played with a delay because Windows 8/10 delays startup processes
-* You'll get yet another process sleeping in background, separate from `explorer.exe`
-
-As such, this feature can be disabled entierely in the SoundManager settings.
+Windows 11 reintroduced a startup sound but still lacks a shutdown sound, so the background proces approach is also available for this system version. Using the background process feature will automatically disable the built-in startup sound, which is not customizable.
 
 ## License
 
