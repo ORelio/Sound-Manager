@@ -5,9 +5,9 @@ using System.Media;
 using System.IO;
 using System.Drawing;
 using System.Threading;
+using System.Security.AccessControl;
 using Microsoft.Win32;
 using SharpTools;
-using System.Security.AccessControl;
 
 namespace SoundManager
 {
@@ -86,9 +86,11 @@ namespace SoundManager
                     //StartupDelay.SetValue(StartupDelayInMSec, 0, RegistryValueKind.DWord);
 
                     //Create scheduled task - Runs sooner on logon compared to registry keys
+                    string sidCurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+                    string taskSecurityDescriptor = String.Concat("O:", sidCurrentUser, "D:(A;;FA;;;", sidCurrentUser, ")");
                     TaskScheduler.ITaskDefinition task = ts.NewTask(0);
                     TaskScheduler.ILogonTrigger trigger = (TaskScheduler.ILogonTrigger)task.Triggers.Create(TaskScheduler._TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
-                    trigger.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+                    trigger.UserId = sidCurrentUser;
                     TaskScheduler.IExecAction action = (TaskScheduler.IExecAction)task.Actions.Create(TaskScheduler._TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                     action.Path = StartupCommandExe;
                     action.Arguments = Program.ArgumentBgSoundPlayer;
@@ -96,7 +98,15 @@ namespace SoundManager
                     task.Settings.StopIfGoingOnBatteries = false;
                     task.Settings.ExecutionTimeLimit = "PT0S";
                     task.Settings.Priority = 5; // Normal
-                    ts.GetFolder("\\").RegisterTaskDefinition(Program.InternalName, task, (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
+                    ts.GetFolder("\\").RegisterTaskDefinition(
+                        Program.InternalName,
+                        task,
+                        (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE,
+                        null,
+                        null,
+                        TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN,
+                        taskSecurityDescriptor
+                    );
 
                     if (ShouldToggleBuiltinStartupSound)
                     {
