@@ -5,7 +5,7 @@
 Thanks for dowloading SoundManager!
 
 SoundManager is a free software allowing to easily create and share Windows sound schemes.
-All Windows versions from Windows XP SP3 to Windows 10 are supported.
+All Windows versions from Windows XP SP3 to Windows 11 are supported.
 
 Main features are the following:
  - Load and test sound files for each event
@@ -14,7 +14,7 @@ Main features are the following:
  - Import sound schemes created with the Sound applet
  - Auto-convert sounds to WAV format (Windows 7+)
  - Patch Windows Vista/7 startup sound (Admin required)
- - Play startup/shutdown sounds on Windows 8 and 10
+ - Play startup/shutdown sounds on Windows 8 to 11
 
 ============
  How to use

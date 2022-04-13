@@ -5,7 +5,7 @@
 Merci d'avoir choisi le Gestionnaire de Sons !
 
 Le Gestionnaire de Sons est un logiciel gratuit permettant de créer et partager des thèmes sonores pour Windows.
-Toutes les versions de Windows de Windows XP SP3 à Windows 10 sont prises en charge.
+Toutes les versions de Windows de Windows XP SP3 à Windows 11 sont prises en charge.
 
 Les principales fonctionnalités sont :
  - Charger et tester des sons pour chaque évènement système
@@ -14,7 +14,7 @@ Les principales fonctionnalités sont :
  - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
  - Conversion automatique des sons au format WAV (Windows 7+)
  - Patch du son de démarrage sous Windows Vista/7 (droits Admin requis)
- - Lecture du son de démarrage/arrêt sous Windows 8 et 10
+ - Lecture du son de démarrage/arrêt sous Windows 8 à 11
 
 =============
  Utilisation
