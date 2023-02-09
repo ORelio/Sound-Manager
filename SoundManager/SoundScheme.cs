@@ -235,6 +235,7 @@ namespace SoundManager
                             player.Play();
                             player.Stop();
                             File.Copy(soundFile, soundEvent.FilePath, true);
+                            File.SetAttributes(soundEvent.FilePath, FileAttributes.Normal);
                         }
                         catch (InvalidOperationException playException)
                         {

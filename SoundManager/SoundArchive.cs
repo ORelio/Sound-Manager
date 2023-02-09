@@ -34,12 +34,13 @@ namespace SoundManager
                 zip.Entries
                     .First(entry => entry.FileName == fileName)
                     .Extract(outputDir, ExtractExistingFileAction.OverwriteSilently);
+                File.SetAttributes(Path.Combine(outputDir, fileName), FileAttributes.Normal);
                 if (outputFileName != null)
                 {
-                    string tempFilePath = String.Concat(outputDir, Path.DirectorySeparatorChar, fileName);
-                    string outputFilePath = String.Concat(outputDir, Path.DirectorySeparatorChar, outputFileName);
+                    string currentFilePath = Path.Combine(outputDir, fileName);
+                    string outputFilePath = Path.Combine(outputDir, outputFileName);
                     File.Delete(outputFilePath);
-                    File.Move(tempFilePath, outputFilePath);
+                    File.Move(currentFilePath, outputFilePath);
                 }
                 return true;
             }
