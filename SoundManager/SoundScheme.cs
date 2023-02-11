@@ -26,7 +26,7 @@ namespace SoundManager
         private static readonly RegistryKey RegCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default);
 
         // ======================== //
-        // == Sound sheme object == //
+        // == Sound scheme object == //
         // ======================== //
 
         private string displayName;
@@ -52,7 +52,7 @@ namespace SoundManager
         }
 
         // ============================ //
-        // == Sound sheme management == //
+        // == Sound scheme management == //
         // ============================ //
 
         /// <summary>

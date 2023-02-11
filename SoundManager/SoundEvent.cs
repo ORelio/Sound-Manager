@@ -95,27 +95,40 @@ namespace SoundManager
         static SoundEvent()
         {
             allEvents = new []{
-                // ==========================================================================================================================
-                //              Sound Name                   Registry Key(s)                     Old file name (XP FR)        imageres.dll
-                // ==========================================================================================================================
-                new SoundEvent("Startup",           new []{ ".Default\\SystemStart" },          "Démarrage",                    true),
-                new SoundEvent("Shutdown",          new []{ ".Default\\SystemExit" },           "Arrêt du système"                  ),
-                new SoundEvent("Logon",             new []{ ".Default\\WindowsLogon" },         "Ouverture de session"              ),
-                new SoundEvent("Logoff",            new []{ ".Default\\WindowsLogoff" },        "Fermeture de session"              ),
-                new SoundEvent("Information",       new []{ ".Default\\SystemAsterisk" },       "Erreur"                            ),
-                new SoundEvent("Question",          new []{ ".Default\\SystemQuestion" },       null                                ),
-                new SoundEvent("Warning",           new []{ ".Default\\SystemExclamation" },    "Exclamation"                       ),
-                new SoundEvent("Error",             new []{ ".Default\\SystemHand" },           "Arrêt critique"                    ),
-                new SoundEvent("DeviceConnect",     new []{ ".Default\\DeviceConnect" },        "Insertion d'un matériel"           ),
-                new SoundEvent("DeviceDisconnect",  new []{ ".Default\\DeviceDisconnect" },     "Suppression d'un matériel"         ),
-                new SoundEvent("DeviceFail",        new []{ ".Default\\DeviceFail" },           "Échec d'un matériel"               ),
-                new SoundEvent("Default",           new []{ ".Default\\.Default" },             "Ding"                              ),
+                // ===========================================================================================================================
+                //              Sound Name                   Registry Key(s)                      Old file name (XP FR)        imageres.dll
+                // ===========================================================================================================================
+                new SoundEvent("Startup",           new []{ ".Default\\SystemStart" },           "Démarrage",                    true),
+                new SoundEvent("Shutdown",          new []{ ".Default\\SystemExit" },            "Arrêt du système"                  ),
+                new SoundEvent("Logon",             new []{ ".Default\\WindowsLogon" },          "Ouverture de session"              ),
+                new SoundEvent("Logoff",            new []{ ".Default\\WindowsLogoff" },         "Fermeture de session"              ),
+                new SoundEvent("Information",       new []{ ".Default\\SystemAsterisk" },        "Erreur"                            ),
+                new SoundEvent("Question",          new []{ ".Default\\SystemQuestion" },        null                                ),
+                new SoundEvent("Warning",           new []{ ".Default\\SystemExclamation" },     "Exclamation"                       ),
+                new SoundEvent("Error",             new []{ ".Default\\SystemHand" },            "Arrêt critique"                    ),
+                new SoundEvent("DeviceConnect",     new []{ ".Default\\DeviceConnect" },         "Insertion d'un matériel"           ),
+                new SoundEvent("DeviceDisconnect",  new []{ ".Default\\DeviceDisconnect" },      "Suppression d'un matériel"         ),
+                new SoundEvent("DeviceFail",        new []{ ".Default\\DeviceFail" },            "Échec d'un matériel"               ),
+                new SoundEvent("Default",           new []{ ".Default\\.Default" },              "Ding"                              ),
                 new SoundEvent("Balloon",           new []{ ".Default\\SystemNotification",
                                                             ".Default\\Notification.Default",
-                                                            "Explorer\\SystemNotification", },  "Infobulle"                         ),
-                new SoundEvent("Navigate",          new []{ "Explorer\\Navigating" },           "Menu Démarrer"                     ),
-                new SoundEvent("RecycleBin",        new []{ "Explorer\\EmptyRecycleBin" },      "Corbeille"                         ),
-                new SoundEvent("UAC",               new []{ ".Default\\WindowsUAC" },           null                                )
+                                                            "Explorer\\SystemNotification", },   "Infobulle"                         ),
+                new SoundEvent("Navigate",          new []{ "Explorer\\Navigating" },            "Menu Démarrer"                     ),
+                new SoundEvent("RecycleBin",        new []{ "Explorer\\EmptyRecycleBin" },       "Corbeille"                         ),
+                new SoundEvent("UAC",               new []{ ".Default\\WindowsUAC" },            null                                ),
+                new SoundEvent("BatteryLow",        new []{ ".Default\\LowBatteryAlarm" },       null                                ),
+                new SoundEvent("BatteryCritical",   new []{ ".Default\\CriticalBatteryAlarm" },  null                                ),
+                new SoundEvent("Email",             new []{ ".Default\\MailBeep" },              null                                ),
+                new SoundEvent("Print",             new []{ ".Default\\PrintComplete" },         null                                ),
+                new SoundEvent("AppOpen",           new []{ ".Default\\Open" },                  null                                ),
+                new SoundEvent("AppClose",          new []{ ".Default\\Close" },                 null                                ),
+                new SoundEvent("Minimize",          new []{ ".Default\\Minimize" },              null                                ),
+                new SoundEvent("UnMinimize",        new []{ ".Default\\RestoreUp" },             null                                ),
+                new SoundEvent("Maximize",          new []{ ".Default\\Maximize" },              null                                ),
+                new SoundEvent("UnMaximize",        new []{ ".Default\\RestoreDown" },           null                                ),
+                new SoundEvent("Menu",              new []{ ".Default\\MenuPopup" },             null                                ),
+                new SoundEvent("MenuCommand",       new []{ ".Default\\MenuCommand" },           null                                ),
+                new SoundEvent("Select",            new []{ ".Default\\CCSelect" },              null                                )
                 // ==========================================================================================================================
                 //       Sound names above should not be modified to retain compatibility with sound archives and BgSoundPlayer
                 // ==========================================================================================================================

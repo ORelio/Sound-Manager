@@ -103,6 +103,19 @@
   <ItemGroup>
     <None Include="SoundIcons\UAC.png" />
     <None Include="SoundIcons\Question.png" />
+    <Content Include="SoundIcons\AppClose.png" />
+    <Content Include="SoundIcons\AppOpen.png" />
+    <Content Include="SoundIcons\BatteryCritical.png" />
+    <Content Include="SoundIcons\BatteryLow.png" />
+    <Content Include="SoundIcons\Email.png" />
+    <Content Include="SoundIcons\Maximize.png" />
+    <Content Include="SoundIcons\Menu.png" />
+    <Content Include="SoundIcons\MenuCommand.png" />
+    <Content Include="SoundIcons\Minimize.png" />
+    <Content Include="SoundIcons\Print.png" />
+    <Content Include="SoundIcons\Select.png" />
+    <Content Include="SoundIcons\UnMaximize.png" />
+    <Content Include="SoundIcons\UnMinimize.png" />
     <Content Include="SoundScheme.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
