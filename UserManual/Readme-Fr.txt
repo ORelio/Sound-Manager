@@ -20,12 +20,12 @@ Les principales fonctionnalités sont :
  Utilisation
 =============
 
-Installation :
+Installation (si vous utilisez la version portable) :
  - Extraire l'archive dans un endroit fixe tel que C:\Program Files\SoundManager ou Documents\SoundManager
  - Lancer SoundManager.exe, et activer les intégrations avec le système de votre choix dans l'onglet Paramètres
  - Si vous le souhaitez, créez un raccourci vers SoundManager.exe et placez-le sur votre Bureau
 
-Désinstallation :
+Désinstallation (si vous utilisez la version portable) :
  - Lancer SoundManager.exe, et cliquer sur le bouton Désinstaller dans l'onglet Paramètres
  - Supprimer le répertoire SoundManager créé précédemment dans C:\Program Files ou Documents
  - Si créé précédemment, supprimer le raccourci présent sur le Bureau
@@ -74,6 +74,7 @@ R: Non, les premières versions étaient conçues avec Game Maker et plein de sc
 le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
 
  - Bibliothèque Privilege20 du magazine MSDN, Mars 2005
+ - Bibliothèque Tri-State Tree View, CodeProject no. 202435
  - Icône Windows Media Player par Microsoft Corporation
  - Resource Hacker par Angus Johnson
  - Icône Clipping Sound par RAD.E8

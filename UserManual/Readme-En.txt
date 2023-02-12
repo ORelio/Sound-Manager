@@ -2,7 +2,7 @@
 ==== SoundManager v3.0.2 - By ORelio - Microzoom.fr ====
 ========================================================
 
-Thanks for dowloading SoundManager!
+Thanks for downloading SoundManager!
 
 SoundManager is a free software allowing to easily create and share Windows sound schemes.
 All Windows versions from Windows XP SP3 to Windows 11 are supported.
@@ -20,12 +20,12 @@ Main features are the following:
  How to use
 ============
 
-Setup:
+Setup (if using the standalone version):
  - Extract the archive in a fixed place such as C:\Program Files\SoundManager or Documents\SoundManager
  - Run SoundManager.exe, go to Settings and enable the desired features under System integration
  - Optionally create a Desktop shortcut for SoundManager.exe ;)
 
-Uninstall:
+Uninstall (if using the standalone version):
  - Run SoundManager.exe, go to Settings and click Uninstall under Maintenance section
  - Delete the SoundManager directory, such as C:\Program Files\SoundManager or Documents\SoundManager
  - Optionally delete the previously created Desktop shortcut
@@ -74,6 +74,7 @@ A: No, these versions were created using Game Maker and a bunch of batch files.
 The SoundManager program has been created using the following resources:
 
  - Privilege20 library from MSDN magazine, March 2005
+ - Tri-State Tree View library from CodeProject no. 202435
  - Windows Media Player icon, by Microsoft Corporation
  - Resource Hacker by Angus Johnson
  - Clipping Sound Icon by RAD.E8

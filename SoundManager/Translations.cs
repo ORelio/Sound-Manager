@@ -85,6 +85,8 @@ namespace SharpTools
                 translations["button_export"] = "Exporter";
                 translations["button_reset"] = "Réinitialiser";
                 translations["button_exit"] = "Quitter";
+                translations["button_ok"] = "OK";
+                translations["button_cancel"] = "Cancel";
                 translations["event_startup_name"] = "Démarrage";
                 translations["event_startup_desc"] = "Démarrage de Windows";
                 translations["event_shutdown_name"] = "Arrêt";
@@ -204,6 +206,7 @@ namespace SharpTools
                 translations["help_file_not_found_text"] = "Le fichier d'aide est manquant. Essayez de consulter le site Internet pour l'obtenir.";
                 translations["button_help"] = "Consulter l'aide";
                 translations["button_website"] = "Voir mon site";
+                translations["button_download_schemes"] = "Télécharger des thèmes sonores";
                 translations["box_system_info"] = "Informations système";
                 translations["supported_system_version"] = "Cette version de Windows est prise en charge par l'application.";
                 translations["unsupported_system_version"] = "L'application n'a pas été testée sur cette version de Windows et *POURRAIT* ne pas fonctionner comme prévu.";
@@ -211,6 +214,10 @@ namespace SharpTools
                 translations["drag_drop_no_target_sound_text"] = "Veuillez sélectionner un son avant de déposer un fichier.";
                 translations["drag_drop_sound_confirm_title"] = "Confirmer le remplacement du son";
                 translations["drag_drop_sound_confirm_text"] = "Remplacer ce son ?";
+                translations["download_schemes_selection_title"] = "Télécharger des thèmes";
+                translations["download_schemes_selection_text"] = "Sélectionnez les thèmes à télécharger";
+                translations["download_schemes_selection_fetching_list"] = "Récupération de la liste...";
+                translations["download_schemes_selection_everything"] = "Tous les thèmes sonores";
                 translations["download_schemes_no_tls_title"] = "Configuration TLS/HTTPS insuffisante";
                 translations["download_schemes_no_tls_text"] = "La configuration HTTPS ne permet pas le téléchargement des thèmes. Afficher la liste dans votre navigateur ?";
                 translations["download_schemes_failed_title"] = "Échec du téléchargement";
@@ -233,6 +240,8 @@ namespace SharpTools
                 translations["button_export"] = "Export";
                 translations["button_reset"] = "Reset";
                 translations["button_exit"] = "Exit";
+                translations["button_ok"] = "OK";
+                translations["button_cancel"] = "Annuler";
                 translations["event_startup_name"] = "Startup";
                 translations["event_startup_desc"] = "System start";
                 translations["event_shutdown_name"] = "Shutdown";
@@ -352,6 +361,7 @@ namespace SharpTools
                 translations["help_file_not_found_text"] = "The help file is missing. Try visiting the website to grab it.";
                 translations["button_help"] = "View Help";
                 translations["button_website"] = "Visit my website";
+                translations["button_download_schemes"] = "Download more sound schemes";
                 translations["box_system_info"] = "System information";
                 translations["supported_system_version"] = "This Windows version is supported by the application.";
                 translations["unsupported_system_version"] = "The application has not been tested on this Windows version and as such *MIGHT* not perform as expected.";
@@ -359,6 +369,10 @@ namespace SharpTools
                 translations["drag_drop_no_target_sound_text"] = "Please select a target sound before dropping a file.";
                 translations["drag_drop_sound_confirm_title"] = "Confirm sound replacement";
                 translations["drag_drop_sound_confirm_text"] = "Replace this sound?";
+                translations["download_schemes_selection_title"] = "Download Schemes";
+                translations["download_schemes_selection_text"] = "Select schemes to download";
+                translations["download_schemes_selection_fetching_list"] = "Fetching list...";
+                translations["download_schemes_selection_everything"] = "All Sound Schemes";
                 translations["download_schemes_no_tls_title"] = "TLS/HTTPS configuration is inadequate";
                 translations["download_schemes_no_tls_text"] = "The current HTTPS configuration does not allow downloading. View scheme list in your web browser?";
                 translations["download_schemes_failed_title"] = "Download failed";

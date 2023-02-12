@@ -65,6 +65,7 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.comboBoxSystemSchemes = new System.Windows.Forms.ComboBox();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.buttonDownloadSchemes = new System.Windows.Forms.Button();
             this.buttonWebsite = new System.Windows.Forms.Button();
             this.buttonHelp = new System.Windows.Forms.Button();
             this.labelProgramDescription = new System.Windows.Forms.Label();
@@ -438,6 +439,7 @@
             // 
             // tabPageAbout
             // 
+            this.tabPageAbout.Controls.Add(this.buttonDownloadSchemes);
             this.tabPageAbout.Controls.Add(this.buttonWebsite);
             this.tabPageAbout.Controls.Add(this.buttonHelp);
             this.tabPageAbout.Controls.Add(this.labelProgramDescription);
@@ -452,9 +454,19 @@
             this.tabPageAbout.Text = "UI_ABOUT";
             this.tabPageAbout.UseVisualStyleBackColor = true;
             // 
+            // buttonDownloadSchemes
+            // 
+            this.buttonDownloadSchemes.Location = new System.Drawing.Point(115, 326);
+            this.buttonDownloadSchemes.Name = "buttonDownloadSchemes";
+            this.buttonDownloadSchemes.Size = new System.Drawing.Size(180, 23);
+            this.buttonDownloadSchemes.TabIndex = 6;
+            this.buttonDownloadSchemes.Text = "BUTTON_DOWNLOAD_SCHEMES";
+            this.buttonDownloadSchemes.UseVisualStyleBackColor = true;
+            this.buttonDownloadSchemes.Click += new System.EventHandler(this.buttonDownloadSchemes_Click);
+            // 
             // buttonWebsite
             // 
-            this.buttonWebsite.Location = new System.Drawing.Point(221, 304);
+            this.buttonWebsite.Location = new System.Drawing.Point(221, 284);
             this.buttonWebsite.Name = "buttonWebsite";
             this.buttonWebsite.Size = new System.Drawing.Size(100, 23);
             this.buttonWebsite.TabIndex = 5;
@@ -464,7 +476,7 @@
             // 
             // buttonHelp
             // 
-            this.buttonHelp.Location = new System.Drawing.Point(89, 304);
+            this.buttonHelp.Location = new System.Drawing.Point(89, 284);
             this.buttonHelp.Name = "buttonHelp";
             this.buttonHelp.Size = new System.Drawing.Size(100, 23);
             this.buttonHelp.TabIndex = 4;
@@ -507,7 +519,7 @@
             this.labelProgramName.Name = "labelProgramName";
             this.labelProgramName.Size = new System.Drawing.Size(395, 30);
             this.labelProgramName.TabIndex = 0;
-            this.labelProgramName.Text = "PRORAM_NAME";
+            this.labelProgramName.Text = "PROGRAM_NAME";
             this.labelProgramName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonOpen
@@ -632,6 +644,7 @@
         private System.Windows.Forms.Label labelSystemInfo;
         private System.Windows.Forms.Label labelSystemSupportStatus;
         private System.Windows.Forms.CheckBox checkBoxMissingSoundsUseDefault;
+        private System.Windows.Forms.Button buttonDownloadSchemes;
     }
 }
 

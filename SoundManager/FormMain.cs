@@ -68,6 +68,7 @@ namespace SoundManager
             labelProgramDescription.Text = Translations.Get("app_desc");
             buttonHelp.Text = Translations.Get("button_help");
             buttonWebsite.Text = Translations.Get("button_website");
+            buttonDownloadSchemes.Text = Translations.Get("button_download_schemes");
             groupBoxSystemInfo.Text = Translations.Get("box_system_info");
 
             // System information
@@ -759,6 +760,23 @@ namespace SoundManager
                 Process.Start("https://microzoom.fr/");
             }
             else Process.Start("https://github.com/ORelio/");
+        }
+
+        /// <summary>
+        /// Launch sound scheme download tool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonDownloadSchemes_Click(object sender, EventArgs e)
+        {
+            if (File.Exists("DownloadSchemes.exe"))
+            {
+                Process.Start("DownloadSchemes.exe");
+            }
+            else
+            {
+                Process.Start("https://github.com/ORelio/Sound-Manager-Schemes");
+            }
         }
     }
 }

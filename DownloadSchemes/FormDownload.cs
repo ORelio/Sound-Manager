@@ -11,7 +11,7 @@ namespace SharpTools
 {
     /// <summary>
     /// Perform file downloads while showing progress to the user
-    /// By ORelio - (c) 2020 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2020-2023 - Available under the CDDL-1.0 license
     /// </summary>
     public partial class FormDownload : Form
     {
@@ -84,12 +84,12 @@ namespace SharpTools
         /// <param name="destinationFile">Destination file on disk</param>
         /// <param name="downloadComplete">Optional callback when download is complete</param>
         /// <param name="downloadError">Optional callback when an error occured</param>
-        private void StartAsyncDownload(string url, string destinationFile, Action downloadComplete = null, Action<Exception> downloadError = null)
+        private void StartAsyncDownload(string url, string destinationFile, Action downloadComplete = null, Action<Exception, string> downloadError = null)
         {
             if (InvokeRequired)
             {
                 this.Invoke(
-                    new Action<string, string, Action, Action<Exception>>(StartAsyncDownload),
+                    new Action<string, string, Action, Action<Exception, string>>(StartAsyncDownload),
                     new object[] { url, destinationFile, downloadComplete, downloadError }
                 );
             }
@@ -104,7 +104,7 @@ namespace SharpTools
                         (object sender, AsyncCompletedEventArgs e) =>
                         {
                             if (e.Error != null && downloadError != null)
-                                downloadError(e.Error);
+                                downloadError(e.Error, destinationFile);
                             if (Success)
                                 downloadComplete();
                         }
@@ -137,14 +137,16 @@ namespace SharpTools
         /// <summary>
         /// Download error callback: Show error message and exit
         /// </summary>
-        private void HandleDownloadError(Exception e)
+        private void HandleDownloadError(Exception e, string outputFile)
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action<Exception>(HandleDownloadError), new object[] { e });
+                this.Invoke(new Action<Exception, string>(HandleDownloadError), new object[] { e, outputFile });
             }
             else
             {
+                if (File.Exists(outputFile))
+                    File.Delete(outputFile);
                 Exception inner = e;
                 List<string> messages = new List<string>();
                 do
