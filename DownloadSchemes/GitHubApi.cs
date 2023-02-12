@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using SharpTools;
+using System.IO;
 
 namespace DownloadSchemes
 {
@@ -40,7 +41,38 @@ namespace DownloadSchemes
             apiClient.Headers["User-Agent"] = typeof(GitHubApi).Namespace + "/1.0";
             apiClient.Headers["Accept"] = "application/vnd.github+json";
             apiClient.Headers["X-GitHub-Api-Version"] = "2022-11-28";
-            string result = apiClient.DownloadString(url);
+            string result;
+
+            try
+            {
+                result = apiClient.DownloadString(url);
+            }
+            catch (WebException e)
+            {
+                if (e.Response.Headers.AllKeys.Contains("X-RateLimit-Remaining") && e.Response.Headers["X-RateLimit-Remaining"] == "0")
+                {
+                    long timestamp;
+                    string message = "GitHub API Rate limit exceeded, please retry after ";
+                    if (e.Response.Headers.AllKeys.Contains("X-RateLimit-Reset") && long.TryParse(e.Response.Headers["X-RateLimit-Reset"], out timestamp))
+                    {
+                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                        dateTime = dateTime.AddSeconds(timestamp).ToLocalTime();
+                        message += dateTime.ToString();
+                    }
+                    else message += "a few minutes";
+                    throw new WebException(message + '.', e);
+                }
+                else
+                {
+                    using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        string message = reader.ReadToEnd();
+                        if (!String.IsNullOrEmpty(message))
+                            throw new WebException(message, e);
+                    }
+                }
+                throw;
+            }
 
             Json.JSONData data = Json.ParseJson(result);
             List<string> files = new List<string>();

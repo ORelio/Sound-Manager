@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
-using SharpTools;
 using System.Diagnostics;
+using SharpTools;
 
 namespace DownloadSchemes
 {
@@ -21,6 +21,7 @@ namespace DownloadSchemes
         const string SoundManagerExe = "SoundManager.exe";
         const string SoundSchemeIcon = "SoundScheme.ico";
 
+        static readonly string TempListFile = Path.Combine(Path.GetTempPath(), RepoName.ToLowerInvariant() + ".txt");
         static readonly bool RunningWindows11 = WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
         static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (RunningWindows11 ? "_11" : "");
         static readonly string SchemesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), Translations.Get("app_name"));
@@ -70,7 +71,7 @@ namespace DownloadSchemes
 
             // Prompt user for list of schemes to download
             FormSelectFiles formSelectFiles = new FormSelectFiles(
-                () => GitHubApi.ListFilesInRepo(RepoUsername, RepoName, "/", true).Where(item => item.EndsWith(".ths")),
+                FetchSchemeList,
                 Translations.Get("download_schemes_selection_title"),
                 Translations.Get("download_schemes_selection_text"),
                 Translations.Get("download_schemes_selection_fetching_list"),
@@ -182,6 +183,24 @@ namespace DownloadSchemes
                 MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 Process.Start(url);
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the list of sound scheme URLs from the GitHub repository, with 1-hour caching due to API rate-limit.
+        /// </summary>
+        /// <returns>List of sound scheme URLs</returns>
+        static IEnumerable<string> FetchSchemeList()
+        {
+            if (File.Exists(TempListFile) && File.GetLastWriteTime(TempListFile) >= DateTime.Now.AddHours(-1))
+            {
+                return File.ReadAllLines(TempListFile);
+            }
+            else
+            {
+                IEnumerable<string> urls = GitHubApi.ListFilesInRepo(RepoUsername, RepoName, "/", true).Where(item => item.EndsWith(".ths"));
+                File.WriteAllLines(TempListFile, urls);
+                return urls;
             }
         }
     }
