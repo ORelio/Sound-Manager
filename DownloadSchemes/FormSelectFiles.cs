@@ -187,7 +187,45 @@ namespace SharpTools
                 treeViewFiles.Nodes[0].Expand();
                 buttonOK.Enabled = true;
                 labelDescription.Text = SelectionMessage;
+                UpdateCheckBoxes(rootNode);
             }
+        }
+
+        /// <summary>
+        /// Update check boxes when all or no child items are checked
+        /// </summary>
+        /// <param name="rootNode">Root node to start from</param>
+        /// <returns>TRUE or FALSE if all childs are (un)checked</returns>
+        private bool? UpdateCheckBoxes(TreeNode rootNode)
+        {
+            if (rootNode.Nodes.Count > 0)
+            {
+                bool foundOneUndetermined = false;
+                bool foundOneChecked = false;
+                bool foundOneNotChecked = false;
+
+                foreach (TreeNode node in rootNode.Nodes)
+                {
+                    bool? childStatus = UpdateCheckBoxes(node);
+                    if (childStatus.HasValue)
+                    {
+                        if (childStatus.Value)
+                            foundOneChecked = true;
+                        else foundOneNotChecked = true;
+                    }
+                    else foundOneUndetermined = true;
+                }
+
+                if (!foundOneUndetermined)
+                {
+                    if (foundOneChecked && !foundOneNotChecked)
+                        return rootNode.Checked = true;
+                    if (!foundOneChecked && foundOneNotChecked)
+                        return rootNode.Checked = false;
+                }
+                return null;
+            }
+            else return rootNode.Checked;
         }
 
         /// <summary>
