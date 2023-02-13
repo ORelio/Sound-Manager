@@ -74,10 +74,11 @@ A: No, these versions were created using Game Maker and a bunch of batch files.
 The SoundManager program has been created using the following resources:
 
  - Privilege20 library from MSDN magazine, March 2005
- - Tri-State Tree View library from CodeProject no. 202435
+ - Tri-State Tree View library, from CodeProject no. 202435
  - Windows Media Player icon, by Microsoft Corporation
- - Resource Hacker by Angus Johnson
+ - Download icon, by Microsoft Corporation
  - Clipping Sound Icon by RAD.E8
+ - Resource Hacker by Angus Johnson
 
 +--------------------+
 | © 2009-2022 ORelio |

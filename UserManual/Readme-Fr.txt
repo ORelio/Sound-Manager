@@ -76,8 +76,9 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
  - Bibliothèque Privilege20 du magazine MSDN, Mars 2005
  - Bibliothèque Tri-State Tree View, CodeProject no. 202435
  - Icône Windows Media Player par Microsoft Corporation
- - Resource Hacker par Angus Johnson
+ - Icône Téléchargement par Microsoft Corporation
  - Icône Clipping Sound par RAD.E8
+ - Resource Hacker par Angus Johnson
 
 +--------------------+
 | © 2009-2022 ORelio |

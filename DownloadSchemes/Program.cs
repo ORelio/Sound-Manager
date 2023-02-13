@@ -80,6 +80,7 @@ namespace DownloadSchemes
                 Translations.Get("button_cancel"),
                 selectedSchemes
             );
+            formSelectFiles.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Application.Run(formSelectFiles);
 
             // Failure? Open in web browser?
