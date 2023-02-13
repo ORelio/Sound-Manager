@@ -24,6 +24,7 @@ namespace SharpTools
         private readonly string DownloadMessage = null;
         private readonly string SelectionMessage = null;
         private readonly HashSet<string> DefaultItems = new HashSet<string>();
+        private int ProcessCheckEvents = 0;
 
         /// <summary>
         /// Holds execution status of the form. If set to false, an error occurred in urlProvider.
@@ -187,7 +188,17 @@ namespace SharpTools
                 treeViewFiles.Nodes[0].Expand();
                 buttonOK.Enabled = true;
                 labelDescription.Text = SelectionMessage;
+
+                //Fix TriStateTreeView checkboxes not updating
                 UpdateCheckBoxes(rootNode);
+                treeViewFiles.AfterCheck += new TreeViewEventHandler((o, e) => {
+                    if (ProcessCheckEvents == 0 && e.Node.Nodes.Count == 0)
+                    {
+                        ProcessCheckEvents++;
+                        UpdateCheckBoxes(rootNode);
+                        ProcessCheckEvents--;
+                    }
+                });
             }
         }
 
@@ -223,7 +234,8 @@ namespace SharpTools
                     if (!foundOneChecked && foundOneNotChecked)
                         return rootNode.Checked = false;
                 }
-                return null;
+
+                return null; // undetermined or mixed nodes below
             }
             else return rootNode.Checked;
         }

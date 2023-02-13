@@ -37,7 +37,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(207, 256);
+            this.buttonCancel.Location = new System.Drawing.Point(257, 271);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -47,7 +47,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(126, 256);
+            this.buttonOK.Location = new System.Drawing.Point(176, 271);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             this.treeViewFiles.Location = new System.Drawing.Point(12, 29);
             this.treeViewFiles.Name = "treeViewFiles";
-            this.treeViewFiles.Size = new System.Drawing.Size(270, 221);
+            this.treeViewFiles.Size = new System.Drawing.Size(320, 236);
             this.treeViewFiles.TabIndex = 0;
             this.treeViewFiles.TriStateStyleProperty = RikTheVeggie.TriStateTreeView.TriStateStyles.Standard;
             // 
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 286);
+            this.ClientSize = new System.Drawing.Size(344, 301);
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
