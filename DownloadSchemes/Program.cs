@@ -21,10 +21,14 @@ namespace DownloadSchemes
         const string SoundManagerExe = "SoundManager.exe";
         const string SoundSchemeIcon = "SoundScheme.ico";
 
+        static readonly string UninstallProgram = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Uninstall.exe");
+        static readonly bool PortableMode = !File.Exists(UninstallProgram);
         static readonly string TempListFile = Path.Combine(Path.GetTempPath(), RepoName.ToLowerInvariant() + ".txt");
         static readonly bool RunningWindows11 = WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
         static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (RunningWindows11 ? "_11" : "");
-        static readonly string SchemesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), Translations.Get("app_name"));
+        static readonly string SchemesFolder = PortableMode
+            ? Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Schemes")
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), Translations.Get("app_name"));
 
         static readonly Dictionary<string, string> SchemesPerNtVersion = new Dictionary<string, string>
         {
@@ -110,14 +114,14 @@ namespace DownloadSchemes
                     Directory.CreateDirectory(SchemesFolder);
 
                     // Set custom folder icon
-                    if (File.Exists(SoundSchemeIcon))
+                    if (File.Exists(SoundSchemeIcon) && !PortableMode)
                     {
                         string desktopIniFile = Path.Combine(SchemesFolder, "desktop.ini");
                         File.WriteAllLines(desktopIniFile, new[] {
-                        "[.ShellClassInfo]",
-                        "IconFile=" + Path.GetFullPath(SoundSchemeIcon),
-                        "IconIndex=0"
-                    });
+                            "[.ShellClassInfo]",
+                            "IconFile=" + Path.GetFullPath(SoundSchemeIcon),
+                            "IconIndex=0"
+                        });
                         DirectoryInfo dirInfo = new DirectoryInfo(SchemesFolder);
                         dirInfo.Attributes |= FileAttributes.System;
                         FileInfo fileInfo = new FileInfo(desktopIniFile);
