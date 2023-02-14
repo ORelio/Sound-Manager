@@ -10,6 +10,7 @@ Desktop.ini
 $RECYCLE.BIN/
 Schemes/
 Other/
+.vs/
 
 *.cab
 *.msi
