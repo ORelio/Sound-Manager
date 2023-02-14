@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.0.2 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.1.0 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for downloading SoundManager!
@@ -56,6 +56,7 @@ Download sound schemes
  - 3.0   : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
  - 3.0.1 : Reduce startup sound delay on Windows 8+, Fix some sounds not playing on Windows 10
  - 3.0.2 : Remove startup sound delay on Windows 8+, Add support for Windows 11
+ - 3.1.0 : Add more sounds, fix handling of readonly files, add categories on download utility
 
 =====
  FAQ
@@ -81,5 +82,5 @@ The SoundManager program has been created using the following resources:
  - Resource Hacker by Angus Johnson
 
 +--------------------+
-| © 2009-2022 ORelio |
+| © 2009-2023 ORelio |
 +--------------------+
