@@ -92,7 +92,7 @@ namespace SoundManager
             checkBoxPatchImageres.CheckedChanged += new System.EventHandler(this.checkBoxPatchImageres_CheckedChanged);
 
             checkBoxBgSoundPlayer.Enabled = BgSoundPlayer.RequiredForThisWindowsVersion;
-            checkBoxBgSoundPlayer.Checked = BgSoundPlayer.RequiredForThisWindowsVersion && BgSoundPlayer.RegisteredForStartup;
+            checkBoxBgSoundPlayer.Checked = BgSoundPlayer.RequiredForThisWindowsVersion && BgSoundPlayer.IsRegisteredForStartup();
             checkBoxBgSoundPlayer.CheckedChanged += new EventHandler(checkBoxBgSoundPlayer_CheckedChanged);
 
             checkBoxMissingSoundsUseDefault.Checked = Settings.MissingSoundUseDefault;
@@ -657,7 +657,18 @@ namespace SoundManager
         /// </summary>
         private void checkBoxBgSoundPlayer_CheckedChanged(object sender, EventArgs e)
         {
-            BgSoundPlayer.RegisteredForStartup = checkBoxBgSoundPlayer.Checked;
+            try
+            {
+                BgSoundPlayer.SetRegisteredForStartup(checkBoxBgSoundPlayer.Checked, true);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(
+                    error.Message,
+                    error.GetType().Name,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

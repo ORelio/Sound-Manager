@@ -124,7 +124,7 @@ namespace SoundManager
                 SoundArchive.AssocFiles();
                 if (BgSoundPlayer.RequiredForThisWindowsVersion)
                 {
-                    BgSoundPlayer.RegisteredForStartup = true;
+                    BgSoundPlayer.SetRegisteredForStartup(true);
                     Process.Start(Application.ExecutablePath, ArgumentBgSoundPlayer);
                 }
             }
@@ -136,9 +136,9 @@ namespace SoundManager
         /// <returns></returns>
         public static void Uninstall()
         {
-            if (BgSoundPlayer.RegisteredForStartup)
+            if (BgSoundPlayer.IsRegisteredForStartup())
             {
-                BgSoundPlayer.RegisteredForStartup = false;
+                BgSoundPlayer.SetRegisteredForStartup(false);
                 foreach (Process process in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Application.ExecutablePath)))
                     if (process.Id != Process.GetCurrentProcess().Id)
                         process.Kill();

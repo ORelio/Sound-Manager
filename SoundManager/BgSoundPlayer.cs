@@ -27,6 +27,9 @@ namespace SoundManager
         private static readonly RegistryKey EditionOverrides = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EditionOverrides", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
         private static readonly string StartupCommandExe = String.Concat("\"", Application.ExecutablePath, "\"");
         private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", Program.ArgumentBgSoundPlayer);
+        private static readonly string SidCurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+        private static readonly string ScheduledTaskBaseName = Program.InternalName;
+        private static readonly string ScheduledTaskNameCurrentUser = String.Concat(ScheduledTaskBaseName, "-", SidCurrentUser);
         private const string StartupDelay_StartupDelayInMSec = "StartupDelayInMSec";
         private const string BootAnimation_DisableStartupSound = "DisableStartupSound";
         private const string EditionOverrides_DisableStartupSound = "UserSetting_DisableStartupSound";
@@ -55,12 +58,13 @@ namespace SoundManager
         }
 
         /// <summary>
-        /// Register, unregister, check registration of the background sound player on system startup
+        /// Check registration of the background sound player on system startup
         /// </summary>
-        public static bool RegisteredForStartup
+        /// <returns>TRUE when registered on system startup</returns>
+        public static bool IsRegisteredForStartup()
         {
-            get
-            {
+                //Temporary indentation for cleaner commit diff
+
                 bool registryKeyPresent = (StartupCommand == (SystemStartup.GetValue(Program.InternalName) as string));
                 bool taskPresent = false;
 
@@ -68,29 +72,38 @@ namespace SoundManager
                 {
                     TaskScheduler.TaskScheduler ts = new TaskScheduler.TaskScheduler();
                     ts.Connect();
-                    taskPresent = (ts.GetFolder("\\").GetTask(Program.InternalName) != null);
+                    taskPresent = (ts.GetFolder("\\").GetTask(ScheduledTaskNameCurrentUser) != null);
                 }
                 catch (FileNotFoundException) { /* Task not present */ }
+                catch (UnauthorizedAccessException) { /* Task is present but wrong permissions */ }
 
                 return registryKeyPresent || taskPresent;
-            }
-            set
-            {
+        }
+
+        /// <summary>
+        /// Register, unregister the background sound player on system startup
+        /// </summary>
+        /// <param name="registered">TRUE to register for startup, FALSE to unregister</param>
+        /// <param name="interactive">TRUE when user changes the setting interactively, FALSE during setup/uninstall</param>
+        public static void SetRegisteredForStartup(bool registered, bool interactive = false)
+        {
+                //Temporary indentation for cleaner commit diff
+
                 TaskScheduler.TaskScheduler ts = new TaskScheduler.TaskScheduler();
                 ts.Connect();
 
-                if (value)
+                if (registered)
                 {
                     //Create registry keys - Currently disabled due to startup delay on registry keys, replaced by scheduled task
                     //SystemStartup.SetValue(Program.InternalName, StartupCommand);
                     //StartupDelay.SetValue(StartupDelayInMSec, 0, RegistryValueKind.DWord);
 
                     //Create scheduled task - Runs sooner on logon compared to registry keys
-                    string sidCurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
-                    string taskSecurityDescriptor = String.Concat("O:", sidCurrentUser, "D:(A;;FA;;;", sidCurrentUser, ")");
+
+                    string taskSecurityDescriptor = String.Concat("O:", SidCurrentUser, "D:(A;;FA;;;", SidCurrentUser, ")");
                     TaskScheduler.ITaskDefinition task = ts.NewTask(0);
                     TaskScheduler.ILogonTrigger trigger = (TaskScheduler.ILogonTrigger)task.Triggers.Create(TaskScheduler._TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
-                    trigger.UserId = sidCurrentUser;
+                    trigger.UserId = SidCurrentUser;
                     TaskScheduler.IExecAction action = (TaskScheduler.IExecAction)task.Actions.Create(TaskScheduler._TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                     action.Path = StartupCommandExe;
                     action.Arguments = Program.ArgumentBgSoundPlayer;
@@ -98,15 +111,26 @@ namespace SoundManager
                     task.Settings.StopIfGoingOnBatteries = false;
                     task.Settings.ExecutionTimeLimit = "PT0S";
                     task.Settings.Priority = 5; // Normal
-                    ts.GetFolder("\\").RegisterTaskDefinition(
-                        Program.InternalName,
-                        task,
-                        (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE,
-                        null,
-                        null,
-                        TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN,
-                        taskSecurityDescriptor
-                    );
+
+                    try
+                    {
+                        ts.GetFolder("\\").RegisterTaskDefinition(
+                            ScheduledTaskNameCurrentUser,
+                            task,
+                            (int)TaskScheduler._TASK_CREATION.TASK_CREATE_OR_UPDATE,
+                            null,
+                            null,
+                            TaskScheduler._TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN,
+                            taskSecurityDescriptor
+                        );
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        //Not allowed to create the scheduled task because it already exists with wrong permissions
+                        //Should not happen since tasks are per-user, but better warn the user.
+                        if (interactive)
+                            throw;
+                    }
 
                     if (ShouldToggleBuiltinStartupSound)
                     {
@@ -117,13 +141,28 @@ namespace SoundManager
                 }
                 else
                 {
-                    //Remove scheduled task
-                    try { ts.GetFolder("\\").DeleteTask(Program.InternalName, 0); }
+                    //Remove scheduled task for the current user
+                    try { ts.GetFolder("\\").DeleteTask(ScheduledTaskNameCurrentUser, 0); }
                     catch (FileNotFoundException) { /* Task was not present */ }
+                    catch (UnauthorizedAccessException) /* Insufficient privileges */
+                    {
+                        //Should not happen since tasks are per-user, but better warn the user.
+                        if (interactive)
+                            throw;
+                    }
 
+                    //Also remove tasks for other users when performing Uninstall as Admin
+                    if (!interactive && FileSystemAdmin.IsAdmin())
+                    {
+                        TaskScheduler.IRegisteredTaskCollection tasks = ts.GetFolder("\\").GetTasks(0);
+                        for (int i = 1; i <= tasks.Count; i++)
+                            if (tasks[i].Path.StartsWith("\\" + ScheduledTaskBaseName))
+                                ts.GetFolder("\\").DeleteTask(tasks[i].Path.Substring(1), 0);
+                    }
+
+                    //Re-Enable built-in startup sound from Windows 11+
                     if (ShouldToggleBuiltinStartupSound)
                     {
-                        //Re-Enable built-in startup sound
                         BootAnimation.SetValue(BootAnimation_DisableStartupSound, 0);
                         EditionOverrides.SetValue(EditionOverrides_DisableStartupSound, 0);
                     }
@@ -132,7 +171,11 @@ namespace SoundManager
                 //Remove registry keys set by previous versions of this program
                 SystemStartup.DeleteValue(Program.InternalName, false);
                 StartupDelay.DeleteValue(StartupDelay_StartupDelayInMSec, false);
-            }
+
+                //Attempt to remove generic scheduled task set by previous versions of this program
+                try { ts.GetFolder("\\").DeleteTask(Program.InternalName, 0); }
+                catch (FileNotFoundException) { /* Task was not present */ }
+                catch (UnauthorizedAccessException) { /* Insufficient privileges */ }
         }
 
         [DllImport("kernel32")]
