@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://microzoom.fr/")]
 [assembly: AssemblyProduct("Sound Manager")]
-[assembly: AssemblyCopyright("By ORelio © 2020-2023")]
+[assembly: AssemblyCopyright("By ORelio © 2020-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

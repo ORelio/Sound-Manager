@@ -15,7 +15,7 @@ namespace SoundManager
     {
         public static readonly string DisplayName = Translations.Get("app_name");
         public static readonly string InternalName = typeof(Program).Namespace;
-        public const string Version = "3.1.0";
+        public const string Version = "3.1.1";
 
         public const string WindowsVersionMin = "5.1";
         public const string WindowsVersionMax = "10.0";

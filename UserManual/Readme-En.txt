@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.1.0 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.1.1 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for downloading SoundManager!
@@ -57,6 +57,7 @@ Download sound schemes
  - 3.0.1 : Reduce startup sound delay on Windows 8+, Fix some sounds not playing on Windows 10
  - 3.0.2 : Remove startup sound delay on Windows 8+, Add support for Windows 11
  - 3.1.0 : Add more sounds, fix handling of readonly files, add categories on download utility
+ - 3.1.1 : Fix startup sound in multi-user context, bug introduced in version 3.0.2
 
 =====
  FAQ
@@ -82,5 +83,5 @@ The SoundManager program has been created using the following resources:
  - Resource Hacker by Angus Johnson
 
 +--------------------+
-| © 2009-2023 ORelio |
+| © 2009-2024 ORelio |
 +--------------------+

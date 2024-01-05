@@ -11,7 +11,7 @@ namespace DownloadSchemes
 {
     /// <summary>
     /// Download utility for retrieving Sound Schemes from the GitHub repository
-    /// By ORelio - (c) 2020-2023 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2020-2024 - Available under the CDDL-1.0 license
     /// </summary>
     static class Program
     {
