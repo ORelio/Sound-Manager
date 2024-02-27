@@ -71,7 +71,7 @@ This feature requires administrator privileges. If enabled, SoundManager will sh
 
 ### Windows 8+ startup and shutdown sounds
 
-On Windows 8, the startup and shutdown sounds where removed for further [performance reasons](https://winaero.com/blog/how-to-play-the-logon-or-startup-sound-in-windows-8-1-or-windows-8/). SoundManager can emulate the playback of these sounds by launching a background process on logon:
+On Windows 8, the startup and shutdown sounds were removed for further [performance reasons](https://winaero.com/blog/how-to-play-the-logon-or-startup-sound-in-windows-8-1-or-windows-8/). SoundManager can emulate the playback of these sounds by launching a background process on logon:
 
 * Process spawns an invisible window, mandatory for delaying system shutdown
 * Process plays Startup or Logon sound and goes inactive
