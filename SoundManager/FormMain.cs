@@ -405,6 +405,8 @@ namespace SoundManager
         private void buttonImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
+            if (Directory.Exists(RuntimeConfig.SchemesFolder))
+                dlg.InitialDirectory = RuntimeConfig.SchemesFolder;
             dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
