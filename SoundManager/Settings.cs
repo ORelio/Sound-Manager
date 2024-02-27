@@ -12,7 +12,7 @@ namespace SoundManager
     /// </summary>
     static class Settings
     {
-        private static readonly string ConfigFile = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, Program.InternalName, ".ini");
+        private static readonly string ConfigFile = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, RuntimeConfig.AppInternalName, ".ini");
 
         /// <summary>
         /// Specify whether the Windows Vista/7 startup sound patch feature is enabled
@@ -80,7 +80,7 @@ namespace SoundManager
             config["main"]["win7patch"] = WinVista7PatchEnabled.ToString();
             config["main"]["usedefaultonmissingsound"] = MissingSoundUseDefault.ToString();
 
-            INIFile.WriteFile(ConfigFile, config, Program.InternalName + " Configuration File");
+            INIFile.WriteFile(ConfigFile, config, RuntimeConfig.AppInternalName + " Configuration File");
         }
     }
 }

@@ -32,7 +32,7 @@ namespace SoundManager
 
             // Icon and translations
 
-            this.Text = Program.DisplayName;
+            this.Text = RuntimeConfig.AppDisplayName;
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             tabPageScheme.Text = Translations.Get("tab_current_scheme");
             tabPageSettings.Text = Translations.Get("tab_settings");
@@ -62,8 +62,8 @@ namespace SoundManager
             buttonReinstall.Text = Translations.Get("button_reinstall");
             buttonUninstall.Text = Translations.Get("button_uninstall");
             tabPageAbout.Text = Translations.Get("tab_about");
-            labelProgramName.Text = Program.DisplayName;
-            labelProgramVersionAuthor.Text = "Version " + Program.Version + " - By ORelio";
+            labelProgramName.Text = RuntimeConfig.AppDisplayName;
+            labelProgramVersionAuthor.Text = "Version " + RuntimeConfig.Version + " - By ORelio";
             labelTranslationAuthor.Text = Translations.Get("translation_author");
             labelProgramDescription.Text = Translations.Get("app_desc");
             buttonHelp.Text = Translations.Get("button_help");
@@ -81,7 +81,7 @@ namespace SoundManager
             );
 
             labelSystemSupportStatus.Text =
-                WindowsVersion.IsBetween(Program.WindowsVersionMin, Program.WindowsVersionMax)
+                WindowsVersion.IsBetween(RuntimeConfig.SupportedWindowsVersionMin, RuntimeConfig.SupportedWindowsVersionMax)
                     ? Translations.Get("supported_system_version")
                     : Translations.Get("unsupported_system_version");
 
@@ -128,7 +128,7 @@ namespace SoundManager
             // Load system sound schemes list
 
             foreach (SoundScheme scheme in SoundScheme.GetSchemeList())
-                if (scheme.ToString() != Program.DisplayName && scheme.ToString() != ".None")
+                if (scheme.ToString() != RuntimeConfig.AppDisplayName && scheme.ToString() != ".None")
                     comboBoxSystemSchemes.Items.Add(scheme);
             if (comboBoxSystemSchemes.Items.Count > 0)
                 comboBoxSystemSchemes.SelectedIndex = 0;

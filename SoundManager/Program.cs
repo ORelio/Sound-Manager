@@ -13,23 +13,6 @@ namespace SoundManager
     /// </summary>
     public static class Program
     {
-        public static readonly string DisplayName = Translations.Get("app_name");
-        public static readonly string InternalName = typeof(Program).Namespace;
-        public const string Version = "3.1.1";
-
-        public const string WindowsVersionMin = "5.1";
-        public const string WindowsVersionMax = "10.0";
-
-        public const string ArgumentSetup = "--setup";
-        public const string ArgumentUninstall = "--uninstall";
-        public const string ArgumentBgSoundPlayer = "--bg-sounds";
-
-        public static readonly string DataFolder = String.Concat(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            Path.DirectorySeparatorChar,
-            typeof(Program).Namespace
-        );
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -44,17 +27,17 @@ namespace SoundManager
             {
                 switch (args[0].ToLowerInvariant())
                 {
-                    case ArgumentSetup:
+                    case RuntimeConfig.CmdArgumentSetup:
                         Setup(false, true);
                         Environment.Exit(0);
                         break;
 
-                    case ArgumentUninstall:
+                    case RuntimeConfig.CmdArgumentUninstall:
                         Uninstall();
                         Environment.Exit(0);
                         break;
 
-                    case ArgumentBgSoundPlayer:
+                    case RuntimeConfig.CmdArgumentBgSoundPlayer:
                         Application.Run(new BgSoundPlayer());
                         Environment.Exit(0);
                         break;
@@ -66,7 +49,7 @@ namespace SoundManager
                         }
                         else
                         {
-                            Console.Error.WriteLine(String.Concat(Program.InternalName, " <", ArgumentSetup, '|', ArgumentUninstall, '|', ArgumentBgSoundPlayer, '>'));
+                            Console.Error.WriteLine(String.Concat(RuntimeConfig.AppInternalName, " <", RuntimeConfig.CmdArgumentSetup, '|', RuntimeConfig.CmdArgumentUninstall, '|', RuntimeConfig.CmdArgumentBgSoundPlayer, '>'));
                             Environment.Exit(1);
                         }
                         break;
@@ -106,10 +89,10 @@ namespace SoundManager
         /// <param name="systemIntegration">Also setup maximum system integration</param>
         public static void Setup(bool forceResetSounds, bool systemIntegration)
         {
-            bool createDataDir = !Directory.Exists(DataFolder);
+            bool createDataDir = !Directory.Exists(RuntimeConfig.LocalDataFolder);
 
             if (createDataDir)
-                Directory.CreateDirectory(DataFolder);
+                Directory.CreateDirectory(RuntimeConfig.LocalDataFolder);
 
             SoundScheme.Setup();
 
@@ -125,7 +108,7 @@ namespace SoundManager
                 if (BgSoundPlayer.RequiredForThisWindowsVersion)
                 {
                     BgSoundPlayer.SetRegisteredForStartup(true);
-                    Process.Start(Application.ExecutablePath, ArgumentBgSoundPlayer);
+                    Process.Start(Application.ExecutablePath, RuntimeConfig.CmdArgumentBgSoundPlayer);
                 }
             }
         }
@@ -147,8 +130,8 @@ namespace SoundManager
             SoundScheme.Uninstall();
             if (Directory.Exists(SoundEvent.DataDirectory))
                 Directory.Delete(SoundEvent.DataDirectory, true);
-            if (Directory.Exists(DataFolder))
-                Directory.Delete(DataFolder, true);
+            if (Directory.Exists(RuntimeConfig.LocalDataFolder))
+                Directory.Delete(RuntimeConfig.LocalDataFolder, true);
         }
     }
 }

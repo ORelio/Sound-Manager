@@ -19,16 +19,16 @@ namespace SoundManager
     /// </summary>
     public class BgSoundPlayer : Form
     {
-        private static readonly string LastBootFile = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
+        private static readonly string LastBootFile = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
         private static readonly RegistryKey RegistryHKLM64bits = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
         private static readonly RegistryKey BootAnimation = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\BootAnimation", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
         private static readonly RegistryKey EditionOverrides = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EditionOverrides", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
         private static readonly string StartupCommandExe = String.Concat("\"", Application.ExecutablePath, "\"");
-        private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", Program.ArgumentBgSoundPlayer);
+        private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", RuntimeConfig.CmdArgumentBgSoundPlayer);
         private static readonly string SidCurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
-        private static readonly string ScheduledTaskBaseName = Program.InternalName;
+        private static readonly string ScheduledTaskBaseName = RuntimeConfig.AppInternalName;
         private static readonly string ScheduledTaskNameCurrentUser = String.Concat(ScheduledTaskBaseName, "-", SidCurrentUser);
         private const string StartupDelay_StartupDelayInMSec = "StartupDelayInMSec";
         private const string BootAnimation_DisableStartupSound = "DisableStartupSound";
@@ -63,7 +63,7 @@ namespace SoundManager
         /// <returns>TRUE when registered on system startup</returns>
         public static bool IsRegisteredForStartup()
         {
-            bool registryKeyPresent = (StartupCommand == (SystemStartup.GetValue(Program.InternalName) as string));
+            bool registryKeyPresent = (StartupCommand == (SystemStartup.GetValue(RuntimeConfig.AppInternalName) as string));
             bool taskPresent = false;
 
             try
@@ -102,7 +102,7 @@ namespace SoundManager
                 trigger.UserId = SidCurrentUser;
                 TaskScheduler.IExecAction action = (TaskScheduler.IExecAction)task.Actions.Create(TaskScheduler._TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                 action.Path = StartupCommandExe;
-                action.Arguments = Program.ArgumentBgSoundPlayer;
+                action.Arguments = RuntimeConfig.CmdArgumentBgSoundPlayer;
                 task.Settings.DisallowStartIfOnBatteries = false;
                 task.Settings.StopIfGoingOnBatteries = false;
                 task.Settings.ExecutionTimeLimit = "PT0S";
@@ -165,11 +165,11 @@ namespace SoundManager
             }
 
             //Remove registry keys set by previous versions of this program
-            SystemStartup.DeleteValue(Program.InternalName, false);
+            SystemStartup.DeleteValue(RuntimeConfig.AppInternalName, false);
             StartupDelay.DeleteValue(StartupDelay_StartupDelayInMSec, false);
 
             //Attempt to remove generic scheduled task set by previous versions of this program
-            try { ts.GetFolder("\\").DeleteTask(Program.InternalName, 0); }
+            try { ts.GetFolder("\\").DeleteTask(RuntimeConfig.AppInternalName, 0); }
             catch (FileNotFoundException) { /* Task was not present */ }
             catch (UnauthorizedAccessException) { /* Insufficient privileges */ }
         }
@@ -240,7 +240,7 @@ namespace SoundManager
         /// </summary>
         public BgSoundPlayer()
         {
-            this.Text = Program.DisplayName;
+            this.Text = RuntimeConfig.AppDisplayName;
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;

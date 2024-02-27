@@ -56,6 +56,9 @@
     <Compile Include="..\SoundManager\WindowsVersion.cs">
       <Link>WindowsVersion.cs</Link>
     </Compile>
+    <Compile Include="..\SoundManager\RuntimeConfig.cs">
+      <Link>RuntimeConfig.cs</Link>
+    </Compile>
     <Compile Include="FormDownload.cs">
       <SubType>Form</SubType>
     </Compile>

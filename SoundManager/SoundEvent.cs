@@ -11,7 +11,7 @@ namespace SoundManager
     public class SoundEvent
     {
         private static readonly SoundEvent[] allEvents;
-        public static readonly string DataDirectory = String.Concat(Program.DataFolder, Path.DirectorySeparatorChar, "Media");
+        public static readonly string DataDirectory = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, "Media");
 
         /// <summary>
         /// Get all supported event types supported by the application

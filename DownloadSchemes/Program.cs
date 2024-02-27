@@ -6,6 +6,7 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 using SharpTools;
+using SoundManager;
 
 namespace DownloadSchemes
 {
@@ -15,20 +16,7 @@ namespace DownloadSchemes
     /// </summary>
     static class Program
     {
-        const string RepoUsername = "ORelio";
-        const string RepoName = "Sound-Manager-Schemes";
-        const string RepoUrl = "https://github.com/" + RepoUsername + "/" + RepoName + "/";
-        const string SoundManagerExe = "SoundManager.exe";
-        const string SoundSchemeIcon = "SoundScheme.ico";
-
-        static readonly string UninstallProgram = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Uninstall.exe");
-        static readonly bool PortableMode = !File.Exists(UninstallProgram);
-        static readonly string TempListFile = Path.Combine(Path.GetTempPath(), RepoName.ToLowerInvariant() + ".txt");
-        static readonly bool RunningWindows11 = WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
-        static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (RunningWindows11 ? "_11" : "");
-        static readonly string SchemesFolder = PortableMode
-            ? Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Schemes")
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), Translations.Get("app_name"));
+        static readonly string SchemesListTempFile = Path.Combine(Path.GetTempPath(), RuntimeConfig.SchemesRepositoryName.ToLowerInvariant() + ".txt");
 
         static readonly Dictionary<string, string> SchemesPerNtVersion = new Dictionary<string, string>
         {
@@ -59,7 +47,7 @@ namespace DownloadSchemes
             }
             catch (NotSupportedException)
             {
-                FailureOfferWebpage("download_schemes_no_tls_title", "download_schemes_no_tls_text", RepoUrl);
+                FailureOfferWebpage("download_schemes_no_tls_title", "download_schemes_no_tls_text", RuntimeConfig.SchemesRepositoryUrl);
                 return;
             }
 
@@ -67,11 +55,11 @@ namespace DownloadSchemes
             // On first launch, the pre-selected scheme is the best suited one for the current OS version
             // On subsequent launches, already downloaded schemes are pre-selected: un-checking them will delete the files
             List<string> selectedSchemes = new List<string>();
-            if (Directory.Exists(SchemesFolder))
-                foreach (string scheme in Directory.GetFiles(SchemesFolder))
+            if (Directory.Exists(RuntimeConfig.SchemesFolder))
+                foreach (string scheme in Directory.GetFiles(RuntimeConfig.SchemesFolder))
                     selectedSchemes.Add(Path.GetFileName(scheme));
-            else if (SchemesPerNtVersion.ContainsKey(WindowsNtVersion))
-                selectedSchemes.Add(SchemesPerNtVersion[WindowsNtVersion]);
+            else if (SchemesPerNtVersion.ContainsKey(RuntimeConfig.WindowsNtVersion))
+                selectedSchemes.Add(SchemesPerNtVersion[RuntimeConfig.WindowsNtVersion]);
 
             // Prompt user for list of schemes to download
             FormSelectFiles formSelectFiles = new FormSelectFiles(
@@ -90,7 +78,7 @@ namespace DownloadSchemes
             // Failure? Open in web browser?
             if (!formSelectFiles.Success)
             {
-                FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RepoUrl);
+                FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RuntimeConfig.SchemesRepositoryUrl);
                 return;
             }
 
@@ -99,7 +87,7 @@ namespace DownloadSchemes
             {
                 foreach (string url in formSelectFiles.UnselectedResults)
                 {
-                    string localPath = Path.Combine(SchemesFolder, Path.GetFileName(url));
+                    string localPath = Path.Combine(RuntimeConfig.SchemesFolder, Path.GetFileName(url));
                     if (File.Exists(localPath))
                         File.Delete(localPath);
                 }
@@ -109,20 +97,20 @@ namespace DownloadSchemes
             if (formSelectFiles.Results.Count > 0)
             {
                 // Create destination Folder
-                if (!Directory.Exists(SchemesFolder))
+                if (!Directory.Exists(RuntimeConfig.SchemesFolder))
                 {
-                    Directory.CreateDirectory(SchemesFolder);
+                    Directory.CreateDirectory(RuntimeConfig.SchemesFolder);
 
                     // Set custom folder icon
-                    if (File.Exists(SoundSchemeIcon) && !PortableMode)
+                    if (File.Exists(RuntimeConfig.SoundSchemeIcon) && !RuntimeConfig.RunningInPortableMode)
                     {
-                        string desktopIniFile = Path.Combine(SchemesFolder, "desktop.ini");
+                        string desktopIniFile = Path.Combine(RuntimeConfig.SchemesFolder, "desktop.ini");
                         File.WriteAllLines(desktopIniFile, new[] {
                             "[.ShellClassInfo]",
-                            "IconFile=" + Path.GetFullPath(SoundSchemeIcon),
+                            "IconFile=" + Path.GetFullPath(RuntimeConfig.SoundSchemeIcon),
                             "IconIndex=0"
                         });
-                        DirectoryInfo dirInfo = new DirectoryInfo(SchemesFolder);
+                        DirectoryInfo dirInfo = new DirectoryInfo(RuntimeConfig.SchemesFolder);
                         dirInfo.Attributes |= FileAttributes.System;
                         FileInfo fileInfo = new FileInfo(desktopIniFile);
                         fileInfo.Attributes |= FileAttributes.Hidden;
@@ -133,7 +121,7 @@ namespace DownloadSchemes
                 List<KeyValuePair<string, string>> schemeDownloads = new List<KeyValuePair<string,string>>();
                 foreach (string url in formSelectFiles.Results)
                 {
-                    string localPath = Path.Combine(SchemesFolder, Path.GetFileName(url));
+                    string localPath = Path.Combine(RuntimeConfig.SchemesFolder, Path.GetFileName(url));
                     if (!File.Exists(localPath))
                         schemeDownloads.Add(new KeyValuePair<string, string>(url, localPath));
                 }
@@ -145,7 +133,7 @@ namespace DownloadSchemes
                 // Failure? Open in web browser?
                 if (!formDownload.Success)
                 {
-                    FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RepoUrl);
+                    FailureOfferWebpage("download_schemes_failed_title", "download_schemes_failed_text", RuntimeConfig.SchemesRepositoryUrl);
                     return;
                 }
 
@@ -155,20 +143,20 @@ namespace DownloadSchemes
                     schemeFile = schemeDownloads[0].Value;
 
                 // If the sound scheme for the current OS is in the set of downloaded files, offer to apply it
-                if (SchemesPerNtVersion.ContainsKey(WindowsNtVersion)
-                    && schemeDownloads.Any(scheme => (Path.GetFileName(scheme.Key) == SchemesPerNtVersion[WindowsNtVersion])))
+                if (SchemesPerNtVersion.ContainsKey(RuntimeConfig.WindowsNtVersion)
+                    && schemeDownloads.Any(scheme => (Path.GetFileName(scheme.Key) == SchemesPerNtVersion[RuntimeConfig.WindowsNtVersion])))
                 {
-                    schemeFile = Path.Combine(SchemesFolder, SchemesPerNtVersion[WindowsNtVersion]);
+                    schemeFile = Path.Combine(RuntimeConfig.SchemesFolder, SchemesPerNtVersion[RuntimeConfig.WindowsNtVersion]);
                 }
 
                 // Run SoundManager with the scheme file to offer, or default to opening the Schemes folder
-                if (schemeFile != null && File.Exists(SoundManagerExe) && File.Exists(schemeFile))
+                if (schemeFile != null && File.Exists(RuntimeConfig.SoundManagerExe) && File.Exists(schemeFile))
                 {
-                    Process.Start(SoundManagerExe, String.Format("\"{0}\"", schemeFile));
+                    Process.Start(RuntimeConfig.SoundManagerExe, String.Format("\"{0}\"", schemeFile));
                 }
                 else if (schemeDownloads.Count > 0)
                 {
-                    Process.Start("explorer", '"' + SchemesFolder + '"');
+                    Process.Start("explorer", '"' + RuntimeConfig.SchemesFolder + '"');
                 }
             }
         }
@@ -197,14 +185,14 @@ namespace DownloadSchemes
         /// <returns>List of sound scheme URLs</returns>
         static IEnumerable<string> FetchSchemeList()
         {
-            if (File.Exists(TempListFile) && File.GetLastWriteTime(TempListFile) >= DateTime.Now.AddHours(-1))
+            if (File.Exists(SchemesListTempFile) && File.GetLastWriteTime(SchemesListTempFile) >= DateTime.Now.AddHours(-1))
             {
-                return File.ReadAllLines(TempListFile);
+                return File.ReadAllLines(SchemesListTempFile);
             }
             else
             {
-                IEnumerable<string> urls = GitHubApi.ListFilesInRepo(RepoUsername, RepoName, "/", true).Where(item => item.EndsWith(".ths"));
-                File.WriteAllLines(TempListFile, urls);
+                IEnumerable<string> urls = GitHubApi.ListFilesInRepo(RuntimeConfig.SchemesRepositoryUsername, RuntimeConfig.SchemesRepositoryName, "/", true).Where(item => item.EndsWith(".ths"));
+                File.WriteAllLines(SchemesListTempFile, urls);
                 return urls;
             }
         }

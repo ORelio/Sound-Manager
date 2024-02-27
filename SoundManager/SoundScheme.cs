@@ -15,7 +15,7 @@ namespace SoundManager
     /// </summary>
     public class SoundScheme
     {
-        private static readonly string SchemeManager = Program.InternalName;
+        private static readonly string SchemeManager = RuntimeConfig.AppInternalName;
         private const string SchemeDefault = ".Default";
         private const string SchemeCurrent = ".Current";
 
@@ -61,7 +61,7 @@ namespace SoundManager
         public static void Setup()
         {
             RegistryKey name = RegCurrentUser.CreateSubKey(RegNames + SchemeManager);
-            name.SetValue(null, Program.DisplayName);
+            name.SetValue(null, RuntimeConfig.AppDisplayName);
             name.Close();
 
             foreach (SoundEvent soundEvent in SoundEvent.GetAll())
