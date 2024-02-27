@@ -40,6 +40,8 @@ Créer un thème sonore :
 
 Télécharger des thèmes
  - Obtenez des thèmes sur https://github.com/ORelio/Sound-Manager-Schemes
+ - Ou alternativement, utilisez l'outil de téléchargement fourni via l'onglet À propos
+   Dans ce cas, le dossier des thèmes est créé à côté de SoundManager.exe (mode portable) ou dans Musique (mode installé)
  - N'hésitez pas à m'envoyer les vôtres pour ajout sur le dépôt de thèmes :)
 
 ===================
