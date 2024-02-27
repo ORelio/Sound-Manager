@@ -40,8 +40,9 @@ Create a sound scheme
 
 Download sound schemes
  - Get some sound schemes from https://github.com/ORelio/Sound-Manager-Schemes
+ - Or alternatively, use the built-in download tool in the About tab of the program
+   In that case, the download folder is alongside SoundManager.exe (portable mode) or in Music folder (setup mode)
  - Do not hesitate to submit your own sound schemes to be added into the repository :)
- - Default folder for downloaded sound schemes is: "C:\%USERPROFILE%\Music\Sound Manager"
 
 ===========
  Changelog
