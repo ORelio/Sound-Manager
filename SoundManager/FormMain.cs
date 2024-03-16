@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Drawing;
 using System.Resources;
 using System.Diagnostics;
@@ -483,6 +484,24 @@ namespace SoundManager
                     {
                         //Not a WAV file
                         File.Delete(soundEvent.FilePath);
+                    }
+                }
+                else // No sound file associated with this event
+                {
+                    // The ListView UI element triggers the "Select" sound event when selected.
+                    // If we do not play anything, Windows attempts to play the "Select" sound event, but we do not want that.
+                    // As a workaround, play a random WAV file but immediately stop it so the sound will not be heard.
+                    SoundEvent eventWithFile = SoundEvent.GetAll().FirstOrDefault(evt => File.Exists(evt.FilePath));
+                    if (eventWithFile != null) // If no event has a file, then "Select" has no file as well so we are done.
+                    {
+                        string dummyFilePath = eventWithFile.FilePath;
+                        try
+                        {
+                            System.Media.SoundPlayer dummyPlayer = new System.Media.SoundPlayer(dummyFilePath);
+                            dummyPlayer.Play();
+                            dummyPlayer.Stop();
+                        }
+                        catch { /* Avoid crashing if file is invalid */ }
                     }
                 }
             }
