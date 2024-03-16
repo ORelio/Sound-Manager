@@ -205,7 +205,8 @@ namespace SoundManager
                     }
                     catch
                     {
-                        if (Path.GetExtension(files[0]).ToLower().Trim('.') == SoundArchive.FileExtension)
+                        string fileExtension = Path.GetExtension(files[0]).ToLower().Trim('.');
+                        if (fileExtension == SoundArchive.FileExtension || fileExtension == SoundArchiveProprietary.FileExtension)
                         {
                             if (MessageBox.Show(
                                 String.Concat(Translations.Get("scheme_load_prompt_text"), '\n', Path.GetFileName(files[0])),
@@ -407,7 +408,7 @@ namespace SoundManager
             OpenFileDialog dlg = new OpenFileDialog();
             if (Directory.Exists(RuntimeConfig.SchemesFolder))
                 dlg.InitialDirectory = RuntimeConfig.SchemesFolder;
-            dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension);
+            dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension, ";*." + SoundArchiveProprietary.FileExtension);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 ImportSoundScheme(dlg.FileName);

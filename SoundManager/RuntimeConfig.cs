@@ -60,9 +60,8 @@ namespace SoundManager
         /// <summary>
         /// Local folder for storing configuration and current sound scheme
         /// </summary>
-        public static readonly string LocalDataFolder = String.Concat(
+        public static readonly string LocalDataFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            Path.DirectorySeparatorChar,
             AppInternalName
         );
 

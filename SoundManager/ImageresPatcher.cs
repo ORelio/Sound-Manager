@@ -24,7 +24,7 @@ namespace SoundManager
         private static readonly string ImageresBak = Imageres + ".bak";
         private static readonly string ImageresOld = Imageres + ".old";
 
-        private static readonly string ResHackerExe = string.Concat(Path.GetDirectoryName(Application.ExecutablePath), Path.DirectorySeparatorChar, "ResHacker.exe");
+        private static readonly string ResHackerExe = Path.Combine(RuntimeConfig.AppFolder, "ResHacker.exe");
         private static readonly string ResHackerIni = ResHackerExe.Replace(".exe", ".ini");
         private static readonly string ResHackerLog = ResHackerExe.Replace(".exe", ".log");
 

@@ -187,6 +187,7 @@ namespace SharpTools
                 translations["playing_shutdown_sound"] = "Lecture du son d'arrêt de l'ordinateur";
                 translations["playing_logoff_sound"] = "Lecture du son de fermeture de session";
                 translations["scheme_file_desc"] = "Fichier de Thème Sonore";
+                translations["scheme_file_proprietary_desc"] = "Fichier de Thème Sonore (Format propriétaire)";
                 translations["box_import_system_scheme"] = "Importer un thème sonore du système";
                 translations["box_system_integration"] = "Intégration avec le système";
                 translations["check_box_imageres_patch"] = "Patcher le son de démarrage de Windows Vista/7";
@@ -342,6 +343,7 @@ namespace SharpTools
                 translations["playing_shutdown_sound"] = "Playing Shutdown sound";
                 translations["playing_logoff_sound"] = "Playing Logoff sound";
                 translations["scheme_file_desc"] = "Sound Scheme File";
+                translations["scheme_file_proprietary_desc"] = "Sound Scheme File (Proprietary file format)";
                 translations["box_import_system_scheme"] = "Import a system sound scheme";
                 translations["box_system_integration"] = "System integration";
                 translations["check_box_imageres_patch"] = "Patch the Windows 7 startup sound";

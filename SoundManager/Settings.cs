@@ -12,7 +12,7 @@ namespace SoundManager
     /// </summary>
     static class Settings
     {
-        private static readonly string ConfigFile = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, RuntimeConfig.AppInternalName, ".ini");
+        private static readonly string ConfigFile = Path.Combine(RuntimeConfig.LocalDataFolder, RuntimeConfig.AppInternalName + ".ini");
 
         /// <summary>
         /// Specify whether the Windows Vista/7 startup sound patch feature is enabled
@@ -23,6 +23,11 @@ namespace SoundManager
         /// Specify whether a missing sound should be replaced by the default system sound when loading a sound archive file
         /// </summary>
         public static bool MissingSoundUseDefault { get; set; }
+
+        /// <summary>
+        /// Specify whether the program should convert proprietary files into the SoundManager file format. If enabled, move the proprietary file to recycle bin.
+        /// </summary>
+        public static bool ConvertProprietaryFiles { get; set; }
 
         /// <summary>
         /// Static class initializer to automatically load settings
@@ -56,6 +61,10 @@ namespace SoundManager
                                     case "usedefaultonmissingsound":
                                         MissingSoundUseDefault = INIFile.Str2Bool(setting.Value);
                                         break;
+
+                                    case "convertproprietaryfiles":
+                                        ConvertProprietaryFiles = INIFile.Str2Bool(setting.Value);
+                                        break;
                                 }
                             }
                             break;
@@ -79,6 +88,7 @@ namespace SoundManager
             config["main"] = new Dictionary<string, string>();
             config["main"]["win7patch"] = WinVista7PatchEnabled.ToString();
             config["main"]["usedefaultonmissingsound"] = MissingSoundUseDefault.ToString();
+            config["main"]["convertproprietaryfiles"] = ConvertProprietaryFiles.ToString();
 
             INIFile.WriteFile(ConfigFile, config, RuntimeConfig.AppInternalName + " Configuration File");
         }

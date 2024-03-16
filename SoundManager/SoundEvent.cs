@@ -11,7 +11,7 @@ namespace SoundManager
     public class SoundEvent
     {
         private static readonly SoundEvent[] allEvents;
-        public static readonly string DataDirectory = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, "Media");
+        public static readonly string DataDirectory = Path.Combine(RuntimeConfig.LocalDataFolder, "Media");
 
         /// <summary>
         /// Get all supported event types supported by the application
@@ -41,7 +41,7 @@ namespace SoundManager
         {
             this._displayName = Translations.Get("event_" + name.ToLower() + "_name");
             this._description = Translations.Get("event_" + name.ToLower() + "_desc");
-            this._filePath = String.Concat(DataDirectory, Path.DirectorySeparatorChar, name, ".wav");
+            this._filePath = Path.Combine(DataDirectory, name + ".wav");
             this._legacyFileName = "Windows XP " + legacyFilename + ".wav";
             this._fileName = name + ".wav";
             this._regKeys = regKeys;

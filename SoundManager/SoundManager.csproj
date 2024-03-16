@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileRecycler.cs" />
     <Compile Include="FileSystemAdmin.cs" />
     <Compile Include="BgSoundPlayer.cs">
       <SubType>Form</SubType>
@@ -81,6 +82,7 @@
     <Compile Include="RuntimeConfig.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShellFileType.cs" />
+    <Compile Include="SoundArchiveProprietary.cs" />
     <Compile Include="SoundIcons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +104,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SoundSchemeProprietary.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="SoundIcons\UAC.png" />
     <None Include="SoundIcons\Question.png" />
     <Content Include="SoundIcons\AppClose.png" />

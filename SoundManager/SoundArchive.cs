@@ -14,7 +14,7 @@ namespace SoundManager
     /// </summary>
     static class SoundArchive
     {
-        private static readonly string FileIconPath = String.Concat(Path.GetDirectoryName(Application.ExecutablePath), Path.DirectorySeparatorChar, "SoundScheme.ico");
+        private static readonly string FileIconPath = Path.Combine(RuntimeConfig.AppFolder, "SoundScheme.ico");
         private static readonly string FileExtCommand = String.Concat("\"", Application.ExecutablePath, "\" \"%1\"");
         private const string FileExtAction = "import";
         public const string FileExtension = "ths";
@@ -53,6 +53,23 @@ namespace SoundManager
         /// <param name="zipfile">Input Zip file</param>
         public static void Import(string zipfile)
         {
+            string tempFileToDelete = null;
+
+            // Convert proprietary sound archive to our file format?
+            // When "Convert Archive" setting is enabled, replace proprietary file with converted file, moving the original to recycle bin
+            // When "Convert Archive" setting is disabled, convert to a temporary file
+            if (SoundArchiveProprietary.IsProprietary(zipfile))
+            {
+                string outfile = zipfile.Substring(0, zipfile.Length - SoundArchiveProprietary.FileExtension.Length) + SoundArchive.FileExtension;
+                if (!Settings.ConvertProprietaryFiles)
+                    outfile = tempFileToDelete = Path.GetTempFileName();
+                SoundArchiveProprietary.ConvertArchive(zipfile, outfile);
+                if (Settings.ConvertProprietaryFiles)
+                    FileRecycler.MoveToRecycleBin(zipfile);
+                zipfile = outfile;
+            }
+
+            // Import sound archive
             using (ZipFile zip = ZipFile.Read(zipfile))
             {
                 foreach (SoundEvent soundEvent in SoundEvent.GetAll())
@@ -72,6 +89,10 @@ namespace SoundManager
                 SchemeMeta.ReloadFromDisk();
                 SoundScheme.Apply(SoundScheme.GetSchemeSoundManager(), Settings.MissingSoundUseDefault);
             }
+
+            // Delete temporary converted file
+            if (tempFileToDelete != null && File.Exists(tempFileToDelete))
+                File.Delete(tempFileToDelete);
         }
 
         /// <summary>
@@ -96,26 +117,48 @@ namespace SoundManager
         }
 
         /// <summary>
-        /// Associate the SoundArchive file extension to the program
+        /// Associate SoundArchive file extensions to the program
         /// </summary>
         public static void AssocFiles()
         {
-            ShellFileType fileType = ShellFileType.GetOrCreateType(FileExtension);
-            fileType.DefaultIcon = FileIconPath;
-            fileType.Description = Translations.Get("scheme_file_desc");
+            AssocFileExtension(FileExtension, FileIconPath, Translations.Get("scheme_file_desc"));
+            AssocFileExtension(SoundArchiveProprietary.FileExtension, SoundArchiveProprietary.FileIconPath, Translations.Get("scheme_file_proprietary_desc"));
+        }
+
+        /// <summary>
+        /// Associate a SoundArchive file extension to the program
+        /// </summary>
+        /// <param name="fileExtension">File extension without leading dot</param>
+        /// <param name="fileIconPath">Full path to file icon</param>
+        /// <param name="fileDescription">Description shown in file explorer for this file type</param>
+        private static void AssocFileExtension(string fileExtension, string fileIconPath, string fileDescription)
+        {
+            ShellFileType fileType = ShellFileType.GetOrCreateType(fileExtension);
+            fileType.DefaultIcon = fileIconPath;
+            fileType.Description = fileDescription;
             fileType.MenuItems[FileExtAction] = new ShellFileType.MenuItem(Translations.Get("button_open"), FileExtCommand);
             fileType.DefaultAction = FileExtAction;
             fileType.Save();
         }
 
         /// <summary>
-        /// Remove association to the SoundArchive file extension
+        /// Remove association to SoundArchive file extensions
         /// </summary>
         public static void UnAssocFiles()
         {
+            UnAssocFileExtension(FileExtension);
+            UnAssocFileExtension(SoundArchiveProprietary.FileExtension);
+        }
+
+        /// <summary>
+        /// Remove association for a SoundArchive file extension
+        /// </summary>
+        /// <param name="fileExtension">File extension without leading dot</param>
+        private static void UnAssocFileExtension(string fileExtension)
+        {
             try
             {
-                ShellFileType fileType = ShellFileType.GetType(FileExtension);
+                ShellFileType fileType = ShellFileType.GetType(fileExtension);
                 fileType.DefaultIcon = null;
                 fileType.DefaultAction = null;
                 fileType.Description = null;
@@ -135,17 +178,28 @@ namespace SoundManager
         {
             get
             {
-                try
-                {
-                    ShellFileType fileType = ShellFileType.GetType(FileExtension);
-                    return (FileExtAction == fileType.DefaultAction
-                        && fileType.MenuItems.ContainsKey(FileExtAction)
-                        && fileType.MenuItems[FileExtAction].Command == FileExtCommand);
-                }
-                catch (KeyNotFoundException)
-                {
-                    return false;
-                }
+                return IsFileExtensionAssociated(FileExtension)
+                    && IsFileExtensionAssociated(SoundArchiveProprietary.FileExtension);
+            }
+        }
+
+        /// <summary>
+        /// Check file association to a SoundArchive file type
+        /// </summary>
+        /// <param name="fileExtension">File extension without leading dot</param>
+        /// <returns>TRUE if file type is associated with SoundManager</returns>
+        private static bool IsFileExtensionAssociated(string fileExtension)
+        {
+            try
+            {
+                ShellFileType fileType = ShellFileType.GetType(fileExtension);
+                return (FileExtAction == fileType.DefaultAction
+                    && fileType.MenuItems.ContainsKey(FileExtAction)
+                    && fileType.MenuItems[FileExtAction].Command == FileExtCommand);
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
             }
         }
     }

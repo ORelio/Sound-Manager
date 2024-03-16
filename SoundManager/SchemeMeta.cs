@@ -13,8 +13,11 @@ namespace SoundManager
     /// </summary>
     static class SchemeMeta
     {
-        public static readonly string SchemeImageFilePath = String.Concat(SoundEvent.DataDirectory, Path.DirectorySeparatorChar, "Scheme.png");
-        public static readonly string SchemeInfoFilePath = String.Concat(SoundEvent.DataDirectory, Path.DirectorySeparatorChar, "Scheme.ini");
+        public const string SchemeImageFileName = "Scheme.png";
+        public static readonly string SchemeImageFilePath = Path.Combine(SoundEvent.DataDirectory, SchemeImageFileName);
+
+        public const string SchemeInfoFileName = "Scheme.ini";
+        public static readonly string SchemeInfoFilePath = Path.Combine(SoundEvent.DataDirectory, SchemeInfoFileName);
 
         private static Image _thumbnail = null;
         private static string _name = null;
@@ -37,6 +40,10 @@ namespace SoundManager
         /// </summary>
         public static void ReloadFromDisk()
         {
+            _name = null;
+            _author = null;
+            _about = null;
+
             try
             {
                 using (Image diskImage = Image.FromFile(SchemeImageFilePath))
@@ -90,12 +97,22 @@ namespace SoundManager
         /// </summary>
         private static void SaveSchemeInfo()
         {
-            File.WriteAllLines(SchemeInfoFilePath, new[]{
+            File.WriteAllBytes(SchemeInfoFilePath, SerializeSchemeInfo(_name, _author, _about));
+        }
+
+        /// <summary>
+        /// Get serialized scheme information for storing to disk or archive.
+        /// </summary>
+        /// <returns>Scheme information ready to write to storage medium.</returns>
+        public static byte[] SerializeSchemeInfo(string name, string author, string about)
+        {
+            return Encoding.UTF8.GetBytes(String.Join("\r\n", new[]{
                 "[SchemeInfo]",
-                "name=" + _name,
-                "author=" + _author,
-                "about=" + _about
-            }, Encoding.UTF8);
+                "name=" + name,
+                "author=" + author,
+                "about=" + about,
+                ""
+            }));
         }
 
         /// <summary>

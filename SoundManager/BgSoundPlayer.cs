@@ -19,7 +19,7 @@ namespace SoundManager
     /// </summary>
     public class BgSoundPlayer : Form
     {
-        private static readonly string LastBootFile = String.Concat(RuntimeConfig.LocalDataFolder, Path.DirectorySeparatorChar, "LastBootTime.ini");
+        private static readonly string LastBootFile = Path.Combine(RuntimeConfig.LocalDataFolder, "LastBootTime.ini");
         private static readonly RegistryKey RegistryHKLM64bits = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
