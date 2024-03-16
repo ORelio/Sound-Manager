@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.1.1 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.2.0 - Par ORelio - Microzoom.fr ====
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -14,7 +14,8 @@ Les principales fonctionnalités sont :
  - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
  - Conversion automatique des sons au format WAV (Windows 7+)
  - Patch du son de démarrage sous Windows Vista/7 (droits Admin requis)
- - Lecture du son de démarrage/arrêt sous Windows 8 à 11
+ - Lecture du son de démarrage/arrêt sous Windows 8 et supérieur
+ - Ouverture du format d'archive propriétaire "soundpack"
 
 =============
  Utilisation
@@ -60,6 +61,7 @@ Télécharger des thèmes
  - 3.0.2 : Suppression du délai du son de démarrage sous Win 8+, et prise en charge de Windows 11
  - 3.1.0 : Ajout de sons, correctif pour les fichiers en lecture seule, catégories sur l'outil de téléchargement
  - 3.1.1 : Correction du son de démarrage lorsqu'il y a plusieurs comptes utilisateur, bug apparu dans la v3.0.2
+ - 3.2.0 : Ajout du support pour lire le format d'archive propriétaire "soundpack"
 
 =====
  FAQ

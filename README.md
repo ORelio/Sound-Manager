@@ -19,7 +19,8 @@ Main features are the following:
 * Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
 * Auto-convert sounds to WAV format (Windows 7+)
 * Patch Windows Vista/7 startup sound (Admin required)
-* Play startup/shutdown sounds on Windows 8 to 11
+* Play startup/shutdown sounds on Windows 8 and greater
+* Load proprietary `soundpack` archive files
 
 ## User Manual
 
@@ -75,7 +76,7 @@ On Windows 8, the startup and shutdown sounds were removed for further [performa
 
 * Process spawns an invisible window, mandatory for delaying system shutdown
 * Process plays Startup or Logon sound and goes inactive
-* On logoff, the process is waken up and [sets up a ShutdownBlockReason](https://blogs.msdn.microsoft.com/oldnewthing/20120614-00/?p=7373/)
+* On logoff, the process is waken up and [sets up a ShutdownBlockReason](https://devblogs.microsoft.com/oldnewthing/20120614-00/?p=7373)
 * Process determines if the Logoff or Shutdown sound should be played
 * Sound is played, then ShutdownBlockReason is removed and the process exits
 

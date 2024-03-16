@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.1.1 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.2.0 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for downloading SoundManager!
@@ -14,7 +14,8 @@ Main features are the following:
  - Import sound schemes created with the Sound applet
  - Auto-convert sounds to WAV format (Windows 7+)
  - Patch Windows Vista/7 startup sound (Admin required)
- - Play startup/shutdown sounds on Windows 8 to 11
+ - Play startup/shutdown sounds on Windows 8 and greater
+ - Load proprietary "soundpack" archive files
 
 ============
  How to use
@@ -60,6 +61,7 @@ Download sound schemes
  - 3.0.2 : Remove startup sound delay on Windows 8+, Add support for Windows 11
  - 3.1.0 : Add more sounds, fix handling of readonly files, add categories on download utility
  - 3.1.1 : Fix startup sound in multi-user context, bug introduced in version 3.0.2
+ - 3.2.0 : Add support for loading proprietary "soundpack" archive files
 
 =====
  FAQ
