@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.2.0 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.2.1 - Par ORelio - Microzoom.fr ====
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -62,6 +62,7 @@ Télécharger des thèmes
  - 3.1.0 : Ajout de sons, correctif pour les fichiers en lecture seule, catégories sur l'outil de téléchargement
  - 3.1.1 : Correction du son de démarrage lorsqu'il y a plusieurs comptes utilisateur, bug apparu dans la v3.0.2
  - 3.2.0 : Ajout du support pour lire le format d'archive propriétaire "soundpack"
+ - 3.2.1 : Refonte de l'icône du programme, correction de crash si lancé depuis un \\partage\réseau
 
 =====
  FAQ
@@ -81,7 +82,7 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
 
  - Bibliothèque Privilege20 du magazine MSDN, Mars 2005
  - Bibliothèque Tri-State Tree View, CodeProject no. 202435
- - Icône Windows Media Player par Microsoft Corporation
+ - Polices Teko et Dancing Script de Google Fonts (Logo)
  - Icône Téléchargement par Microsoft Corporation
  - Icône Clipping Sound par RAD.E8
  - Resource Hacker par Angus Johnson

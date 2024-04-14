@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.2.0 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.2.1 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for downloading SoundManager!
@@ -62,6 +62,7 @@ Download sound schemes
  - 3.1.0 : Add more sounds, fix handling of readonly files, add categories on download utility
  - 3.1.1 : Fix startup sound in multi-user context, bug introduced in version 3.0.2
  - 3.2.0 : Add support for loading proprietary "soundpack" archive files
+ - 3.2.1 : Program icon overhaul, fix crash when launching from a \\network\share
 
 =====
  FAQ
@@ -81,7 +82,7 @@ The SoundManager program has been created using the following resources:
 
  - Privilege20 library from MSDN magazine, March 2005
  - Tri-State Tree View library, from CodeProject no. 202435
- - Windows Media Player icon, by Microsoft Corporation
+ - Teko & Dancing Script Fonts from Google Fonts (Logo)
  - Download icon, by Microsoft Corporation
  - Clipping Sound Icon by RAD.E8
  - Resource Hacker by Angus Johnson
