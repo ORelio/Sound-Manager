@@ -1,6 +1,6 @@
-# SoundManager
+![SoundManager](Images/logo-en.png)
 
-SoundManager is a free software allowing to easily create and share Windows sound schemes. All Windows versions from Windows XP SP3 to Windows 11 are supported. Requires [.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17718) or greater.
+SoundManager is free software that makes it easy to create and share Windows sound schemes. All Windows versions from Windows XP SP3 to Windows 11 are supported. Requires [.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17718) or greater.
 
 * **Download:** Have a look at the [releases section](https://github.com/ORelio/Sound-Manager/releases) to get a build.
 * **Sound schemes:** Check out the [sound schemes repository](https://github.com/ORelio/Sound-Manager-Schemes) :)
@@ -9,7 +9,7 @@ SoundManager is a free software allowing to easily create and share Windows soun
 
 The main UI allows managing the current sound scheme, as well as defining metadata:
 
-![SoundManager main UI](Screenshots/gui-scheme-en.png)
+![SoundManager main UI](Images/gui-scheme-en.png)
 
 Main features are the following:
 
@@ -20,7 +20,7 @@ Main features are the following:
 * Auto-convert sounds to WAV format (Windows 7+)
 * Patch Windows Vista/7 startup sound (Admin required)
 * Play startup/shutdown sounds on Windows 8 and greater
-* Load proprietary `soundpack` archive files
+* Load proprietary soundpack archive files
 
 ## User Manual
 

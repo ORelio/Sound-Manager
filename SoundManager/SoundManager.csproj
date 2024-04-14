@@ -105,6 +105,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="SoundManager.png" />
     <Content Include="SoundSchemeProprietary.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

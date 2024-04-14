@@ -303,6 +303,16 @@ namespace SoundManager {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SoundManagerLogo {
+            get {
+                object obj = ResourceManager.GetObject("SoundManagerLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Startup {
             get {
                 object obj = ResourceManager.GetObject("Startup", resourceCulture);

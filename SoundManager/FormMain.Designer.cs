@@ -65,6 +65,7 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.comboBoxSystemSchemes = new System.Windows.Forms.ComboBox();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.programLogo = new System.Windows.Forms.PictureBox();
             this.buttonDownloadSchemes = new System.Windows.Forms.Button();
             this.buttonWebsite = new System.Windows.Forms.Button();
             this.buttonHelp = new System.Windows.Forms.Button();
@@ -87,6 +88,7 @@
             this.groupBoxSystemIntegration.SuspendLayout();
             this.groupBoxImport.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.programLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // soundContextMenu
@@ -439,6 +441,7 @@
             // 
             // tabPageAbout
             // 
+            this.tabPageAbout.Controls.Add(this.programLogo);
             this.tabPageAbout.Controls.Add(this.buttonDownloadSchemes);
             this.tabPageAbout.Controls.Add(this.buttonWebsite);
             this.tabPageAbout.Controls.Add(this.buttonHelp);
@@ -454,9 +457,19 @@
             this.tabPageAbout.Text = "UI_ABOUT";
             this.tabPageAbout.UseVisualStyleBackColor = true;
             // 
+            // programLogo
+            // 
+            this.programLogo.BackgroundImage = global::SoundManager.SoundIcons.SoundManagerLogo;
+            this.programLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.programLogo.Location = new System.Drawing.Point(6, 17);
+            this.programLogo.Name = "programLogo";
+            this.programLogo.Size = new System.Drawing.Size(395, 128);
+            this.programLogo.TabIndex = 7;
+            this.programLogo.TabStop = false;
+            // 
             // buttonDownloadSchemes
             // 
-            this.buttonDownloadSchemes.Location = new System.Drawing.Point(115, 326);
+            this.buttonDownloadSchemes.Location = new System.Drawing.Point(115, 346);
             this.buttonDownloadSchemes.Name = "buttonDownloadSchemes";
             this.buttonDownloadSchemes.Size = new System.Drawing.Size(180, 23);
             this.buttonDownloadSchemes.TabIndex = 6;
@@ -466,7 +479,7 @@
             // 
             // buttonWebsite
             // 
-            this.buttonWebsite.Location = new System.Drawing.Point(221, 284);
+            this.buttonWebsite.Location = new System.Drawing.Point(221, 304);
             this.buttonWebsite.Name = "buttonWebsite";
             this.buttonWebsite.Size = new System.Drawing.Size(100, 23);
             this.buttonWebsite.TabIndex = 5;
@@ -476,7 +489,7 @@
             // 
             // buttonHelp
             // 
-            this.buttonHelp.Location = new System.Drawing.Point(89, 284);
+            this.buttonHelp.Location = new System.Drawing.Point(89, 304);
             this.buttonHelp.Name = "buttonHelp";
             this.buttonHelp.Size = new System.Drawing.Size(100, 23);
             this.buttonHelp.TabIndex = 4;
@@ -486,7 +499,7 @@
             // 
             // labelProgramDescription
             // 
-            this.labelProgramDescription.Location = new System.Drawing.Point(6, 136);
+            this.labelProgramDescription.Location = new System.Drawing.Point(6, 216);
             this.labelProgramDescription.Name = "labelProgramDescription";
             this.labelProgramDescription.Size = new System.Drawing.Size(395, 71);
             this.labelProgramDescription.TabIndex = 3;
@@ -496,7 +509,7 @@
             // labelTranslationAuthor
             // 
             this.labelTranslationAuthor.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.labelTranslationAuthor.Location = new System.Drawing.Point(6, 116);
+            this.labelTranslationAuthor.Location = new System.Drawing.Point(6, 196);
             this.labelTranslationAuthor.Name = "labelTranslationAuthor";
             this.labelTranslationAuthor.Size = new System.Drawing.Size(395, 20);
             this.labelTranslationAuthor.TabIndex = 2;
@@ -505,7 +518,7 @@
             // 
             // labelProgramVersionAuthor
             // 
-            this.labelProgramVersionAuthor.Location = new System.Drawing.Point(6, 98);
+            this.labelProgramVersionAuthor.Location = new System.Drawing.Point(6, 178);
             this.labelProgramVersionAuthor.Name = "labelProgramVersionAuthor";
             this.labelProgramVersionAuthor.Size = new System.Drawing.Size(395, 20);
             this.labelProgramVersionAuthor.TabIndex = 1;
@@ -515,7 +528,7 @@
             // labelProgramName
             // 
             this.labelProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelProgramName.Location = new System.Drawing.Point(6, 70);
+            this.labelProgramName.Location = new System.Drawing.Point(6, 150);
             this.labelProgramName.Name = "labelProgramName";
             this.labelProgramName.Size = new System.Drawing.Size(395, 30);
             this.labelProgramName.TabIndex = 0;
@@ -593,6 +606,7 @@
             this.groupBoxSystemIntegration.PerformLayout();
             this.groupBoxImport.ResumeLayout(false);
             this.tabPageAbout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.programLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -645,6 +659,7 @@
         private System.Windows.Forms.Label labelSystemSupportStatus;
         private System.Windows.Forms.CheckBox checkBoxMissingSoundsUseDefault;
         private System.Windows.Forms.Button buttonDownloadSchemes;
+        private System.Windows.Forms.PictureBox programLogo;
     }
 }
 
