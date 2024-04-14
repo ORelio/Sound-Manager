@@ -10,6 +10,9 @@
    viewBox="0 0 259.03616 103.91395"
    height="103.91395mm"
    width="259.03616mm"
+   inkscape:export-filename="logo-en.png"
+   inkscape:export-xdpi="48.886604"
+   inkscape:export-ydpi="48.886604"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -30,14 +33,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.56438475"
-     inkscape:cx="-46.953785"
+     inkscape:cx="-45.181944"
      inkscape:cy="104.53861"
      inkscape:window-width="1920"
      inkscape:window-height="1137"
      inkscape:window-x="-8"
      inkscape:window-y="537"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2" /><defs
+     inkscape:current-layer="svg5" /><defs
      id="defs2"><linearGradient
        inkscape:collect="always"
        id="linearGradient5707"><stop
@@ -546,7 +549,7 @@
        style="fill:#186db2;fill-opacity:1;filter:url(#filter1089)"
        transform="matrix(1.1090094,0.08259476,-0.47509732,0.69165348,57.26537,30.762364)"><text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.3889px;font-family:Teko;-inkscape-font-specification:'Teko, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#667681;fill-opacity:1;stroke:none;stroke-width:0.898;stroke-dasharray:none;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.3889px;font-family:Teko;-inkscape-font-specification:'Teko, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#667681;fill-opacity:0.5;stroke:none;stroke-width:0.898;stroke-dasharray:none;stroke-opacity:1"
          x="190.33263"
          y="77.820732"
          id="text1067-6"
@@ -556,7 +559,7 @@
            x="190.33263"
            y="77.820732">Manager</tspan></text><text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:62.8601px;font-family:'Dancing Script';-inkscape-font-specification:'Dancing Script, @wght=400';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 400;fill:#186db2;fill-opacity:1;stroke:none;stroke-width:1.00007"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:62.8601px;font-family:'Dancing Script';-inkscape-font-specification:'Dancing Script, @wght=400';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 400;fill:#186db2;fill-opacity:0.5;stroke:none;stroke-width:1.00007"
          x="138.13312"
          y="18.881439"
          id="text408-5"
@@ -588,7 +591,9 @@
            id="tspan390-7"
            x="138.13312"
            y="18.881439">Sound</tspan></text></g></g><metadata
-     id="metadata350"><rdf:RDF><cc:License
+     id="metadata350"><rdf:RDF><cc:Work
+         rdf:about=""><cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" /><dc:title>SoundManager Logo - EN</dc:title><dc:date>2024-04-14</dc:date><dc:creator><cc:Agent><dc:title>https://github.com/ORelio/</dc:title></cc:Agent></dc:creator><dc:rights><cc:Agent><dc:title>CC BY-NC-SA v4.0</dc:title></cc:Agent></dc:rights></cc:Work><cc:License
          rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/"><cc:permits
            rdf:resource="http://creativecommons.org/ns#Reproduction" /><cc:permits
            rdf:resource="http://creativecommons.org/ns#Distribution" /><cc:requires
@@ -596,6 +601,4 @@
            rdf:resource="http://creativecommons.org/ns#Attribution" /><cc:prohibits
            rdf:resource="http://creativecommons.org/ns#CommercialUse" /><cc:permits
            rdf:resource="http://creativecommons.org/ns#DerivativeWorks" /><cc:requires
-           rdf:resource="http://creativecommons.org/ns#ShareAlike" /></cc:License><cc:Work
-         rdf:about=""><cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" /><dc:title>SoundManager Logo - EN</dc:title><dc:date>2024-04-14</dc:date><dc:creator><cc:Agent><dc:title>https://github.com/ORelio/</dc:title></cc:Agent></dc:creator><dc:rights><cc:Agent><dc:title>CC BY-NC-SA v4.0</dc:title></cc:Agent></dc:rights></cc:Work></rdf:RDF></metadata></svg>
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" /></cc:License></rdf:RDF></metadata></svg>
