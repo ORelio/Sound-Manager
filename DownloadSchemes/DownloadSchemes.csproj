@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SoundManager\IconExtractor.cs">
+      <Link>IconExtractor.cs</Link>
+    </Compile>
     <Compile Include="..\SoundManager\Translations.cs">
       <Link>Translations.cs</Link>
     </Compile>

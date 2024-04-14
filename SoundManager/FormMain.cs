@@ -34,7 +34,7 @@ namespace SoundManager
             // Icon and translations
 
             this.Text = RuntimeConfig.AppDisplayName;
-            this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.Icon = IconExtractor.ExtractAssociatedIcon(Application.ExecutablePath);
             tabPageScheme.Text = Translations.Get("tab_current_scheme");
             tabPageSettings.Text = Translations.Get("tab_settings");
             soundImageText.Text = Translations.Get("no_image");

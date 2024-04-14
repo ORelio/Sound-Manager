@@ -241,7 +241,7 @@ namespace SoundManager
         public BgSoundPlayer()
         {
             this.Text = RuntimeConfig.AppDisplayName;
-            this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.Icon = IconExtractor.ExtractAssociatedIcon(Application.ExecutablePath);
 
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.ShowInTaskbar = false;

@@ -72,6 +72,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="IconExtractor.cs" />
     <Compile Include="ImageresPatcher.cs" />
     <Compile Include="INIFile.cs" />
     <Compile Include="Privilege20\NativeMethods.cs" />
