@@ -84,38 +84,41 @@ This is typically how `explorer.exe` was handling the thing on Windows 7, but yo
 
 Windows 11 reintroduced a startup sound but still lacks a shutdown sound, so the background proces approach is also available for this system version. Using the background process feature will automatically disable the built-in startup sound, which is not customizable.
 
-## Build and compile
+## Build instructions
 
-### setting up the environment
+In order to maintain support for Windows XP SP3, SoundManager targets .NET Framework v4.0 and builds under Visual Studio 2010. If you want to build without support for Windows XP, you should be able to build using the latest version of [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/). The following instructions detail how to build with XP support.
 
-We will be using Visual C# 2010 Express for this exercise. It's free and allows SoundManager to run under Windows XP.
-Note: While you can run SoundManager on Windows XP, you will need Windows Vista or higher to compile it, since it uses Task Scheduler 2.0 functions and the ShutdownBlockReason, which aren't supported on XP.
-We will refer to the Visual Studio 2010 ISO as the DVD, since that's basically what it is.
+For proper support of newer operating systems such as Windows 10, SoundManager needs APIs such as [Task Scheduler 2.0](https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-2-0-interfaces) and [ShutdownBlockReason](https://devblogs.microsoft.com/oldnewthing/20120614-00/?p=7373), which aren't present on XP, so building under Windows XP will not work. Building should work under Vista or greater, and was tested successfully under Windows 7 and Windows 10.
 
-1. Download Visual Studio 2010 Express [here](https://archive.org/details/vs-2010-express-1).
-2. On Windows 10 and 11, simply opening the downloaded ISO file in Windows Explorer will automatically mount it as a virtual DVD drive. On earlier Windows versions, [WinCDEmu](https://wincdemu.sysprogs.org/) will do the trick.
-3. Launch setup.exe, located inside the VCSExpress folder on the DVD.
-4. Follow the on-screen instructions to install Visual C# 2010.
+### Setting up Visual Studio
+
+1. Download [Visual Studio 2010 Express](https://archive.org/details/vs-2010-express-1). This is the community version of Visual Studio 2010.
+2. Mount or extract the downloaded ISO file: `VS2010Express1.iso`
+  * On Windows 8 or greater, opening the ISO file in file Explorer will automatically mount it as a virtual DVD drive.
+  * On earlier Windows versions, software such as [WinCDEmu](https://wincdemu.sysprogs.org/) or [Daemon Tools](https://www.daemon-tools.cc/products/dtLite) can mount the ISO file.
+  * Alternatively, you can use a file archive utility such as [7-Zip](https://7-zip.org/) to extract the ISO file instead of mounting it.
+4. Open the `VCSExpress` folder inside the virtual DVD drive or extracted ISO file and launch `setup.exe`
+5. Follow the on-screen instructions to install Visual C# 2010.
 
 ### Compiling
 
-#### Notes
+This section assumes you already have the `Sound-Manager` git repository cloned or [manually downloaded](https://github.com/seediffusion/Sound-Manager/archive/refs/heads/master.zip). In the following instructions, "project folder" refers to the main folder of the `Sound-Manager` repository, where `README.md` and `SoundManager.sln` are housed.
 
-* This section assumes you already have the Sound-Manager repository git cloned or manually downloaded.
-* In this section, %sm% refers to the main folder of the SoundManager repository. I.E. the folder where .git and readme.md are housed.
-* If you don't see a Release folder after compiling, replace Release with Debug.
-
-1. Navigate to %sm% and launch the SoundManager.sln file. If your system isn't showing file extensions, you won't see the .sln part of the filename. If VS 2010 doesn't open automatically, select Visual C# 2010 in the open with dialog.
-2. Once VS 2010 is open, hit Shift+Control+B to build the SoundManager solution. Give the project a second or 2 to compile.
-3. Assuming there were no errors during compilation, hit Alt + F4 to close VS 2010.
-4. If everything worked properly, you should see SoundManager.exe in %sm%\SoundManager\bin\Release and DownloadSchemes.exe in %sm%\DownloadSchemes\bin\Release.
-5. Copy the following items into %sm%\SoundManager\bin\Release.
-
-  * %sm%\SoundManager\Lang
-  * %sm%\UserManual\Readme-En.txt
-  * %sm%\UserManual\Readme-Fr.txt
-  *%sm%\DownloadSchemes\bin\Release\DownloadSchemes.exe
-6. Finally, check that everything's working by launching %sm%\SoundManager\bin\Release\SoundManager.exe.
+1. Navigate to the project folder and open `SoundManager.sln file`
+  * If your system isn't configured to [show file extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/), you won't see the `.sln` part of the filename.
+  * If VS 2010 doesn't open automatically, select Visual C# 2010 in the "open with" dialog.
+2. Once the project is open, set the build target to `Release` instead of `Debug` in the dropdown menu next to the Build button. You can leave `Debug` while making changes in the code and using the debugger in Visual Studio.
+3. Hit `Shift+Control+B` to build the entire `SoundManager` solution. This should only take a few seconds to compile.
+4. Assuming there were no errors during compilation, hit Alt + F4 to close VS 2010.
+5. If everything worked properly, you should see:
+  * `SoundManager.exe` in `<ProjectFolder>\SoundManager\bin\Release`
+  * `DownloadSchemes.exe` in `<ProjectFolder>\DownloadSchemes\bin\Release`.
+6. Copy the following items into `<ProjectFolder>\SoundManager\bin\Release`.
+  * `<ProjectFolder>\SoundManager\Lang`
+  * `<ProjectFolder>\UserManual\Readme-En.txt`
+  * `<ProjectFolder>\UserManual\Readme-Fr.txt`
+  * `<ProjectFolder>\DownloadSchemes\bin\Release\DownloadSchemes.exe`
+7. Finally, check that everything's working by launching `ProjectFolder\SoundManager\bin\Release\SoundManager.exe`.
 
 ## License
 
