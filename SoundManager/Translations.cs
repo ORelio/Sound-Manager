@@ -352,7 +352,7 @@ namespace SharpTools
                 translations["check_box_reset_missing_on_load"] = "Leave system sound when a scheme lacks a sound";
                 translations["reinstall_confirm_title"] = "Reset the application";
                 translations["reinstall_confirm_text"] = "All application settings will be reset and the current sound scheme will be lost.";
-                translations["uninstall_confirm_title"] = "Désinstaller l'application";
+                translations["uninstall_confirm_title"] = "Uninstall the application";
                 translations["uninstall_confirm_text"] = "System settings will be restored, all application data will be removed and the app will exit.";
                 translations["box_maintenance"] = "Maintenance";
                 translations["button_reinstall"] = "Reinstall";
