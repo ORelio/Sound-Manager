@@ -82,7 +82,7 @@ On Windows 8, the startup and shutdown sounds were removed for further [performa
 
 This is typically how `explorer.exe` was handling the thing on Windows 7, but you'll get yet another process sleeping in background, separate from `explorer.exe`. As such, this feature can be disabled entierely in the SoundManager settings.
 
-Windows 11 reintroduced a startup sound but still lacks a shutdown sound, so the background proces approach is also available for this system version. Using the background process feature will automatically disable the built-in startup sound, which is not customizable.
+Windows 11 reintroduced a startup sound but still lacks a shutdown sound, so the background process approach is also available for this system version. Using the background process feature will automatically disable the built-in startup sound, which is not customizable.
 
 ## Build instructions
 
@@ -92,7 +92,7 @@ For proper support of newer operating systems such as Windows 10, SoundManager n
 
 ### Setting up Visual Studio
 
-1. Download [Visual Studio 2010 Express](https://archive.org/details/vs-2010-express-1). This is the community version of Visual Studio 2010.
+1. Download [Visual Studio 2010 Express](https://archive.org/details/vs-2010-express-1). This is the free version of Visual Studio 2010 that includes the bare minimum components needed to get started using Visual Studio.
 2. Mount or extract the downloaded ISO file: `VS2010Express1.iso`
   * On Windows 8 or greater, opening the ISO file in file Explorer will automatically mount it as a virtual DVD drive.
   * On earlier Windows versions, software such as [WinCDEmu](https://wincdemu.sysprogs.org/) or [Daemon Tools](https://www.daemon-tools.cc/products/dtLite) can mount the ISO file.
@@ -118,7 +118,7 @@ This section assumes you already have the `Sound-Manager` git repository cloned 
   * `<ProjectFolder>\UserManual\Readme-En.txt`
   * `<ProjectFolder>\UserManual\Readme-Fr.txt`
   * `<ProjectFolder>\DownloadSchemes\bin\Release\DownloadSchemes.exe`
-7. Finally, check that everything's working by launching `ProjectFolder\SoundManager\bin\Release\SoundManager.exe`.
+7. Finally, check that everything's working by launching `<ProjectFolder> \SoundManager\bin\Release\SoundManager.exe`.
 
 ## License
 
