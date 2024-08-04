@@ -9,24 +9,22 @@ using System.Runtime.InteropServices;
 namespace SoundManager
 {
     /// <summary>
-    /// Utility class for patching startup sound for Windows 7 embedded in imageres.dll
+    /// Utility class for patching startup sound embedded in imageres.dll
     /// </summary>
     /// <remarks>
     /// https://www.sevenforums.com/tutorials/63398-startup-sound-change-windows-7-a.html
+    /// https://answers.microsoft.com/en-us/windows/forum/all/workaround-for-changing-the-windows-1011-startup/b15dd438-42c7-471c-bc86-2e5fb0fa4037
     /// </remarks>
     static class ImageresPatcher
     {
-        private static readonly int WaveResourceNumber = WindowsVersion.WinMinorVersion == 0 ? 5051 : 5080;
+        private static readonly ushort WaveLocaleNumber = 1033;
+        private static readonly uint WaveResourceNumber = (WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion == 0) ? (uint)5051 : (uint)5080;
         private static readonly bool SystemIsWindowsVista7 = WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion <= 1;
 
         private static readonly string System32 = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + (Environment.Is64BitOperatingSystem ? @"\Sysnative\" : @"\System32\");
         private static readonly string Imageres = System32 + "imageres.dll";
         private static readonly string ImageresBak = Imageres + ".bak";
         private static readonly string ImageresOld = Imageres + ".old";
-
-        private static readonly string ResHackerExe = Path.Combine(RuntimeConfig.AppFolder, "ResHacker.exe");
-        private static readonly string ResHackerIni = ResHackerExe.Replace(".exe", ".ini");
-        private static readonly string ResHackerLog = ResHackerExe.Replace(".exe", ".log");
 
         private static readonly byte[] emptyWavFile = new byte[]
         {
@@ -124,38 +122,34 @@ namespace SoundManager
                 {
                     if (FileSystemAdmin.IsAdmin())
                     {
-                        if (File.Exists(ResHackerExe))
+                        bool success = false;
+
+                        if (!File.Exists(ImageresBak))
+                            Backup();
+
+                        try
                         {
-                            if (!File.Exists(ImageresBak))
-                                Backup();
-
-                            try
-                            {
-                                //Move in-use DLL so that we can create a new one
-                                File.Delete(ImageresOld);
-                                File.Move(Imageres, ImageresOld);
-                            }
-                            catch (UnauthorizedAccessException) { }
-
-                            bool deleteAfterPatching = false;
-
-                            if (!File.Exists(replacementStartupSound))
-                            {
-                                File.WriteAllBytes(replacementStartupSound, emptyWavFile);
-                                deleteAfterPatching = true;
-                            }
-
-                            Process.Start(ResHackerExe, "-modify \"" + ImageresBak + "\", \"" + Imageres + "\", \"" + replacementStartupSound + "\", WAVE, " + WaveResourceNumber + ",").WaitForExit();
-                            File.Delete(ResHackerIni);
-                            File.Delete(ResHackerLog);
-
-                            if (deleteAfterPatching)
-                                File.Delete(replacementStartupSound);
-
-                            if (!File.Exists(Imageres))
-                                File.Copy(ImageresBak, Imageres);
+                            // Move in-use DLL so that we can create a new one
+                            File.Delete(ImageresOld);
+                            File.Move(Imageres, ImageresOld);
                         }
-                        else throw new FileNotFoundException(Translations.Get("startup_patch_no_resource_hacker"));
+                        catch (UnauthorizedAccessException) { }
+
+                        // Create a new Imageres file from backup
+                        File.Copy(ImageresBak, Imageres, true);
+
+                        if (File.Exists(replacementStartupSound))
+                        {
+                            success = NativeResource.Replace(Imageres, "WAVE", WaveResourceNumber, WaveLocaleNumber, replacementStartupSound);
+                        }
+                        else
+                        {
+                            success = NativeResource.Replace(Imageres, "WAVE", WaveResourceNumber, WaveLocaleNumber, emptyWavFile);
+                        }
+
+                        // Restore imageres.dll if something went wrong
+                        if (!success)
+                            File.Copy(ImageresBak, Imageres, true);
                     }
                     else throw new UnauthorizedAccessException(Translations.Get("startup_patch_not_admin"));
                 }
@@ -168,7 +162,8 @@ namespace SoundManager
         /// Extract the default startup sound file
         /// </summary>
         /// <param name="outputFile">Output file path</param>
-        public static void ExtractDefault(string outputFile)
+        /// <returns>TRUE if successfully extracted</returns>
+        public static bool ExtractDefault(string outputFile)
         {
             if (SystemIsWindowsVista7)
             {
@@ -177,12 +172,7 @@ namespace SoundManager
                     string sourceFile = ImageresBak;
                     if (!File.Exists(ImageresBak))
                         sourceFile = Imageres;
-
-                    if (File.Exists(ResHackerExe))
-                    {
-                        Process.Start(ResHackerExe, "-extract \"" + sourceFile + "\", \"" + outputFile + "\", WAVE, " + WaveResourceNumber + ",").WaitForExit();
-                    }
-                    else throw new FileNotFoundException(Translations.Get("startup_patch_no_resource_hacker"));
+                    return NativeResource.Extract(sourceFile, "WAVE", WaveResourceNumber, WaveLocaleNumber, outputFile);
                 }
                 else throw new FileNotFoundException(Translations.Get("startup_patch_no_imageres_dll"));
             }

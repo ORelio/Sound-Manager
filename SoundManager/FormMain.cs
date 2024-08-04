@@ -790,9 +790,9 @@ namespace SoundManager
         {
             if (Translations.SystemLanguage == "fra")
             {
-                Process.Start("https://microzoom.fr/");
+                Process.Start("https://microzoom.fr/gestionnaire-de-sons");
             }
-            else Process.Start("https://github.com/ORelio/");
+            else Process.Start("https://github.com/ORelio/Sound-Manager");
         }
 
         /// <summary>

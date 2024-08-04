@@ -183,7 +183,6 @@ namespace SharpTools
                 translations["startup_patch_not_admin"] = "Le son de démarrage de Windows Vista/7 ne peut être modifié car l'application ne dispose pas des droits Administrateur.";
                 translations["startup_patch_no_imageres_dll"] = "Le son de démarrage de Windows Vista/7 ne peut être modifié car le fichier imageres.dll est introuvable.";
                 translations["startup_patch_not_windows7"] = "Le son de démarrage de Windows Vista/7 ne peut pas être modifié car le système actuel n'est pas Windows NT 6.1";
-                translations["startup_patch_no_resource_hacker"] = "Le son de démarrage de Windows Vista/7 ne peut pas être accédé car l'application ResHacker.exe est introuvable.";
                 translations["playing_shutdown_sound"] = "Lecture du son d'arrêt de l'ordinateur";
                 translations["playing_logoff_sound"] = "Lecture du son de fermeture de session";
                 translations["scheme_file_desc"] = "Fichier de Thème Sonore";
@@ -339,7 +338,6 @@ namespace SharpTools
                 translations["startup_patch_not_admin"] = "Cannot modify the Windows 7 startup sound: missing Administrator permissions.";
                 translations["startup_patch_no_imageres_dll"] = "Cannot modify the Windows 7 startup sound: cannot find imageres.dll.";
                 translations["startup_patch_not_windows7"] = "Cannot modify the Windows 7 startup sound: the operating system is not Windows NT 6.1";
-                translations["startup_patch_no_resource_hacker"] = "Cannot access the Windows 7 startup sound: cannot find ResHacker.exe.";
                 translations["playing_shutdown_sound"] = "Playing Shutdown sound";
                 translations["playing_logoff_sound"] = "Playing Logoff sound";
                 translations["scheme_file_desc"] = "Sound Scheme File";
