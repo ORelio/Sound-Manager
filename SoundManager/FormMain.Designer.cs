@@ -77,6 +77,7 @@
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
+            this.toolTipHandler = new System.Windows.Forms.ToolTip(this.components);
             this.soundContextMenu.SuspendLayout();
             this.imageContextMenu.SuspendLayout();
             this.mainTabs.SuspendLayout();
@@ -660,6 +661,7 @@
         private System.Windows.Forms.CheckBox checkBoxMissingSoundsUseDefault;
         private System.Windows.Forms.Button buttonDownloadSchemes;
         private System.Windows.Forms.PictureBox programLogo;
+        private System.Windows.Forms.ToolTip toolTipHandler;
     }
 }
 

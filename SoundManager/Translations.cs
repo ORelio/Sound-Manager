@@ -80,6 +80,9 @@ namespace SharpTools
                 translations["meta_name"] = "Nom";
                 translations["meta_author"] = "Auteur";
                 translations["meta_about"] = "À propos";
+                translations["meta_name_desc"] = "Nom du thème sonore";
+                translations["meta_author_desc"] = "Auteur du thème sonore";
+                translations["meta_about_desc"] = "Description ou lien vers le site web";
                 translations["button_open"] = "Ouvrir";
                 translations["button_import"] = "Importer";
                 translations["button_export"] = "Exporter";
@@ -237,6 +240,9 @@ namespace SharpTools
                 translations["meta_name"] = "Name";
                 translations["meta_author"] = "Author";
                 translations["meta_about"] = "About";
+                translations["meta_name_desc"] = "Sound scheme name";
+                translations["meta_author_desc"] = "Sound scheme author";
+                translations["meta_about_desc"] = "Description or website link";
                 translations["button_open"] = "Open";
                 translations["button_import"] = "Import";
                 translations["button_export"] = "Export";

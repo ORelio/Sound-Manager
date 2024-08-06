@@ -35,6 +35,7 @@ namespace SoundManager
 
             this.Text = RuntimeConfig.AppDisplayName;
             this.Icon = IconExtractor.ExtractAssociatedIcon(Application.ExecutablePath);
+
             tabPageScheme.Text = Translations.Get("tab_current_scheme");
             tabPageSettings.Text = Translations.Get("tab_settings");
             soundImageText.Text = Translations.Get("no_image");
@@ -71,6 +72,14 @@ namespace SoundManager
             buttonWebsite.Text = Translations.Get("button_website");
             buttonDownloadSchemes.Text = Translations.Get("button_download_schemes");
             groupBoxSystemInfo.Text = Translations.Get("box_system_info");
+
+            soundInfoNameBox.AccessibleDescription = Translations.Get("meta_name_desc");
+            soundInfoAuthorBox.AccessibleDescription = Translations.Get("meta_author_desc");
+            soundInfoAboutBox.AccessibleDescription = Translations.Get("meta_about_desc");
+
+            toolTipHandler.SetToolTip(soundInfoNameBox, Translations.Get("meta_name_desc"));
+            toolTipHandler.SetToolTip(soundInfoAuthorBox, Translations.Get("meta_author_desc"));
+            toolTipHandler.SetToolTip(soundInfoAboutBox, Translations.Get("meta_about_desc"));
 
             // System information
 
