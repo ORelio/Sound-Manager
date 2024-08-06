@@ -56,7 +56,7 @@ namespace SoundManager
                 }
             }
 
-            if (ImageresPatcher.IsWindowsVista7 && !FileSystemAdmin.IsAdmin() && Settings.WinVista7PatchEnabled)
+            if (ImageresPatcher.IsPatchingPossible && !FileSystemAdmin.IsAdmin() && Settings.PatchStartupSound)
             {
                 try
                 {
@@ -70,8 +70,8 @@ namespace SoundManager
                 catch
                 {
                     MessageBox.Show(
-                        Translations.Get("windows7_not_elevated_text"),
-                        Translations.Get("windows7_not_elevated_title"),
+                        Translations.Get("startup_patch_not_elevated_text"),
+                        Translations.Get("startup_patch_not_elevated_title"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
@@ -107,6 +107,7 @@ namespace SoundManager
                 SoundArchive.AssocFiles();
                 if (BgSoundPlayer.RequiredForThisWindowsVersion)
                 {
+                    SystemStartupSound.Enabled = false;
                     BgSoundPlayer.SetRegisteredForStartup(true);
                     Process.Start(Application.ExecutablePath, RuntimeConfig.CmdArgumentBgSoundPlayer);
                 }
@@ -121,6 +122,7 @@ namespace SoundManager
         {
             if (BgSoundPlayer.IsRegisteredForStartup())
             {
+                SystemStartupSound.Enabled = SystemStartupSound.DefaultEnabled;
                 BgSoundPlayer.SetRegisteredForStartup(false);
                 foreach (Process process in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Application.ExecutablePath)))
                     if (process.Id != Process.GetCurrentProcess().Id)

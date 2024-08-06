@@ -20,19 +20,14 @@ namespace SoundManager
     public class BgSoundPlayer : Form
     {
         private static readonly string LastBootFile = Path.Combine(RuntimeConfig.LocalDataFolder, "LastBootTime.ini");
-        private static readonly RegistryKey RegistryHKLM64bits = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
         private static readonly RegistryKey SystemStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private static readonly RegistryKey StartupDelay = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize");
-        private static readonly RegistryKey BootAnimation = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\BootAnimation", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
-        private static readonly RegistryKey EditionOverrides = RegistryHKLM64bits.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EditionOverrides", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.SetValue);
         private static readonly string StartupCommandExe = String.Concat("\"", Application.ExecutablePath, "\"");
         private static readonly string StartupCommand = String.Concat(StartupCommandExe, " ", RuntimeConfig.CmdArgumentBgSoundPlayer);
         private static readonly string SidCurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
         private static readonly string ScheduledTaskBaseName = RuntimeConfig.AppInternalName;
         private static readonly string ScheduledTaskNameCurrentUser = String.Concat(ScheduledTaskBaseName, "-", SidCurrentUser);
         private const string StartupDelay_StartupDelayInMSec = "StartupDelayInMSec";
-        private const string BootAnimation_DisableStartupSound = "DisableStartupSound";
-        private const string EditionOverrides_DisableStartupSound = "UserSetting_DisableStartupSound";
 
         /// <summary>
         /// Check if the background sound player is required for the current Windows version
@@ -41,19 +36,7 @@ namespace SoundManager
         {
             get
             {
-                return (WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion >= 2)
-                    || WindowsVersion.WinMajorVersion >= 10;
-            }
-        }
-
-        /// <summary>
-        /// Check if the current Windows version has a built-in startup sound enabled by default that we need to toggle
-        /// </summary>
-        private static bool ShouldToggleBuiltinStartupSound
-        {
-            get
-            {
-                return WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
+                return WindowsVersion.IsAtLeast8;
             }
         }
 
@@ -127,13 +110,6 @@ namespace SoundManager
                     if (interactive)
                         throw;
                 }
-
-                if (ShouldToggleBuiltinStartupSound)
-                {
-                    //Disable built-in startup sound
-                    BootAnimation.SetValue(BootAnimation_DisableStartupSound, 1);
-                    EditionOverrides.SetValue(EditionOverrides_DisableStartupSound, 1);
-                }
             }
             else
             {
@@ -154,13 +130,6 @@ namespace SoundManager
                     for (int i = 1; i <= tasks.Count; i++)
                         if (tasks[i].Path.StartsWith("\\" + ScheduledTaskBaseName))
                             ts.GetFolder("\\").DeleteTask(tasks[i].Path.Substring(1), 0);
-                }
-
-                //Re-Enable built-in startup sound from Windows 11+
-                if (ShouldToggleBuiltinStartupSound)
-                {
-                    BootAnimation.SetValue(BootAnimation_DisableStartupSound, 0);
-                    EditionOverrides.SetValue(EditionOverrides_DisableStartupSound, 0);
                 }
             }
 
@@ -229,10 +198,10 @@ namespace SoundManager
             }
         }
 
-        private SoundEvent soundStartup;
-        private SoundEvent soundShutdown;
-        private SoundEvent soundLogon;
-        private SoundEvent soundLogoff;
+        private SoundEvent soundStartup = SoundEvent.Get(SoundEvent.EventType.Startup);
+        private SoundEvent soundShutdown = SoundEvent.Get(SoundEvent.EventType.Shutdown);
+        private SoundEvent soundLogon = SoundEvent.Get(SoundEvent.EventType.Logon);
+        private SoundEvent soundLogoff = SoundEvent.Get(SoundEvent.EventType.Logoff);
 
         /// <summary>
         /// Instantiate a new Background Sound Player.
@@ -249,39 +218,36 @@ namespace SoundManager
             this.Location = new System.Drawing.Point(-2000, -2000);
             this.Size = new System.Drawing.Size(1, 1);
 
-            foreach (SoundEvent soundEvent in SoundEvent.GetAll())
-            {
-                switch (soundEvent.FileName.Replace(".wav", "").ToLower())
-                {
-                    case "startup":
-                        soundStartup = soundEvent;
-                        break;
-                    case "shutdown":
-                        soundShutdown = soundEvent;
-                        break;
-                    case "logon":
-                        soundLogon = soundEvent;
-                        break;
-                    case "logoff":
-                        soundLogoff = soundEvent;
-                        break;
-                }
-            }
-
+            // Determine system startup time
             string bootTime = GetBootTimestamp().ToString();
             bootTime = bootTime.Substring(0, bootTime.Length - 1) + '0';
             string lastBootTime = "";
             if (File.Exists(LastBootFile))
                 lastBootTime = File.ReadAllText(LastBootFile);
+
+            // Determine sound event to play
             SoundEvent soundToPlay = soundLogon;
-            if (bootTime != lastBootTime && File.Exists(soundStartup.FilePath))
+            if (bootTime != lastBootTime)
             {
                 File.WriteAllText(LastBootFile, bootTime);
-                soundToPlay = soundStartup;
+                if (SystemStartupSound.Enabled)
+                {
+                    soundToPlay = null; // Built-in system startup sound will play already
+                }
+                else if (File.Exists(soundStartup.FilePath))
+                {
+                    soundToPlay = soundStartup;
+                }
+                //else keep logon sound instead
             }
-            while (IsScreenLocked())
-                Thread.Sleep(100);
-            PlaySound(soundToPlay);
+
+            // Play sound event?
+            if (soundToPlay != null)
+            {
+                while (IsScreenLocked())
+                    Thread.Sleep(100);
+                PlaySound(soundToPlay);
+            }
 
             SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);

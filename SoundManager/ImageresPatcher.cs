@@ -17,15 +17,17 @@ namespace SoundManager
     /// </remarks>
     static class ImageresPatcher
     {
-        private static readonly ushort WaveLocaleNumber = 1033;
-        private static readonly uint WaveResourceNumber = (WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion == 0) ? (uint)5051 : (uint)5080;
-        private static readonly bool SystemIsWindowsVista7 = WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion <= 1;
+        private const ushort WaveLocaleNumber = 1033;
+        private static readonly uint WaveResourceNumber = WindowsVersion.IsVista ? (uint)5051 : (uint)5080;
 
         private static readonly string System32 = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + (Environment.Is64BitOperatingSystem ? @"\Sysnative\" : @"\System32\");
         private static readonly string Imageres = System32 + "imageres.dll";
         private static readonly string ImageresBak = Imageres + ".bak";
         private static readonly string ImageresOld = Imageres + ".old";
 
+        /// <summary>
+        /// Represents an empty wav file
+        /// </summary>
         private static readonly byte[] emptyWavFile = new byte[]
         {
             0x52, 0x49, 0x46, 0x46, 0x3e, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45, 0x66, 0x6d, 0x74, 0x20,
@@ -36,14 +38,36 @@ namespace SoundManager
         };
 
         /// <summary>
-        /// Check whethere the operating system is Windows Vista or Windows 7 and requires Imageres patching
+        /// Check whether the operating system embeds the startup sound into Imageres.dll and patching is possible
         /// </summary>
-        /// <returns>TRUE if the operating system is Windows Vista or Windows 7</returns>
-        public static bool IsWindowsVista7
+        /// <returns>TRUE if the operating system use imageres.dll (Windows Vista or greater) and patching is possible</returns>
+        public static bool IsPatchingPossible
         {
             get
             {
-                return SystemIsWindowsVista7;
+                return WindowsVersion.IsAtLeastVista;
+            }
+        }
+
+        /// <summary>
+        /// Check whether patching the startup sound is required for customizing (Windows Vista or Windows 7)
+        /// </summary>
+        public static bool IsPatchingRequired
+        {
+            get
+            {
+                return WindowsVersion.IsVista || WindowsVersion.Is7;
+            }
+        }
+
+        /// <summary>
+        /// Check whether startup sound patching is not recommended: for OS that still receive major updates, as major updates might revert or break patching
+        /// </summary>
+        public static bool IsPatchingNotRecommended
+        {
+            get
+            {
+                return WindowsVersion.IsAtLeast10;
             }
         }
 
@@ -52,7 +76,7 @@ namespace SoundManager
         /// </summary>
         public static void Backup()
         {
-            if (SystemIsWindowsVista7)
+            if (IsPatchingPossible)
             {
                 if (File.Exists(Imageres))
                 {
@@ -75,7 +99,7 @@ namespace SoundManager
                 }
                 else throw new FileNotFoundException(Translations.Get("startup_patch_no_imageres_dll"));
             }
-            else throw new InvalidOperationException(Translations.Get("startup_patch_not_windows7"));
+            else throw new InvalidOperationException(Translations.Get("startup_patch_not_possible"));
         }
 
         /// <summary>
@@ -83,7 +107,7 @@ namespace SoundManager
         /// </summary>
         public static void Restore()
         {
-            if (SystemIsWindowsVista7)
+            if (IsPatchingPossible)
             {
                 if (File.Exists(ImageresBak))
                 {
@@ -107,7 +131,7 @@ namespace SoundManager
                     else throw new UnauthorizedAccessException(Translations.Get("startup_patch_not_admin"));
                 }
             }
-            else throw new InvalidOperationException(Translations.Get("startup_patch_not_windows7"));
+            else throw new InvalidOperationException(Translations.Get("startup_patch_not_possible"));
         }
 
         /// <summary>
@@ -116,7 +140,7 @@ namespace SoundManager
         /// <param name="replacementStartupSound">Replacement startup sound. Must be a PCM WAV file.</param>
         public static void Patch(string replacementStartupSound)
         {
-            if (SystemIsWindowsVista7)
+            if (IsPatchingPossible)
             {
                 if (File.Exists(Imageres) || File.Exists(ImageresBak))
                 {
@@ -155,7 +179,7 @@ namespace SoundManager
                 }
                 else throw new FileNotFoundException(Translations.Get("startup_patch_no_imageres_dll"));
             }
-            else throw new InvalidOperationException(Translations.Get("startup_patch_not_windows7"));
+            else throw new InvalidOperationException(Translations.Get("startup_patch_not_possible"));
         }
 
         /// <summary>
@@ -165,7 +189,7 @@ namespace SoundManager
         /// <returns>TRUE if successfully extracted</returns>
         public static bool ExtractDefault(string outputFile)
         {
-            if (SystemIsWindowsVista7)
+            if (IsPatchingPossible)
             {
                 if (File.Exists(Imageres) || File.Exists(ImageresBak))
                 {
@@ -176,7 +200,7 @@ namespace SoundManager
                 }
                 else throw new FileNotFoundException(Translations.Get("startup_patch_no_imageres_dll"));
             }
-            else throw new InvalidOperationException(Translations.Get("startup_patch_not_windows7"));
+            else throw new InvalidOperationException(Translations.Get("startup_patch_not_possible"));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace SharpTools
 {
     /// <summary>
     /// Retrieve information about the current Windows version
-    /// By ORelio - (c) 2018-2022 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2018-2024 - Available under the CDDL-1.0 license
     /// </summary>
     /// <remarks>
     /// Environment.OSVersion does not work with Windows 10, it returns 6.2 which is Windows 8
@@ -231,6 +231,127 @@ namespace SharpTools
                 return winMinor <= maxMinor;
             }
             else return false;
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is XP/2003
+        /// </summary>
+        public static bool IsXP
+        {
+            get
+            {
+                return WinMajorVersion == 5 && (WinMinorVersion == 1 || WinMinorVersion == 2);
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is at least XP/2003
+        /// </summary>
+        public static bool IsAtLeastXP
+        {
+            get
+            {
+                return WinMajorVersion > 5 || (WinMajorVersion == 5 && WinMinorVersion >= 1);
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is Vista/2008
+        /// </summary>
+        public static bool IsVista
+        {
+            get
+            {
+                return WinMajorVersion == 6 && WinMinorVersion == 0;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is Vista/2008
+        /// </summary>
+        public static bool IsAtLeastVista
+        {
+            get
+            {
+                return WinMajorVersion >= 6;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is 7/2008 R2
+        /// </summary>
+        public static bool Is7
+        {
+            get
+            {
+                return WinMajorVersion == 6 && WinMinorVersion == 1;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is Vista/2008
+        /// </summary>
+        public static bool IsAtLeast7
+        {
+            get
+            {
+                return WinMajorVersion > 6 || (WinMajorVersion == 6 && WinMinorVersion >= 1);
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is 8, 8.1 or 2012
+        /// </summary>
+        public static bool Is8
+        {
+            get
+            {
+                return WinMajorVersion == 6 && (WinMinorVersion == 2 || WinMinorVersion == 3);
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is Vista/2008
+        /// </summary>
+        public static bool IsAtLeast8
+        {
+            get
+            {
+                return WinMajorVersion > 6 || (WinMajorVersion == 6 && WinMinorVersion >= 2);
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is 10
+        /// </summary>
+        public static bool Is10
+        {
+            get
+            {
+                return WinMajorVersion == 10 && WinMinorVersion == 0 && !Is11;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is Vista/2008
+        /// </summary>
+        public static bool IsAtLeast10
+        {
+            get
+            {
+                return WinMajorVersion >= 10;
+            }
+        }
+
+        /// <summary>
+        /// Check if the current Windows version is 11
+        /// </summary>
+        public static bool Is11
+        {
+            get
+            {
+                return FriendlyName.ToLowerInvariant().Contains("windows 11");
+            }
         }
     }
 }

@@ -25,9 +25,9 @@ namespace SoundManager
 
         private static readonly RegistryKey RegCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default);
 
-        // ======================== //
+        // ========================= //
         // == Sound scheme object == //
-        // ======================== //
+        // ========================= //
 
         private string displayName;
         private string internalName;
@@ -51,9 +51,9 @@ namespace SoundManager
             return displayName;
         }
 
-        // ============================ //
+        // ============================= //
         // == Sound scheme management == //
-        // ============================ //
+        // ============================= //
 
         /// <summary>
         /// Create the "SoundManager" sound scheme in registry
@@ -75,8 +75,7 @@ namespace SoundManager
                 }
             }
 
-            //Windows 7 : Also backup imageres.dll when creating sound scheme
-            if (ImageresPatcher.IsWindowsVista7 && FileSystemAdmin.IsAdmin())
+            if (Settings.PatchStartupSound && ImageresPatcher.IsPatchingPossible && FileSystemAdmin.IsAdmin())
                 ImageresPatcher.Backup();
         }
 
@@ -106,13 +105,15 @@ namespace SoundManager
                     defaultFileFound = true;
                 }
             }
-            if (soundEvent.Imageres && ImageresPatcher.IsWindowsVista7)
+
+            if (soundEvent.Type == SoundEvent.EventType.Startup && ImageresPatcher.IsPatchingPossible)
             {
                 if (FileSystemAdmin.IsAdmin())
                     ImageresPatcher.Restore();
-                ImageresPatcher.ExtractDefault(soundEvent.FilePath);
+                defaultFileFound = ImageresPatcher.ExtractDefault(soundEvent.FilePath);
             }
-            else if (!defaultFileFound)
+
+            if (!defaultFileFound)
             {
                 Remove(soundEvent);
             }
@@ -201,8 +202,7 @@ namespace SoundManager
         {
             get
             {
-                return WindowsVersion.WinMajorVersion > 6
-                    || (WindowsVersion.WinMajorVersion == 6 && WindowsVersion.WinMinorVersion >= 1);
+                return WindowsVersion.IsAtLeast7;
             }
         }
 
@@ -268,12 +268,12 @@ namespace SoundManager
                 else File.Delete(soundEvent.FilePath);
             }
 
-            //Windows 7 : Also patch imageres.dll when updating startup sound
-            if (soundEvent.Imageres && ImageresPatcher.IsWindowsVista7 && FileSystemAdmin.IsAdmin())
+            //Windows Vista and greater: Also patch imageres.dll when updating startup sound?
+            if (soundEvent.Type == SoundEvent.EventType.Startup && Settings.PatchStartupSound && ImageresPatcher.IsPatchingPossible && FileSystemAdmin.IsAdmin())
                 ImageresPatcher.Patch(soundEvent.FilePath);
 
-            //Windows 10 : Also make sure file read access is set for All Application Packages, otherwise UWP UI parts will not be able to play the sound event
-            if (File.Exists(soundEvent.FilePath) && WindowsVersion.WinMajorVersion >= 10)
+            //Windows 10 and greater: Also make sure file read access is set for All Application Packages, otherwise UWP UI parts will not be able to play the sound event
+            if (File.Exists(soundEvent.FilePath) && WindowsVersion.IsAtLeast10)
             {
                 FileInfo fileInfo = new FileInfo(soundEvent.FilePath);
                 FileSecurity fileSecurity = fileInfo.GetAccessControl();
@@ -307,10 +307,10 @@ namespace SoundManager
             if (RegCurrentUser.OpenSubKey(RegNames + SchemeManager) != null)
                 RegCurrentUser.DeleteSubKey(RegNames + SchemeManager);
 
-            //Windows 7 : Also restore imageres.dll when removing sound scheme
+            //Windows Vista+ : Also restore imageres.dll when removing sound scheme
             try
             {
-                if (ImageresPatcher.IsWindowsVista7 && FileSystemAdmin.IsAdmin())
+                if (ImageresPatcher.IsPatchingPossible && FileSystemAdmin.IsAdmin())
                     ImageresPatcher.Restore();
             }
             catch (FileNotFoundException) { /* No imageres backup to restore */ }

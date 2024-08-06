@@ -88,8 +88,8 @@ namespace SoundManager
 
             // Load UI settings
 
-            checkBoxPatchImageres.Enabled = ImageresPatcher.IsWindowsVista7;
-            checkBoxPatchImageres.Checked = ImageresPatcher.IsWindowsVista7 && Settings.WinVista7PatchEnabled;
+            checkBoxPatchImageres.Enabled = ImageresPatcher.IsPatchingPossible;
+            checkBoxPatchImageres.Checked = ImageresPatcher.IsPatchingPossible && Settings.PatchStartupSound;
             checkBoxPatchImageres.CheckedChanged += new System.EventHandler(this.checkBoxPatchImageres_CheckedChanged);
 
             checkBoxBgSoundPlayer.Enabled = BgSoundPlayer.RequiredForThisWindowsVersion;
@@ -656,22 +656,63 @@ namespace SoundManager
         }
 
         /// <summary>
-        /// Change "Patch Windows 7 startup sound" setting
+        /// Change "Patch the built-in system startup sound" setting
         /// </summary>
         private void checkBoxPatchImageres_CheckedChanged(object sender, EventArgs e)
         {
+            if (checkBoxPatchImageres.Checked && ImageresPatcher.IsPatchingNotRecommended)
+            {
+                if (MessageBox.Show(
+                    Translations.Get("startup_patch_not_recommended_text"),
+                    Translations.Get("startup_patch_not_recommended_title"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                ) != DialogResult.Yes)
+                {
+                    checkBoxPatchImageres.Checked = false;
+                    return;
+                }
+            }
+
+            if (FileSystemAdmin.IsAdmin())
+            {
+                try
+                {
+                    if (checkBoxPatchImageres.Checked)
+                    {
+                        SoundEvent startupSound = SoundEvent.Get(SoundEvent.EventType.Startup);
+                        if (File.Exists(startupSound.FilePath))
+                            ImageresPatcher.Patch(startupSound.FilePath);
+                    }
+                    else
+                    {
+                        ImageresPatcher.Restore();
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(
+                        error.Message,
+                        error.GetType().Name,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+
             if (!FileSystemAdmin.IsAdmin() && checkBoxPatchImageres.Checked)
             {
                 MessageBox.Show(
-                    Translations.Get("windows7_not_elevated_text"),
-                    Translations.Get("windows7_not_elevated_title"),
+                    Translations.Get("startup_patch_not_elevated_text"),
+                    Translations.Get("startup_patch_not_elevated_title"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
             }
 
-            Settings.WinVista7PatchEnabled = checkBoxPatchImageres.Checked;
+            Settings.PatchStartupSound = checkBoxPatchImageres.Checked;
             Settings.Save();
+
+            UpdateStartupSoundSetting();
         }
 
         /// <summary>
@@ -682,6 +723,7 @@ namespace SoundManager
             try
             {
                 BgSoundPlayer.SetRegisteredForStartup(checkBoxBgSoundPlayer.Checked, true);
+                UpdateStartupSoundSetting();
             }
             catch (Exception error)
             {
@@ -690,6 +732,28 @@ namespace SoundManager
                     error.GetType().Name,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Determine whether the built-in system startup sound should be enabled and apply the appropriate setting
+        /// </summary>
+        private void UpdateStartupSoundSetting()
+        {
+            if (Settings.PatchStartupSound)
+            {
+                // When patching the startup sound, we want it to play regardless of other settings
+                SystemStartupSound.Enabled = true;
+            }
+            else if (BgSoundPlayer.IsRegisteredForStartup())
+            {
+                // When using the background sound player and NOT patching the startup sound, mute the built-in startup sound and play the custom one using BgSoundPlayer
+                SystemStartupSound.Enabled = false;
+            }
+            else
+            {
+                // When using none of the above, restore the system default behavior regarding startup sound
+                SystemStartupSound.Enabled = SystemStartupSound.DefaultEnabled;
             }
         }
 

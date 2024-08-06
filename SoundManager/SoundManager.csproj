@@ -94,6 +94,7 @@
     <Compile Include="SoundArchive.cs" />
     <Compile Include="SoundScheme.cs" />
     <Compile Include="SoundEvent.cs" />
+    <Compile Include="SystemStartupSound.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="WindowsVersion.cs" />

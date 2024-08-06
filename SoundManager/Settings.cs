@@ -15,9 +15,9 @@ namespace SoundManager
         private static readonly string ConfigFile = Path.Combine(RuntimeConfig.LocalDataFolder, RuntimeConfig.AppInternalName + ".ini");
 
         /// <summary>
-        /// Specify whether the Windows Vista/7 startup sound patch feature is enabled
+        /// Specify whether the Windows startup sound patch feature is enabled
         /// </summary>
-        public static bool WinVista7PatchEnabled { get; set; }
+        public static bool PatchStartupSound { get; set; }
 
         /// <summary>
         /// Specify whether a missing sound should be replaced by the default system sound when loading a sound archive file
@@ -54,8 +54,9 @@ namespace SoundManager
                             {
                                 switch (setting.Key.ToLower())
                                 {
-                                    case "win7patch":
-                                        WinVista7PatchEnabled = INIFile.Str2Bool(setting.Value);
+                                    case "win7patch": // old setting name
+                                    case "patchstartupsound":
+                                        PatchStartupSound = INIFile.Str2Bool(setting.Value);
                                         break;
 
                                     case "usedefaultonmissingsound":
@@ -73,7 +74,7 @@ namespace SoundManager
             }
             else
             {
-                WinVista7PatchEnabled = true;
+                PatchStartupSound = ImageresPatcher.IsPatchingRequired;
                 MissingSoundUseDefault = true;
             }
         }
@@ -86,7 +87,7 @@ namespace SoundManager
             var config = new Dictionary<string, Dictionary<string, string>>();
 
             config["main"] = new Dictionary<string, string>();
-            config["main"]["win7patch"] = WinVista7PatchEnabled.ToString();
+            config["main"]["patchstartupsound"] = PatchStartupSound.ToString();
             config["main"]["usedefaultonmissingsound"] = MissingSoundUseDefault.ToString();
             config["main"]["convertproprietaryfiles"] = ConvertProprietaryFiles.ToString();
 
