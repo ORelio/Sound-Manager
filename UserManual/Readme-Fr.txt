@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.2.1 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.3.0 - Par ORelio - Microzoom.fr ====
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -13,8 +13,8 @@ Les principales fonctionnalités sont :
  - Exporter et importer un thème sonore via un fichier d'archive
  - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
  - Conversion automatique des sons au format WAV (Windows 7+)
- - Patch du son de démarrage sous Windows Vista/7 (droits Admin requis)
- - Lecture du son de démarrage/arrêt sous Windows 8 et supérieur
+ - Patch du son de démarrage de Windows (droits Admin requis, Windows Vista+)
+ - Lecture des sons manquants sous Windows 8 et supérieur
  - Ouverture du format d'archive propriétaire "soundpack"
 
 =============
@@ -58,18 +58,20 @@ Télécharger des thèmes
  - 2.1   : Possibilité d'appliquer un fichier .ths directement en cliquant dessus
  - 3.0   : Réécriture en C#, passage en open source, traduction anglaise, prise en charge de Windows 8 et 10
  - 3.0.1 : Réduction du délai du son de démarrage sous Win 8+, correction de sons ne se lisant pas sous Win 10
- - 3.0.2 : Suppression du délai du son de démarrage sous Win 8+, et prise en charge de Windows 11
+ - 3.0.2 : Suppression du délai du son de démarrage sous Win 10, et prise en charge de Windows 11
  - 3.1.0 : Ajout de sons, correctif pour les fichiers en lecture seule, catégories sur l'outil de téléchargement
  - 3.1.1 : Correction du son de démarrage lorsqu'il y a plusieurs comptes utilisateur, bug apparu dans la v3.0.2
  - 3.2.0 : Ajout du support pour lire le format d'archive propriétaire "soundpack"
  - 3.2.1 : Refonte de l'icône du programme, correction de crash si lancé depuis un \\partage\réseau
+ - 3.3.0 : Retravaillé le système de patch du son de démarrage, ajoutant le support pour Windows 8, 10 et 11
 
 =====
  FAQ
 =====
 
-Q: Sur Windows 7, le son de démarrage n'est pas toujours mis à jour ?
-R: Les fichiers DLL peuvent être en cours d'utilisation, redémarrez Windows et re-chargez le thème.
+Q: Lorsque le patch du son de démarrage est activé, celui-ci n'est pas correctement mis à jour ?
+R: Les fichiers système peuvent être en cours d'utilisation, essayez de redémarrer et réappliquer le thème sonore.
+R: Une mise à jour majeure du système peut également enlever le patch, essayez de désactiver et réactiver l'option.
 
 Q: Y a-t-il un code source pour les versions 1.x et 2.x ?
 R: Non, les premières versions étaient conçues avec Game Maker et plein de scripts batch.
@@ -85,7 +87,6 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
  - Polices Teko et Dancing Script de Google Fonts (Logo)
  - Icône Téléchargement par Microsoft Corporation
  - Icône Clipping Sound par RAD.E8
- - Resource Hacker par Angus Johnson
 
 +--------------------+
 | © 2009-2024 ORelio |

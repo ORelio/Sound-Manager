@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.2.1 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.3.0 - By ORelio - Microzoom.fr ====
 ========================================================
 
 Thanks for downloading SoundManager!
@@ -13,8 +13,8 @@ Main features are the following:
  - Export and import sound schemes using archive files
  - Import sound schemes created with the Sound applet
  - Auto-convert sounds to WAV format (Windows 7+)
- - Patch Windows Vista/7 startup sound (Admin required)
- - Play startup/shutdown sounds on Windows 8 and greater
+ - Patch startup sound (Admin required, Windows Vista+)
+ - Play missing sounds on Windows 8 and greater
  - Load proprietary "soundpack" archive files
 
 ============
@@ -58,18 +58,20 @@ Download sound schemes
  - 2.1   : Ability to load a .ths file directly by clicking on it
  - 3.0   : C# rewrite, open sourcing, English translation, add support for Windows 8 and 10
  - 3.0.1 : Reduce startup sound delay on Windows 8+, Fix some sounds not playing on Windows 10
- - 3.0.2 : Remove startup sound delay on Windows 8+, Add support for Windows 11
+ - 3.0.2 : Remove startup sound delay on Windows 10, Add support for Windows 11
  - 3.1.0 : Add more sounds, fix handling of readonly files, add categories on download utility
  - 3.1.1 : Fix startup sound in multi-user context, bug introduced in version 3.0.2
  - 3.2.0 : Add support for loading proprietary "soundpack" archive files
  - 3.2.1 : Program icon overhaul, fix crash when launching from a \\network\share
+ - 3.3.0 : Rework startup sound patching, adding support for Windows 8, 10 and 11
 
 =====
  FAQ
 =====
 
-Q: On Windows 7, the startup sound is not always properly updated?
-A: DLL files may be in use, you may need to reboot and reapply the sound scheme.
+Q: When patching the built-in system startup sound, it does not properly update?
+A: System files may be in use, try rebooting and reapplying the sound scheme.
+A: A major system update may also revert or break the patch, try disabling and enabling the setting.
 
 Q: Is there any source code for versions 1.x and 2.x?
 A: No, these versions were created using Game Maker and a bunch of batch files.
@@ -85,7 +87,6 @@ The SoundManager program has been created using the following resources:
  - Teko & Dancing Script Fonts from Google Fonts (Logo)
  - Download icon, by Microsoft Corporation
  - Clipping Sound Icon by RAD.E8
- - Resource Hacker by Angus Johnson
 
 +--------------------+
 | © 2009-2024 ORelio |

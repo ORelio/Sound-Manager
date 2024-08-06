@@ -18,8 +18,8 @@ Main features are the following:
 * Export and import sound schemes using archive files
 * Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
 * Auto-convert sounds to WAV format (Windows 7+)
-* Patch Windows Vista/7 startup sound (Admin required)
-* Play startup/shutdown sounds on Windows 8 and greater
+* Patch startup sound (Admin required, Windows Vista+)
+* Play missing sounds on Windows 8 and greater
 * Load proprietary soundpack archive files
 
 ## User Manual
@@ -57,9 +57,9 @@ SoundScheme.ths
 
 SoundManager can associate itself with this file type to conveniently load sound schemes, and you can manually edit them using any file archive utility such as [7-Zip](https://www.7-zip.org/) or by renaming them to `.zip` while displaying [file extensions](https://www.thewindowsclub.com/show-file-extensions-in-windows), then using the built-in Windows utility.
 
-### Windows Vista/7 startup sound
+### Windows Vista+ startup sound
 
-On Windows Vista and Windows 7, the startup sound is no longer customizable by the user, the corresponding WAV file being embedded in `C:\Windows\System32\imageres.dll` for [performance reasons](https://blogs.msdn.microsoft.com/e7/2009/02/18/engineering-the-windows-7-boot-animation/).
+On Windows Vista and greater, the startup sound is no longer customizable by the user, the corresponding WAV file being embedded in `C:\Windows\System32\imageres.dll` for [performance reasons](https://blogs.msdn.microsoft.com/e7/2009/02/18/engineering-the-windows-7-boot-animation/).
 
 SoundManager can optionally [patch imageres.dll](https://www.sevenforums.com/tutorials/63398-startup-sound-change-windows-7-a.html) to update the startup sound:
 
@@ -68,11 +68,13 @@ SoundManager can optionally [patch imageres.dll](https://www.sevenforums.com/tut
 * Existing `imageres.dll` is moved to `imageres.dll.old` since it is in use by the system
 * `imageres.dll.bak` is copied to `imageres.dll` and its `WAV` resourse is updated
 
-This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on launch. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot.
+This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on launch. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot. Also, major system updates might revert the startup sound to its original state and/or break the patch mechanism.
 
-### Windows 8+ startup and shutdown sounds
+Initially implemented using [Resource Hacker](https://www.angusj.com/resourcehacker/), SoundManager now patches the DLL directly using the Windows API ([BeginUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648030%28v=vs.85%29.aspx), [UpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648049%28v=vs.85%29.aspx), [EndUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648032%28v=vs.85%29.aspx)) to replace the startup sound. This allows seamless patching on newer system versions that implement a [distinct resource file for the DLL](https://answers.microsoft.com/en-us/windows/forum/all/workaround-for-changing-the-windows-1011-startup/b15dd438-42c7-471c-bc86-2e5fb0fa4037) `imageres.dll.mun`.
 
-On Windows 8, the startup and shutdown sounds were removed for further [performance reasons](https://winaero.com/blog/how-to-play-the-logon-or-startup-sound-in-windows-8-1-or-windows-8/). SoundManager can emulate the playback of these sounds by launching a background process on logon:
+### Windows 8+ shutdown, login, logoff sounds
+
+On Windows 8, the shutdown sound was removed for further [performance reasons](https://winaero.com/blog/how-to-play-the-logon-or-startup-sound-in-windows-8-1-or-windows-8/), as well as the logon and logoff sounds. SoundManager can emulate the playback of these sounds by launching a background process on logon:
 
 * Process spawns an invisible window, mandatory for delaying system shutdown
 * Process plays Startup or Logon sound and goes inactive
@@ -82,13 +84,13 @@ On Windows 8, the startup and shutdown sounds were removed for further [performa
 
 This is typically how `explorer.exe` was handling the thing on Windows 7, but you'll get yet another process sleeping in background, separate from `explorer.exe`. As such, this feature can be disabled entierely in the SoundManager settings.
 
-Windows 11 reintroduced a startup sound but still lacks a shutdown sound, so the background process approach is also available for this system version. Using the background process feature will automatically disable the built-in startup sound, which is not customizable.
+SoundManager also allows patching the startup sound on Windows 8 and greater. When used in combination with the background sound player process, the system itself will play the native startup sound, and the background process from SoundManager will play the other sounds. This helps reducing latency in startup sound playback since the system will play the startup sound with high priority.
 
 ## Build instructions
 
 In order to maintain support for Windows XP SP3, SoundManager targets .NET Framework v4.0 and builds under Visual Studio 2010. If you want to build without support for Windows XP, you should be able to build using the latest version of [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/). The following instructions detail how to build with XP support.
 
-For proper support of newer operating systems such as Windows 10, SoundManager needs APIs such as [Task Scheduler 2.0](https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-2-0-interfaces) and [ShutdownBlockReason](https://devblogs.microsoft.com/oldnewthing/20120614-00/?p=7373), which aren't present on XP, so building under Windows XP will not work. Building should work under Vista or greater, and was tested successfully under Windows 7 and Windows 10.
+For proper support of newer operating systems such as Windows 10, SoundManager needs APIs such as [Task Scheduler 2.0](https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-2-0-interfaces) and [ShutdownBlockReason](https://devblogs.microsoft.com/oldnewthing/20120614-00/?p=7373), which aren't present on XP, so building under Windows XP will not work. Building was tested successfully under Windows Vista, 7, 8, 10 and 11 using Visual Studio 2010.
 
 ### Setting up Visual Studio
 
