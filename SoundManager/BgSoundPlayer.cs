@@ -217,6 +217,7 @@ namespace SoundManager
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new System.Drawing.Point(-2000, -2000);
             this.Size = new System.Drawing.Size(1, 1);
+            this.GotFocus += new EventHandler(WindowFocused);
 
             // Determine system startup time
             string bootTime = GetBootTimestamp().ToString();
@@ -285,6 +286,15 @@ namespace SoundManager
             {
                 PlaySound(soundLogon);
             }
+        }
+
+        /// <summary>
+        /// Detect when the background sound player window is focused
+        /// </summary>
+        private void WindowFocused(object sender, EventArgs e)
+        {
+            // Refuse focus by switching to Minimized state
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
