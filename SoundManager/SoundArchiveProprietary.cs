@@ -95,10 +95,20 @@ namespace SoundManager
                         }
                     }
 
-                    // Process XML metadata file to determine thumbnail, author, and sound event file names
+                    // Load XML metadata file
                     XmlDocument metadata = new XmlDocument();
                     metadata.XmlResolver = null; // Do not process external entities
-                    metadata.LoadXml(metadataXmlString);
+                    try
+                    {
+                        metadata.LoadXml(metadataXmlString);
+                    }
+                    catch (XmlException)
+                    {
+                        // Retry attempting to escape invalid entities in XML metadata file
+                        metadata.LoadXml(metadataXmlString.Replace("&", "&amp;"));
+                    }
+
+                    // Process XML metadata file to determine thumbnail, author, and sound event file names
                     XmlElement rootNode = metadata.DocumentElement;
                     string schemeName = XmlGetValue(rootNode, "name") ?? "";
                     string schemeAuthor = XmlGetValue(rootNode, "author") ?? "";
