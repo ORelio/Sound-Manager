@@ -78,6 +78,7 @@
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.toolTipHandler = new System.Windows.Forms.ToolTip(this.components);
+            this.buttonConfigFile = new System.Windows.Forms.Button();
             this.soundContextMenu.SuspendLayout();
             this.imageContextMenu.SuspendLayout();
             this.mainTabs.SuspendLayout();
@@ -328,6 +329,7 @@
             // 
             // groupBoxMaintenance
             // 
+            this.groupBoxMaintenance.Controls.Add(this.buttonConfigFile);
             this.groupBoxMaintenance.Controls.Add(this.buttonUninstall);
             this.groupBoxMaintenance.Controls.Add(this.buttonReinstall);
             this.groupBoxMaintenance.Location = new System.Drawing.Point(6, 327);
@@ -576,6 +578,16 @@
             this.buttonReset.UseVisualStyleBackColor = true;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
+            // buttonConfigFile
+            // 
+            this.buttonConfigFile.Location = new System.Drawing.Point(191, 28);
+            this.buttonConfigFile.Name = "buttonConfigFile";
+            this.buttonConfigFile.Size = new System.Drawing.Size(100, 23);
+            this.buttonConfigFile.TabIndex = 2;
+            this.buttonConfigFile.Text = "BUTTON_CONFIG_FILE";
+            this.buttonConfigFile.UseVisualStyleBackColor = true;
+            this.buttonConfigFile.Click += new System.EventHandler(this.buttonConfigFile_Click);
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -662,6 +674,7 @@
         private System.Windows.Forms.Button buttonDownloadSchemes;
         private System.Windows.Forms.PictureBox programLogo;
         private System.Windows.Forms.ToolTip toolTipHandler;
+        private System.Windows.Forms.Button buttonConfigFile;
     }
 }
 

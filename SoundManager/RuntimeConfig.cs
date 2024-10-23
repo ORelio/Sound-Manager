@@ -66,6 +66,11 @@ namespace SoundManager
         );
 
         /// <summary>
+        /// Path to the local configuration file holding program Settings
+        /// </summary>
+        public static readonly string SettingsFile = Path.Combine(LocalDataFolder, AppInternalName + ".ini");
+
+        /// <summary>
         /// GitHub User name for repository holding the sound schemes library
         /// </summary>
         public const string SchemesRepositoryUsername = "ORelio";

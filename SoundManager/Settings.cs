@@ -12,8 +12,6 @@ namespace SoundManager
     /// </summary>
     static class Settings
     {
-        private static readonly string ConfigFile = Path.Combine(RuntimeConfig.LocalDataFolder, RuntimeConfig.AppInternalName + ".ini");
-
         /// <summary>
         /// Specify whether the Windows startup sound patch feature is enabled
         /// </summary>
@@ -30,6 +28,11 @@ namespace SoundManager
         public static bool ConvertProprietaryFiles { get; set; }
 
         /// <summary>
+        /// Specify whether the program should prefer Startup/Shutdown instead of Logon/Logoff. Only play Logon/Logoff when switching users like Windows XP does.
+        /// </summary>
+        public static bool PreferStartupSoundOnLogon { get; set; }
+
+        /// <summary>
         /// Static class initializer to automatically load settings
         /// </summary>
         static Settings()
@@ -42,9 +45,9 @@ namespace SoundManager
         /// </summary>
         public static void Load()
         {
-            if (File.Exists(ConfigFile))
+            if (File.Exists(RuntimeConfig.SettingsFile))
             {
-                var settingsRaw = INIFile.ParseFile(ConfigFile);
+                var settingsRaw = INIFile.ParseFile(RuntimeConfig.SettingsFile);
                 foreach (var settingsSection in settingsRaw)
                 {
                     switch (settingsSection.Key.ToLower())
@@ -66,6 +69,10 @@ namespace SoundManager
                                     case "convertproprietaryfiles":
                                         ConvertProprietaryFiles = INIFile.Str2Bool(setting.Value);
                                         break;
+
+                                    case "preferstartupsoundonlogon":
+                                        PreferStartupSoundOnLogon = INIFile.Str2Bool(setting.Value);
+                                        break;
                                 }
                             }
                             break;
@@ -84,14 +91,15 @@ namespace SoundManager
         /// </summary>
         public static void Save()
         {
-            var config = new Dictionary<string, Dictionary<string, string>>();
+            var settings = new Dictionary<string, Dictionary<string, string>>();
 
-            config["main"] = new Dictionary<string, string>();
-            config["main"]["patchstartupsound"] = PatchStartupSound.ToString();
-            config["main"]["usedefaultonmissingsound"] = MissingSoundUseDefault.ToString();
-            config["main"]["convertproprietaryfiles"] = ConvertProprietaryFiles.ToString();
+            settings["Main"] = new Dictionary<string, string>();
+            settings["Main"]["PatchStartupSound"] = PatchStartupSound.ToString();
+            settings["Main"]["UseDefaultOnMissingSound"] = MissingSoundUseDefault.ToString();
+            settings["Main"]["ConvertProprietaryFiles"] = ConvertProprietaryFiles.ToString();
+            settings["Main"]["PreferStartupSoundOnLogon"] = PreferStartupSoundOnLogon.ToString();
 
-            INIFile.WriteFile(ConfigFile, config, RuntimeConfig.AppInternalName + " Configuration File");
+            INIFile.WriteFile(RuntimeConfig.SettingsFile, settings, RuntimeConfig.AppInternalName + " Configuration File", false);
         }
     }
 }

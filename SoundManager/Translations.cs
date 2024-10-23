@@ -158,7 +158,7 @@ namespace SharpTools
                 translations["sound_file_too_long"] = "Le fichier son a une durée trop élevée.";
                 translations["image_load_failed_text"] = "Le chargement de l'image a échoué :";
                 translations["image_load_failed_title"] = "Echec de chargement de l'image";
-                translations["scheme_load_prompt_text"] = "Souhaitez-vous charger ce fichier de thème ?";
+                translations["scheme_load_prompt_text"] = "Souhaitez-vous charger ce fichier de thème ?";
                 translations["scheme_load_prompt_title"] = "Chargement du thème";
                 translations["scheme_load_failed_text"] = "Le chargement du thème a échoué :";
                 translations["scheme_load_failed_title"] = "Echec de chargement du thème";
@@ -179,7 +179,7 @@ namespace SharpTools
                 translations["sound_open_location"] = "Accéder au fichier";
                 translations["sound_reset"] = "Réinitialiser le son";
                 translations["sound_remove"] = "Supprimer le son";
-                translations["webpage_open_prompt_text"] = "Souhaitez-vous visiter le lien suivant ?";
+                translations["webpage_open_prompt_text"] = "Souhaitez-vous visiter le lien suivant ?";
                 translations["webpage_open_prompt_title"] = "Confirmation d'ouverture de lien";
                 translations["startup_patch_not_elevated_title"] = "Droits Administrateur manquants";
                 translations["startup_patch_not_elevated_text"] = "Relancez l'application en tant qu'Administrateur pour patcher le son de démarrage de Windows.";
@@ -187,7 +187,7 @@ namespace SharpTools
                 translations["startup_patch_no_imageres_dll"] = "Le son de démarrage de Windows ne peut être patché car le fichier imageres.dll est introuvable.";
                 translations["startup_patch_not_possible"] = "Le son de démarrage de Windows ne peut pas être pacthé: opération non gérée pour le système actuel.";
                 translations["startup_patch_not_recommended_title"] = "Patch du son de démarrage non recommandé";
-                translations["startup_patch_not_recommended_text"] = "Patcher le son de démarrage aide à réduire le délai de lecture mais requiert les droits admin et pourrait ne plus marcher après une mise à jour majeure du système. Continuer ?";
+                translations["startup_patch_not_recommended_text"] = "Patcher le son de démarrage aide à réduire le délai de lecture mais requiert les droits admin et pourrait ne plus marcher après une mise à jour majeure du système. Continuer ?";
                 translations["playing_shutdown_sound"] = "Lecture du son d'arrêt de l'ordinateur";
                 translations["playing_logoff_sound"] = "Lecture du son de fermeture de session";
                 translations["scheme_file_desc"] = "Fichier de Thème Sonore";
@@ -202,9 +202,12 @@ namespace SharpTools
                 translations["reinstall_confirm_text"] = "Tous les paramètres de l'application vont être réinitialisés et le thème sonore actuel sera perdu.";
                 translations["uninstall_confirm_title"] = "Désinstaller l'application";
                 translations["uninstall_confirm_text"] = "Les paramètres du système vont être restaurés, les fichiers de l'application supprimés l'application va se quitter.";
+                translations["config_file_confirm_title"] = "Configuration avancée";
+                translations["config_file_confirm_text"] = "N'éditez le fichier de configuration que si vous savez ce que vous faites. L'application va se quitter.";
                 translations["box_maintenance"] = "Maintenance";
                 translations["button_reinstall"] = "Réinstaller";
                 translations["button_uninstall"] = "Désinstaller";
+                translations["button_config_file"] = "Fichier de config.";
                 translations["tab_about"] = "À propos...";
                 translations["help_file"] = "Readme-Fr.txt";
                 translations["help_file_not_found_title"] = "Fichier d'aide non trouvé";
@@ -218,15 +221,15 @@ namespace SharpTools
                 translations["drag_drop_no_target_sound_title"] = "Aucun son sélectionné";
                 translations["drag_drop_no_target_sound_text"] = "Veuillez sélectionner un son avant de déposer un fichier.";
                 translations["drag_drop_sound_confirm_title"] = "Confirmer le remplacement du son";
-                translations["drag_drop_sound_confirm_text"] = "Remplacer ce son ?";
+                translations["drag_drop_sound_confirm_text"] = "Remplacer ce son ?";
                 translations["download_schemes_selection_title"] = "Télécharger des thèmes";
                 translations["download_schemes_selection_text"] = "Sélectionnez les thèmes à télécharger";
                 translations["download_schemes_selection_fetching_list"] = "Récupération de la liste...";
                 translations["download_schemes_selection_everything"] = "Tous les thèmes sonores";
                 translations["download_schemes_no_tls_title"] = "Configuration TLS/HTTPS insuffisante";
-                translations["download_schemes_no_tls_text"] = "La configuration HTTPS ne permet pas le téléchargement des thèmes. Afficher la liste dans votre navigateur ?";
+                translations["download_schemes_no_tls_text"] = "La configuration HTTPS ne permet pas le téléchargement des thèmes. Afficher la liste dans votre navigateur ?";
                 translations["download_schemes_failed_title"] = "Échec du téléchargement";
-                translations["download_schemes_failed_text"] = "Le téléchargement des thèmes a échoué. Afficher la liste dans votre navigateur ?";
+                translations["download_schemes_failed_text"] = "Le téléchargement des thèmes a échoué. Afficher la liste dans votre navigateur ?";
                 //Ajouter de nouvelles traductions ici
             }
             //Add new languages here as 'else if' blocks
@@ -362,9 +365,12 @@ namespace SharpTools
                 translations["reinstall_confirm_text"] = "All application settings will be reset and the current sound scheme will be lost.";
                 translations["uninstall_confirm_title"] = "Uninstall the application";
                 translations["uninstall_confirm_text"] = "System settings will be restored, all application data will be removed and the app will exit.";
+                translations["config_file_confirm_title"] = "Advanced Configuration";
+                translations["config_file_confirm_text"] = "Only edit the configuration file if you know what you are doing. The app will exit.";
                 translations["box_maintenance"] = "Maintenance";
                 translations["button_reinstall"] = "Reinstall";
                 translations["button_uninstall"] = "Uninstall";
+                translations["button_config_file"] = "Edit config file";
                 translations["tab_about"] = "About...";
                 translations["help_file"] = "Readme-En.txt";
                 translations["help_file_not_found_title"] = "Missing help file";

@@ -228,8 +228,13 @@ namespace SoundManager
             if (File.Exists(LastBootFile))
                 lastBootTime = File.ReadAllText(LastBootFile);
 
-            // Determine sound event to play
-            SoundEvent soundToPlay = soundLogon;
+            // Determine default logon sound to play
+            SoundEvent soundToPlay =
+                Settings.PreferStartupSoundOnLogon && File.Exists(soundStartup.FilePath)
+                    ? soundStartup
+                    : soundLogon;
+
+            // Handle case where system has rebooted - startup sound
             if (bootTime != lastBootTime)
             {
                 File.WriteAllText(LastBootFile, bootTime);
@@ -239,9 +244,8 @@ namespace SoundManager
                 }
                 else if (File.Exists(soundStartup.FilePath))
                 {
-                    soundToPlay = soundStartup;
+                    soundToPlay = soundStartup; // We need to emulate the startup sound
                 }
-                //else keep logon sound instead
             }
 
             // Play sound event?
@@ -261,10 +265,13 @@ namespace SoundManager
         /// </summary>
         private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            if (e.Reason == SessionEndReasons.SystemShutdown && File.Exists(soundShutdown.FilePath))
+            this.Text = RuntimeConfig.AppDisplayName;
+
+            if ((e.Reason == SessionEndReasons.SystemShutdown || Settings.PreferStartupSoundOnLogon) && File.Exists(soundShutdown.FilePath))
             {
                 ShutdownBlockReasonCreate(this.Handle, Translations.Get("playing_shutdown_sound"));
-                File.Delete(LastBootFile); // Force Startup sound next time
+                if (e.Reason == SessionEndReasons.SystemShutdown)
+                    File.Delete(LastBootFile); // Force Startup sound next time
                 PlaySound(soundShutdown);
             }
             else
@@ -272,6 +279,7 @@ namespace SoundManager
                 ShutdownBlockReasonCreate(this.Handle, Translations.Get("playing_logoff_sound"));
                 PlaySound(soundLogoff);
             }
+
             ShutdownBlockReasonDestroy(this.Handle);
         }
 

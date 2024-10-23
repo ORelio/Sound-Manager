@@ -63,6 +63,7 @@ namespace SoundManager
             groupBoxMaintenance.Text = Translations.Get("box_maintenance");
             buttonReinstall.Text = Translations.Get("button_reinstall");
             buttonUninstall.Text = Translations.Get("button_uninstall");
+            buttonConfigFile.Text = Translations.Get("button_config_file");
             tabPageAbout.Text = Translations.Get("tab_about");
             labelProgramName.Text = RuntimeConfig.AppDisplayName;
             labelProgramVersionAuthor.Text = "Version " + RuntimeConfig.Version + " - By ORelio";
@@ -832,6 +833,26 @@ namespace SoundManager
                     Program.Uninstall();
                     Close();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Manually edit configuration file
+        /// </summary>
+        private void buttonConfigFile_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                        Translations.Get("config_file_confirm_text"),
+                        Translations.Get("config_file_confirm_title"),
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning
+                    ) == DialogResult.OK
+                )
+            {
+                if (!File.Exists(RuntimeConfig.SettingsFile))
+                    Settings.Save();
+                Process.Start("notepad", "\"" + RuntimeConfig.SettingsFile + "\"");
+                Close();
             }
         }
 
