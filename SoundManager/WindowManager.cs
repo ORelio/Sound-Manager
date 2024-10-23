@@ -10,12 +10,29 @@ namespace SharpTools
 {
     /// <summary>
     /// Programatically interact with on-screen windows using Windows API
-    /// By ORelio - (c) 2013-2022 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2013-2024 - Available under the CDDL-1.0 license
     /// </summary>
     public static class WindowManager
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SetForegroundWindow(IntPtr hwnd);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr GetShellWindow();
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
+
+        private delegate bool CallBack(IntPtr hwnd, int lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool EnumWindows(CallBack lpEnumFunc, int lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
@@ -102,6 +119,49 @@ namespace SharpTools
                 catch { }
             }
             return false; //Process not found
+        }
+
+        /// <summary>
+        /// Find window handle for the Windows desktop folderView
+        /// </summary>
+        /// <param name="window">Will contain the window handle, if found</param>
+        /// <returns>Returns TRUE if the handle was found</returns>
+        public static bool GetDesktopWindow(ref IntPtr window)
+        {
+            window = IntPtr.Zero;
+            IntPtr _ProgMan = GetShellWindow();
+            IntPtr _SHELLDLL_DefViewParent = _ProgMan;
+            IntPtr _SHELLDLL_DefView = FindWindowEx(_ProgMan, IntPtr.Zero, "SHELLDLL_DefView", null);
+            IntPtr _SysListView32 = FindWindowEx(_SHELLDLL_DefView, IntPtr.Zero, "SysListView32", "FolderView");
+
+            if (_SHELLDLL_DefView == IntPtr.Zero)
+            {
+                EnumWindows((hwnd, lParam) =>
+                {
+                    StringBuilder className = new StringBuilder(256);
+                    GetClassName(hwnd, className, className.Capacity);
+                    if (className.ToString() == "WorkerW")
+                    {
+                        IntPtr child = FindWindowEx(hwnd, IntPtr.Zero, "SHELLDLL_DefView", null);
+                        if (child != IntPtr.Zero)
+                        {
+                            _SHELLDLL_DefViewParent = hwnd;
+                            _SHELLDLL_DefView = child;
+                            _SysListView32 = FindWindowEx(child, IntPtr.Zero, "SysListView32", "FolderView");
+                            return false;
+                        }
+                    }
+                    return true;
+                }, 0);
+            }
+
+            if (_SysListView32 != IntPtr.Zero)
+                window = _SysListView32;
+            else if (_SHELLDLL_DefView != IntPtr.Zero)
+                window = _SHELLDLL_DefView;
+            else if (_SHELLDLL_DefViewParent != IntPtr.Zero)
+                window = _SHELLDLL_DefView;
+            return window != IntPtr.Zero;
         }
 
         /// <summary>

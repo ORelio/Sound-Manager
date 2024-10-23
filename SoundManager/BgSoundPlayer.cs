@@ -209,15 +209,17 @@ namespace SoundManager
         /// </summary>
         public BgSoundPlayer()
         {
-            this.Text = RuntimeConfig.AppDisplayName;
+            //this.Text = RuntimeConfig.AppDisplayName; // Window title disabled, see below (issue #8)
             this.Icon = IconExtractor.ExtractAssociatedIcon(Application.ExecutablePath);
 
-            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            // Hide the window in such a way Windows will still consider it eligible for ShutdownBlockReason
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow; // Remove from Alt+Tab
             this.ShowInTaskbar = false;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new System.Drawing.Point(-2000, -2000);
+            this.Location = new System.Drawing.Point(-9999, -9999);
             this.Size = new System.Drawing.Size(1, 1);
-            this.GotFocus += new EventHandler(WindowFocused);
+            this.GotFocus += new EventHandler(WindowFocused); // Evade focus (issue #8)
+            this.Text = "�"; // Avoid screen readers saying the window title loud (issue #8)
 
             // Determine system startup time
             string bootTime = GetBootTimestamp().ToString();
@@ -293,8 +295,34 @@ namespace SoundManager
         /// </summary>
         private void WindowFocused(object sender, EventArgs e)
         {
-            // Refuse focus by switching to Minimized state
-            this.WindowState = FormWindowState.Minimized;
+            // Refuse focus - Some screen readers may pick up the window (issue #8)
+            // Try switching focus to desktop, or as fallback, toggle the minimized state
+            try
+            {
+                // Cannot stay minimized because it may show a window title next to the task bar
+                this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Normal;
+
+                // Switch focus to the Windows Desktop's folderView
+                IntPtr desktop = IntPtr.Zero;
+                if (WindowManager.GetDesktopWindow(ref desktop))
+                    WindowManager.SetForegroundWindow(desktop);
+            }
+            catch
+            {
+                // Avoid crashes linked to this workaround
+            }
+        }
+
+        /// <summary>
+        /// Override "Show without activation" property to not focus the window on launch
+        /// </summary>
+        protected override bool ShowWithoutActivation
+        {
+            get
+            {
+                return true;
+            }
         }
     }
 }
