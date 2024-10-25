@@ -2,25 +2,25 @@
 
 SoundManager is free software that makes it easy to create and share Windows sound schemes. All Windows versions from Windows XP SP3 to Windows 11 are supported. Requires [.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17718) or greater.
 
-* **Download:** Have a look at the [releases section](https://github.com/ORelio/Sound-Manager/releases) to get a build.
-* **Sound schemes:** Check out the [sound schemes repository](https://github.com/ORelio/Sound-Manager-Schemes) :)
+* 💾 **Download:** Have a look at the [releases section](https://github.com/ORelio/Sound-Manager/releases) to get a build
+* 📁 **Sound schemes:** Check out the [sound schemes repository](https://github.com/ORelio/Sound-Manager-Schemes)
 
 ## Overview
 
-The main UI allows managing the current sound scheme, as well as defining metadata:
+SoundManager allows editing the current sound scheme, as well as defining metadata:
 
 ![SoundManager main UI](Images/gui-scheme-en.png)
 
 Main features are the following:
 
-* Load and test sound files for each event
-* Define metadata such as thumbnail, author, description
+* Play missing sounds on Windows 8 and greater
 * Export and import sound schemes using archive files
 * Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
+* Import proprietary "soundpack" archive files
+* Load and test sound files for each event
+* Define metadata such as thumbnail, author, description
 * Auto-convert sounds to WAV format (Windows 7+)
-* Patch startup sound (Admin required, Windows Vista+)
-* Play missing sounds on Windows 8 and greater
-* Load proprietary soundpack archive files
+* Patch built-in startup sound (Admin required, Windows Vista+)
 
 ## User Manual
 
@@ -107,7 +107,7 @@ For proper support of newer operating systems such as Windows 10, SoundManager n
 This section assumes you already have the `Sound-Manager` git repository cloned or [manually downloaded](https://github.com/seediffusion/Sound-Manager/archive/refs/heads/master.zip). In the following instructions, "project folder" refers to the main folder of the `Sound-Manager` repository, where `README.md` and `SoundManager.sln` are housed.
 
 1. Navigate to the project folder and open `SoundManager.sln file`
-  * If your system isn't configured to [show file extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/), you won't see the `.sln` part of the filename.
+  * If your system isn't configured to [show file extensions](https://www.thewindowsclub.com/show-file-extensions-in-windows), you won't see the `.sln` part of the filename.
   * If VS 2010 doesn't open automatically, select Visual C# 2010 in the "open with" dialog.
 2. Once the project is open, set the build target to `Release` instead of `Debug` in the dropdown menu next to the Build button. You can leave `Debug` while making changes in the code and using the debugger in Visual Studio.
 3. Hit `Shift+Control+B` to build the entire `SoundManager` solution. This should only take a few seconds to compile.

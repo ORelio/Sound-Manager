@@ -1,5 +1,6 @@
 =================================================================
-==== Gestionnaire de Sons v3.3.0 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.3.1 - Par ORelio - Microzoom.fr ====
+=========== https://microzoom.fr/gestionnaire-de-sons ===========
 =================================================================
 
 Merci d'avoir choisi le Gestionnaire de Sons !
@@ -8,14 +9,14 @@ Le Gestionnaire de Sons est un logiciel gratuit permettant de créer et partager
 Toutes les versions de Windows de Windows XP SP3 à Windows 11 sont prises en charge.
 
 Les principales fonctionnalités sont :
+ - Lecture des sons manquants sous Windows 8 et supérieur
+ - Exporter et importer les thème sonore via des fichiers archives
+ - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
+ - Importer les archives propriétaires au format "soundpack"
  - Charger et tester des sons pour chaque évènement système
  - Définir des informations telles qu'une image, auteur, description pour votre thème
- - Exporter et importer un thème sonore via un fichier d'archive
- - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
  - Conversion automatique des sons au format WAV (Windows 7+)
  - Patch du son de démarrage de Windows (droits Admin requis, Windows Vista+)
- - Lecture des sons manquants sous Windows 8 et supérieur
- - Ouverture du format d'archive propriétaire "soundpack"
 
 =============
  Utilisation
@@ -64,6 +65,7 @@ Télécharger des thèmes
  - 3.2.0 : Ajout du support pour lire le format d'archive propriétaire "soundpack"
  - 3.2.1 : Refonte de l'icône du programme, correction de crash si lancé depuis un \\partage\réseau
  - 3.3.0 : Retravaillé le système de patch du son de démarrage, ajoutant le support pour Windows 8, 10 et 11
+ - 3.3.1 : Accès rapide au fichier de configuration avancé, meilleure compatibilité avec les lecteurs d'écran
 
 =====
  FAQ
@@ -72,6 +74,10 @@ Télécharger des thèmes
 Q: Lorsque le patch du son de démarrage est activé, celui-ci n'est pas correctement mis à jour ?
 R: Les fichiers système peuvent être en cours d'utilisation, essayez de redémarrer et réappliquer le thème sonore.
 R: Une mise à jour majeure du système peut également enlever le patch, essayez de désactiver et réactiver l'option.
+
+Q : En utilisant le thème Windows XP, le son de démarrage devrait se lire à l'ouverture de session. Comment faire ?
+R : Paramètres > Fichier de config. > régler « PreferStartupSoundOnLogon=True » et enregistrer
+R : Si vous ne voyez pas le paramètre, vous pouvez l'ajouter en dessous des autres
 
 Q: Y a-t-il un code source pour les versions 1.x et 2.x ?
 R: Non, les premières versions étaient conçues avec Game Maker et plein de scripts batch.
