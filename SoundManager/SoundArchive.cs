@@ -31,16 +31,29 @@ namespace SoundManager
         {
             if (zip.ContainsEntry(fileName))
             {
-                zip.Entries
-                    .First(entry => entry.FileName == fileName)
-                    .Extract(outputDir, ExtractExistingFileAction.OverwriteSilently);
-                File.SetAttributes(Path.Combine(outputDir, fileName), FileAttributes.Normal);
+                string extractedFile = Path.Combine(outputDir, fileName);
+                string extractedFileTmp = extractedFile + ".tmp";
+                File.Delete(extractedFileTmp);
+
+                try
+                {
+                    zip.Entries
+                        .First(entry => entry.FileName == fileName)
+                        .Extract(outputDir, ExtractExistingFileAction.OverwriteSilently);
+                }
+                catch (IOException e)
+                {
+                    if (!e.Message.Contains(fileName))
+                        throw new IOException(String.Format("{0}: {1}", fileName, e.Message), e);
+                    throw;
+                }
+
+                File.SetAttributes(extractedFile, FileAttributes.Normal);
                 if (outputFileName != null)
                 {
-                    string currentFilePath = Path.Combine(outputDir, fileName);
                     string outputFilePath = Path.Combine(outputDir, outputFileName);
                     File.Delete(outputFilePath);
-                    File.Move(currentFilePath, outputFilePath);
+                    File.Move(extractedFile, outputFilePath);
                 }
                 return true;
             }

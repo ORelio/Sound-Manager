@@ -634,17 +634,28 @@ namespace SoundManager
                     MessageBoxIcon.Warning
                 ) == DialogResult.OK)
             {
-                foreach (SoundEvent soundEvent in SoundEvent.GetAll())
-                    SoundScheme.CopyDefault(soundEvent, scheme);
-                SchemeMeta.ResetAll();
-                if (scheme != null)
+                try
                 {
-                    SchemeMeta.Name = scheme.ToString();
-                    SchemeMeta.Author = "";
-                    SchemeMeta.About = "";
+                    foreach (SoundEvent soundEvent in SoundEvent.GetAll())
+                        SoundScheme.CopyDefault(soundEvent, scheme);
+                    SchemeMeta.ResetAll();
+                    if (scheme != null)
+                    {
+                        SchemeMeta.Name = scheme.ToString();
+                        SchemeMeta.Author = "";
+                        SchemeMeta.About = "";
+                    }
+                    RefreshSchemeMetadata();
+                    imageContextMenu_Remove_Click(this, EventArgs.Empty);
                 }
-                RefreshSchemeMetadata();
-                imageContextMenu_Remove_Click(this, EventArgs.Empty);
+                catch (Exception error)
+                {
+                    MessageBox.Show(
+                        error.Message,
+                        error.GetType().Name,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
 
