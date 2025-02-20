@@ -23,6 +23,8 @@ namespace SoundManager
         private const string RegNames = RegSchemes + "\\Names\\";
         private const string RegApps = RegSchemes + "\\Apps\\";
 
+        private const string EventDisabledPlaceholder = "<DISABLED>";
+
         private static readonly RegistryKey RegCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default);
 
         // ========================= //
@@ -70,7 +72,7 @@ namespace SoundManager
                 {
                     string eventKeyPath = RegApps + registryKey + '\\' + SchemeManager;
                     RegistryKey eventKey = RegCurrentUser.OpenSubKey(eventKeyPath, true) ?? RegCurrentUser.CreateSubKey(eventKeyPath);
-                    eventKey.SetValue(null, soundEvent.FilePath);
+                    eventKey.SetValue(null, soundEvent.Disabled ? EventDisabledPlaceholder : soundEvent.FilePath);
                     eventKey.Close();
                 }
             }
@@ -347,7 +349,7 @@ namespace SoundManager
                     string soundPath = null;
                     if (schemeSound != null)
                         soundPath = schemeSound.GetValue(null) as string;
-                    if ((soundPath == null || !File.Exists(Environment.ExpandEnvironmentVariables(soundPath))) && defaultSound != null && missingSoundsUseDefault)
+                    if ((soundPath == null || !File.Exists(Environment.ExpandEnvironmentVariables(soundPath))) && defaultSound != null && missingSoundsUseDefault && soundPath != EventDisabledPlaceholder)
                         soundPath = defaultSound.GetValue(null) as string;
                     if (soundPath != null && !File.Exists(Environment.ExpandEnvironmentVariables(soundPath)))
                         soundPath = null;

@@ -35,6 +35,7 @@
             this.soundContextMenu_OpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.soundContextMenu_Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.soundContextMenu_Remove = new System.Windows.Forms.ToolStripMenuItem();
+            this.soundContextMenu_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.imageContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.imageContextMenu_Change = new System.Windows.Forms.ToolStripMenuItem();
             this.imageContextMenu_Remove = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +101,7 @@
             this.soundContextMenu_Change,
             this.soundContextMenu_Reset,
             this.soundContextMenu_Remove,
+            this.soundContextMenu_Disable,
             this.soundContextMenu_OpenLocation});
             this.soundContextMenu.Name = "soundContextMenu";
             this.soundContextMenu.Size = new System.Drawing.Size(205, 136);
@@ -138,6 +140,13 @@
             this.soundContextMenu_Remove.Size = new System.Drawing.Size(204, 22);
             this.soundContextMenu_Remove.Text = "REMOVE_SOUND";
             this.soundContextMenu_Remove.Click += new System.EventHandler(this.soundContextMenu_Remove_Click);
+            //
+            // soundContextMenu_Disable
+            //
+            this.soundContextMenu_Disable.Name = "soundContextMenu_Disable";
+            this.soundContextMenu_Disable.Size = new System.Drawing.Size(204, 22);
+            this.soundContextMenu_Disable.Text = "DISABLE_SOUND";
+            this.soundContextMenu_Disable.Click += new System.EventHandler(this.soundContextMenu_Disable_Click);
             // 
             // imageContextMenu
             // 
@@ -630,6 +639,7 @@
         private System.Windows.Forms.ToolStripMenuItem soundContextMenu_Play;
         private System.Windows.Forms.ToolStripMenuItem soundContextMenu_Reset;
         private System.Windows.Forms.ToolStripMenuItem soundContextMenu_Remove;
+        private System.Windows.Forms.ToolStripMenuItem soundContextMenu_Disable;
         private System.Windows.Forms.ToolStripMenuItem soundContextMenu_OpenLocation;
         private System.Windows.Forms.ContextMenuStrip imageContextMenu;
         private System.Windows.Forms.ToolStripMenuItem imageContextMenu_Change;

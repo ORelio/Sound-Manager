@@ -12,6 +12,8 @@ namespace SoundManager
     /// </summary>
     static class Settings
     {
+        private static HashSet<string> _disabledSoundEvents = new HashSet<string>();
+
         /// <summary>
         /// Specify whether the Windows startup sound patch feature is enabled
         /// </summary>
@@ -31,6 +33,11 @@ namespace SoundManager
         /// Specify whether the program should prefer Startup/Shutdown instead of Logon/Logoff. Only play Logon/Logoff when switching users like Windows XP does.
         /// </summary>
         public static bool PreferStartupSoundOnLogon { get; set; }
+
+        /// <summary>
+        /// List of disabled sounds events. Disabled sound events will not play on the system.
+        /// </summary>
+        public static HashSet<string> DisabledSoundEvents { get { return _disabledSoundEvents; } }
 
         /// <summary>
         /// Static class initializer to automatically load settings
@@ -73,6 +80,12 @@ namespace SoundManager
                                     case "preferstartupsoundonlogon":
                                         PreferStartupSoundOnLogon = INIFile.Str2Bool(setting.Value);
                                         break;
+
+                                    case "disabledsoundevents":
+                                        foreach (string soundName in setting.Value.Split(','))
+                                            if (SoundEvent.GetAll().Any(e => e.InternalName == soundName))
+                                                DisabledSoundEvents.Add(soundName);
+                                        break;
                                 }
                             }
                             break;
@@ -98,6 +111,7 @@ namespace SoundManager
             settings["Main"]["UseDefaultOnMissingSound"] = MissingSoundUseDefault.ToString();
             settings["Main"]["ConvertProprietaryFiles"] = ConvertProprietaryFiles.ToString();
             settings["Main"]["PreferStartupSoundOnLogon"] = PreferStartupSoundOnLogon.ToString();
+            settings["Main"]["DisabledSoundEvents"] = String.Join(",", DisabledSoundEvents);
 
             INIFile.WriteFile(RuntimeConfig.SettingsFile, settings, RuntimeConfig.AppInternalName + " Configuration File", false);
         }

@@ -150,6 +150,12 @@ namespace SharpTools
                 translations["event_menucommand_desc"] = "Sélection d'une option dans un menu contextuel";
                 translations["event_select_name"] = "Sélection";
                 translations["event_select_desc"] = "Sélection d'un élément sur le bureau ou dans l'explorateur de fichiers";
+                translations["system_event_disable_confirm_title"] = "Désactivation d'un son sur ce PC";
+                translations["system_event_disable_confirm_text"] = "Lorsqu'un son est désactivé sur ce PC, vous pouvez toujours l'importer, modifier, exporter, mais il ne sera pas lu sur ce PC.";
+                translations["system_event_disabled_label"] = "Désactivé";
+                translations["system_event_disabled_desc"] = "Désactivé sur ce PC";
+                translations["system_event_disable"] = "Désactiver sur ce PC";
+                translations["system_event_enable"] = "Activer sur ce PC";
                 translations["tab_current_scheme"] = "Thème sonore";
                 translations["tab_settings"] = "Paramètres";
                 translations["default_scheme_name"] = "Sons Windows par défaut";
@@ -187,7 +193,7 @@ namespace SharpTools
                 translations["startup_patch_not_elevated_text"] = "Relancez l'application en tant qu'Administrateur pour patcher le son de démarrage de Windows.";
                 translations["startup_patch_not_admin"] = "Le son de démarrage de Windows ne peut être patché car l'application ne dispose pas des droits Administrateur.";
                 translations["startup_patch_no_imageres_dll"] = "Le son de démarrage de Windows ne peut être patché car le fichier imageres.dll est introuvable.";
-                translations["startup_patch_not_possible"] = "Le son de démarrage de Windows ne peut pas être pacthé: opération non gérée pour le système actuel.";
+                translations["startup_patch_not_possible"] = "Le son de démarrage de Windows ne peut pas être patché: opération non gérée pour le système actuel.";
                 translations["startup_patch_not_recommended_title"] = "Patch du son de démarrage non recommandé";
                 translations["startup_patch_not_recommended_text"] = "Patcher le son de démarrage aide à réduire le délai de lecture mais requiert les droits admin et pourrait ne plus marcher après une mise à jour majeure du système. Continuer ?";
                 translations["playing_shutdown_sound"] = "Lecture du son d'arrêt de l'ordinateur";
@@ -315,6 +321,12 @@ namespace SharpTools
                 translations["event_menucommand_desc"] = "Selecting an option from a context menu";
                 translations["event_select_name"] = "Select";
                 translations["event_select_desc"] = "Selecting an item on the desktop or in the file explorer";
+                translations["system_event_disable_confirm_title"] = "Disable sound event";
+                translations["system_event_disable_confirm_text"] = "When a sound event is disabled on this PC, you can still import, edit, export it, but it will not be played on this PC.";
+                translations["system_event_disabled_label"] = "Disabled";
+                translations["system_event_disabled_desc"] = "Disabled on this PC";
+                translations["system_event_disable"] = "Disable on this PC";
+                translations["system_event_enable"] = "Enable on this PC";
                 translations["tab_current_scheme"] = "Sound scheme";
                 translations["tab_settings"] = "Settings";
                 translations["default_scheme_name"] = "Default Windows sounds";

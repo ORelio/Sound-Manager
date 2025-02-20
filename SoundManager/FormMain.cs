@@ -54,6 +54,7 @@ namespace SoundManager
             soundContextMenu_Play.Text = Translations.Get("sound_play");
             soundContextMenu_Reset.Text = Translations.Get("sound_reset");
             soundContextMenu_Remove.Text = Translations.Get("sound_remove");
+            soundContextMenu_Disable.Text = Translations.Get("system_event_disable");
             groupBoxImport.Text = Translations.Get("box_import_system_scheme");
             groupBoxSystemIntegration.Text = Translations.Get("box_system_integration");
             checkBoxPatchImageres.Text = Translations.Get("check_box_imageres_patch");
@@ -126,14 +127,9 @@ namespace SoundManager
 
             foreach (SoundEvent soundEvent in SoundEvent.GetAll())
             {
-                string iconName = Path.GetFileNameWithoutExtension(soundEvent.FileName);
-                Bitmap icon = soundIcons.GetObject(iconName, SoundManager.SoundIcons.Culture) as Bitmap;
-                if (icon != null)
-                    soundList.LargeImageList.Images.Add(iconName, icon);
                 ListViewItem item = soundList.Items.Add(soundEvent.DisplayName);
-                item.ToolTipText = soundEvent.Description;
-                item.ImageKey = iconName;
                 item.Tag = soundEvent;
+                RefreshEventItem(item);
             }
 
             // Load system sound schemes list
@@ -175,6 +171,42 @@ namespace SoundManager
             soundInfoNameBox.Text = SchemeMeta.Name;
             soundInfoAuthorBox.Text = SchemeMeta.Author;
             soundInfoAboutBox.Text = SchemeMeta.About;
+        }
+
+        /// <summary>
+        /// Refresh sound event icon and description in event list
+        /// </summary>
+        /// <param name="soundEvent">Sound Event to refresh</param>
+        private void RefreshEventItem(ListViewItem item)
+        {
+            SoundEvent soundEvent = item.Tag as SoundEvent;
+            string iconName = soundEvent.InternalName;
+            Bitmap icon = soundIcons.GetObject(iconName, SoundManager.SoundIcons.Culture) as Bitmap;
+
+            if (soundList.LargeImageList.Images.ContainsKey(iconName))
+                soundList.LargeImageList.Images.RemoveByKey(iconName);
+
+            if (icon != null)
+            {
+                if (soundEvent.Disabled)
+                {
+                    // Convert icon to grayscale
+                    for (int x = 0; x < icon.Width; x++)
+                        for (int y = 0; y < icon.Height; y++)
+                            icon.SetPixel(x, y, icon.GetPixel(x, y).GetBrightness() >= 0.9 ? Color.White : Color.LightGray);
+                }
+                soundList.LargeImageList.Images.Add(iconName, icon);
+            }
+
+            item.Text = soundEvent.DisplayName;
+            item.ToolTipText = soundEvent.Description;
+            item.ImageKey = iconName;
+
+            if (soundEvent.Disabled)
+            {
+                item.Text += String.Format("\n({0})", Translations.Get("system_event_disabled_label"));
+                item.ToolTipText += String.Format(" ({0})", Translations.Get("system_event_disabled_desc"));
+            }
         }
 
         /// <summary>
@@ -255,6 +287,17 @@ namespace SoundManager
         }
 
         /// <summary>
+        /// Show context menu for a sound event
+        /// </summary>
+        /// <param name="soundEvent">Associated sound event</param>
+        /// <param name="positionOnScreen">Menu position on screen</param>
+        private void ShowSoundContextMenu(SoundEvent soundEvent, Point positionOnScreen)
+        {
+            soundContextMenu_Disable.Text = Translations.Get(soundEvent.Disabled ? "system_event_enable" : "system_event_disable");
+            soundContextMenu.Show(positionOnScreen);
+        }
+
+        /// <summary>
         /// Handle mouse clicks on sound list: context menu, play on single click, change on double click
         /// </summary>
         private void soundList_MouseClick(object sender, MouseEventArgs e)
@@ -263,7 +306,7 @@ namespace SoundManager
                 && e.Button == MouseButtons.Right
                 && soundList.FocusedItem.Bounds.Contains(e.Location) == true)
             {
-                soundContextMenu.Show(Cursor.Position);
+                ShowSoundContextMenu(soundList.FocusedItem.Tag as SoundEvent, Cursor.Position);
             }
         }
 
@@ -306,7 +349,7 @@ namespace SoundManager
                 {
                     if (soundList.Focused && soundList.FocusedItem != null)
                     {
-                        soundContextMenu.Show(new Point(
+                        ShowSoundContextMenu(soundList.FocusedItem.Tag as SoundEvent, new Point(
                             soundList.PointToScreen(Point.Empty).X + soundList.FocusedItem.Bounds.Location.X + soundList.FocusedItem.Bounds.Width / 2,
                             soundList.PointToScreen(Point.Empty).Y + soundList.FocusedItem.Bounds.Location.Y + soundList.FocusedItem.Bounds.Height / 2
                         ));
@@ -614,6 +657,28 @@ namespace SoundManager
             {
                 SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
                 SoundScheme.Remove(soundEvent);
+            }
+        }
+
+        /// <summary>
+        /// Disable or Enable a sound event
+        /// </summary>
+        private void soundContextMenu_Disable_Click(object sender, EventArgs e)
+        {
+            if (soundList.FocusedItem != null)
+            {
+                if (Settings.DisabledSoundEvents.Count != 0
+                    || MessageBox.Show(
+                        Translations.Get("system_event_disable_confirm_text"),
+                        Translations.Get("system_event_disable_confirm_title"),
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question) == DialogResult.OK
+                    )
+                {
+                    SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
+                    soundEvent.Disabled = !soundEvent.Disabled;
+                    RefreshEventItem(soundList.FocusedItem);
+                }
             }
         }
 

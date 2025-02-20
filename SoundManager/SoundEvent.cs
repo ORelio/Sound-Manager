@@ -35,6 +35,7 @@ namespace SoundManager
             return allEvents.First(e => e.Type == eventType);
         }
 
+        private string _internalName;
         private string _displayName;
         private string _description;
         private string _filePath;
@@ -52,6 +53,7 @@ namespace SoundManager
         /// <param name="eventType">Specify the sound event type corresponding to this item, for events needing special treatment</param>
         private SoundEvent(string name, string[] regKeys, string legacyFilename, EventType? eventType)
         {
+            this._internalName = name;
             this._displayName = Translations.Get("event_" + name.ToLower() + "_name");
             this._description = Translations.Get("event_" + name.ToLower() + "_desc");
             this._filePath = Path.Combine(DataDirectory, name + ".wav");
@@ -60,6 +62,11 @@ namespace SoundManager
             this._regKeys = regKeys;
             this._eventType = eventType;
         }
+
+        /// <summary>
+        /// Internal name of the sound event
+        /// </summary>
+        public string InternalName { get { return _internalName; } }
 
         /// <summary>
         /// Display name of the sound event
@@ -95,6 +102,29 @@ namespace SoundManager
         /// Specify the sound event type corresponding to this item, for events needing special treatment
         /// </summary>
         public EventType? Type { get { return _eventType; } }
+
+        /// <summary>
+        /// Specify whether the sound event is disabled. Disabled sound events will not play.
+        /// </summary>
+        public bool Disabled
+        {
+            get
+            {
+                return Settings.DisabledSoundEvents.Contains(_internalName);
+            }
+            set
+            {
+                if (value && !Settings.DisabledSoundEvents.Contains(_internalName))
+                    Settings.DisabledSoundEvents.Add(_internalName);
+
+                if (!value && Settings.DisabledSoundEvents.Contains(_internalName))
+                    Settings.DisabledSoundEvents.Remove(_internalName);
+
+                SoundScheme.Setup();
+                SoundScheme.Apply(SoundScheme.GetSchemeSoundManager(), Settings.MissingSoundUseDefault);
+                Settings.Save();
+            }
+        }
 
         /// <summary>
         /// Initialize all sound events
