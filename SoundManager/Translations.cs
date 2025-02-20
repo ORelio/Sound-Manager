@@ -128,6 +128,8 @@ namespace SharpTools
                 translations["event_batterycritical_desc"] = "Avertissement de batterie critique";
                 translations["event_email_name"] = "Email";
                 translations["event_email_desc"] = "Réception d'un Email";
+                translations["event_reminder_name"] = "Rappel";
+                translations["event_reminder_desc"] = "Rappel de calendrier";
                 translations["event_print_name"] = "Impression";
                 translations["event_print_desc"] = "Impression terminée";
                 translations["event_appopen_name"] = "Lancer App";
@@ -291,6 +293,8 @@ namespace SharpTools
                 translations["event_batterycritical_desc"] = "Critical battery warning";
                 translations["event_email_name"] = "Email";
                 translations["event_email_desc"] = "Receiving an Email";
+                translations["event_reminder_name"] = "Reminder";
+                translations["event_reminder_desc"] = "Calendar reminder";
                 translations["event_print_name"] = "Print";
                 translations["event_print_desc"] = "Print complete";
                 translations["event_appopen_name"] = "Launch App";

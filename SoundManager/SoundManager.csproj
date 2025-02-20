@@ -147,6 +147,7 @@
     <None Include="SoundIcons\Balloon.png" />
     <None Include="SoundIcons\Navigate.png" />
     <None Include="SoundIcons\RecycleBin.png" />
+    <None Include="SoundIcons\Reminder.png" />
     <Content Include="SoundManager.ico" />
   </ItemGroup>
   <ItemGroup>
