@@ -22,19 +22,18 @@ Les principales fonctionnalités sont :
  Utilisation
 =============
 
-Installation (si vous utilisez la version portable) :
+Installation (si vous utilisez la version portable)
  - Extraire l'archive dans un endroit fixe tel que C:\Program Files\SoundManager ou Documents\SoundManager
  - Lancer SoundManager.exe, et activer les intégrations avec le système de votre choix dans l'onglet Paramètres
  - Si vous le souhaitez, créez un raccourci vers SoundManager.exe et placez-le sur votre Bureau
 
-Désinstallation (si vous utilisez la version portable) :
+Désinstallation (si vous utilisez la version portable)
  - Lancer SoundManager.exe, et cliquer sur le bouton Désinstaller dans l'onglet Paramètres
  - Supprimer le répertoire SoundManager créé précédemment dans C:\Program Files ou Documents
  - Si créé précédemment, supprimer le raccourci présent sur le Bureau
 
-Créer un thème sonore :
+Créer un thème sonore
  - Préparez des fichiers son, de préférence en WAV, via un programme d'édition tel qu'Audacity
- - Il est recommandé de s'assurer que le volume est cohérent entre vos différents fichiers
  - Charger un thème sonore ou cliquer sur Réinitialiser pour partir du jeu de sons par défaut
  - Charger les sons un par un par glisser-déposer ou un clic droit > Remplacer
  - Définir les informations de votre thème : image, auteur, description...
@@ -45,6 +44,64 @@ Télécharger des thèmes
  - Ou alternativement, utilisez l'outil de téléchargement fourni via l'onglet À propos
    Dans ce cas, le dossier des thèmes est créé à côté de SoundManager.exe (mode portable) ou dans Musique (mode installé)
  - N'hésitez pas à m'envoyer les vôtres pour ajout sur le dépôt de thèmes :)
+
+===============================
+ Astuces de création de thèmes
+===============================
+
+Un thème sonore fait partie intégrante de l'expérience utilisateur du système d'exploitation.
+Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréable :
+
+1. Fréquence et durée
+
+   Choisissez une durée adaptée à la fréquence à laquelle un évènement sonore se produit.
+   Vous éviterez ainsi la fatigue induite par la lecture trop fréquente d'un son trop long :
+
+    Fréquence | Exemples de sons                       | Durée maximum conseillée
+    ----------+----------------------------------------+--------------------------
+    Très Rare | Démarrage, Arrêt, Erreur USB, Batterie | 10 secondes
+    Rare      | Connexion, Déconnexion, Corbeille      | 5 secondes
+    Régulie   | Information, Erreur, USB, Accès Admin  | 1 seconde
+    Fréquent  | Par défaut, Lancer/Fermer App          | 300 millisecondes
+    Répétitif | Navigation, Menu, Menu Clic            | 100 millisecondes
+
+   En cas de doute, vous pouvez vous référer à la durée des sons du thème par défaut de Windows.
+   Pensez à retirer le silence avant et après l'effet sonore s'il y en a un dans le fichier son.
+
+2. Volume sonore
+
+   Gardez un volume cohérent entre vos différents fichiers, et par rapport au thème sonore par défaut de Windows :
+   - L'évènement "Par défaut" sert de référence : Il est lu en ajustant le volume du PC depuis la zone de notification.
+   - Le thème sonore doit avoir un volume raisonnablement bas pour être entendu sans gêner l'utilisation du PC.
+   - Certains évènements très fréquents comme Navigation peuvent avoir un volume plus faible que les autres.
+
+3. Groupes de sons
+
+   Certains évènements peuvent être regroupés par similarité.
+   Votre thème semblera plus cohérent à l'usage si les sons d'un même groupe présentent une similitude :
+    - Allumage du PC : Démarrage, Arrêt
+    - Session : Connexion, Déconnexion
+    - Dialogues : Information, Question, Avertissement, Erreur
+    - Périphériques : Ajout USB, Retrait USB, Erreur USB
+    - Programmes : Lancer, Fermer, Minimiser, Restaurer, Agrandir, Réduire
+    - Messagerie : Email, Rappel
+    - Batterie : Faible, Critique
+    - Menu déroulant : Menu, Menu Clic
+
+4. Recycler les sons
+
+   Idéalement, il faut définir au moins les sons allant de Démarrage à Accès Admin pour avoir un thème à peu près complet.
+   Mais si vous créez un thème à partir de fichiers existants, il peut vous en manquer pour compléter votre thème.
+   Plutôt que de laisser des évènements vides, vous pouvez essayer de recycler les sons à votre disposition :
+    - Découper une portion d'un plus long et l'utiliser sur un évènement sonore plus court
+    - Lire un son à l'envers, ex Ajout USB -> Retrait USB (à l'envers), Connexion -> Déconnexion (à l'envers)
+    - En dernier recours, vous pouvez copier-coller des sons. Quelques conseils pour que cela se remarque moins :
+       - Garder des sons différents au sein d'un même groupe, par exemple Evènements de session ou Boites de dialogue
+       - Faire les copier-coller sur des évènements de teneur similaires mais de groupes différents :
+          - Information -> Impression
+          - Avertissement -> Accès Admin
+          - Erreur -> Batterie critique
+          - Infobulle -> Email
 
 ===================
  Notes de versions
