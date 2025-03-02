@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.3.1 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.4.0 - Par ORelio - Microzoom.fr ====
 =========== https://microzoom.fr/gestionnaire-de-sons ===========
 =================================================================
 
@@ -45,9 +45,9 @@ Télécharger des thèmes
    Dans ce cas, le dossier des thèmes est créé à côté de SoundManager.exe (mode portable) ou dans Musique (mode installé)
  - N'hésitez pas à m'envoyer les vôtres pour ajout sur le dépôt de thèmes :)
 
-===============================
- Astuces de création de thèmes
-===============================
+============================================
+ Astuces pour la création de thèmes sonores
+============================================
 
 Un thème sonore fait partie intégrante de l'expérience utilisateur du système d'exploitation.
 Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréable :
@@ -123,6 +123,7 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
  - 3.2.1 : Refonte de l'icône du programme, correction de crash si lancé depuis un \\partage\réseau
  - 3.3.0 : Retravaillé le système de patch du son de démarrage, ajoutant le support pour Windows 8, 10 et 11
  - 3.3.1 : Accès rapide au fichier de configuration avancé, meilleure compatibilité avec les lecteurs d'écran
+ - 3.4.0 : Ajout de la possibilité de désactiver un son sur votre PC. Correction Email sous Win 8+, Ajout Rappel
 
 =====
  FAQ
@@ -131,6 +132,9 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
 Q: Lorsque le patch du son de démarrage est activé, celui-ci n'est pas correctement mis à jour ?
 R: Les fichiers système peuvent être en cours d'utilisation, essayez de redémarrer et réappliquer le thème sonore.
 R: Une mise à jour majeure du système peut également enlever le patch, essayez de désactiver et réactiver l'option.
+
+Q: Il y a des évènements sonores qui ne me plaisent pas. Comment les enlever ?
+R: Clic droit sur l'évènement sonore non souhaité > Désactiver sur ce PC
 
 Q : En utilisant le thème Windows XP, le son de démarrage devrait se lire à l'ouverture de session. Comment faire ?
 R : Paramètres > Fichier de config. > régler « PreferStartupSoundOnLogon=True » et enregistrer
@@ -147,10 +151,11 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
 
  - Bibliothèque Privilege20 du magazine MSDN, Mars 2005
  - Bibliothèque Tri-State Tree View, CodeProject no. 202435
- - Polices Teko et Dancing Script de Google Fonts (Logo)
+ - Police Teko par Manushi Parikh (Logo)
+ - Police Dancing Script par Pablo Impallari (Logo)
  - Icône Téléchargement par Microsoft Corporation
  - Icône Clipping Sound par RAD.E8
 
 +--------------------+
-| © 2009-2024 ORelio |
+| © 2009-2025 ORelio |
 +--------------------+

@@ -1,11 +1,11 @@
 ========================================================
-==== SoundManager v3.3.1 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.4.0 - By ORelio - Microzoom.fr ====
 ======= https://github.com/ORelio/Sound-Manager/ =======
 ========================================================
 
 Thanks for downloading SoundManager!
 
-SoundManager is a free software allowing to easily create and share Windows sound schemes.
+SoundManager is free software allowing to easily create and share Windows sound schemes.
 All Windows versions from Windows XP SP3 to Windows 11 are supported.
 
 Main features are the following:
@@ -45,9 +45,9 @@ Download sound schemes
    In that case, the download folder is alongside SoundManager.exe (portable mode) or in Music folder (setup mode)
  - Do not hesitate to submit your own sound schemes to be added into the repository :)
 
-===========================
- Tips for creating schemes
-===========================
+=================================
+ Tips for creating sound schemes
+=================================
 
 A sound scheme is an integral part of the operating system user experience.
 Here are some tips to make your sound scheme both useful and enjoyable:
@@ -123,6 +123,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
  - 3.2.1 : Program icon overhaul, fix crash when launching from a \\network\share
  - 3.3.0 : Rework startup sound patching, adding support for Windows 8, 10 and 11
  - 3.3.1 : Add quick access to advanced config file, improve compatibility with screen readers
+ - 3.4.0 : Add ability to disable some sounds on your PC, fix Email on Windows 8+, add Reminder
 
 =====
  FAQ
@@ -131,6 +132,9 @@ Here are some tips to make your sound scheme both useful and enjoyable:
 Q: When patching the built-in system startup sound, it does not properly update?
 A: System files may be in use, try rebooting and reapplying the sound scheme.
 A: A major system update may also revert or break the patch, try disabling and enabling the setting.
+
+Q: There are some sound events I don't like. How to mute them?
+R: Right click on undesired sound event > Disable on this PC
 
 Q: When using the Windows XP sound scheme, the startup sound should also play on logon. How to do this?
 R: Settings > Edit config file > set "PreferStartupSoundOnLogon=True" and save
@@ -147,10 +151,11 @@ The SoundManager program has been created using the following resources:
 
  - Privilege20 library from MSDN magazine, March 2005
  - Tri-State Tree View library, from CodeProject no. 202435
- - Teko & Dancing Script Fonts from Google Fonts (Logo)
+ - Teko font by Manushi Parikh (Logo)
+ - Dancing Script font by Pablo Impallari (Logo)
  - Download icon, by Microsoft Corporation
  - Clipping Sound Icon by RAD.E8
 
 +--------------------+
-| © 2009-2024 ORelio |
+| © 2009-2025 ORelio |
 +--------------------+

@@ -36,9 +36,9 @@ HKEY_CURRENT_USER\AppEvents\Schemes
 ````
 The `SoundManager` scheme is automatically created on first launch, pointing to:
 ````
-C:\Users\<USER>\AppData\Roaming\SoundManager\Media\
+C:\Users\%USERNAME%\AppData\Roaming\SoundManager\Media\
 ````
-Sound files such as `Startup.wav`, `Shutdown.wav` and so on are placed here. Since they are automatically played by the system, the SoundManager app is not required to run once the sound scheme has been set, except if you want to restore the startup/shutdown sounds on Windows 8+ (see below).
+Sound files such as `Startup.wav`, `Shutdown.wav` and so on are placed here. Since they are automatically played by the system, the SoundManager app is not required to run once the sound scheme has been set, except if you want to restore the missing sounds on Windows 8+ (see below).
 
 SoundManager handles registry differences between Windows versions, such as the balloon sound which [does not play by default](https://winaero.com/blog/fix-windows-plays-no-sound-for-tray-balloon-tips-notifications/) on Windows 7/8 and changes again on Windows 10.
 
@@ -82,13 +82,13 @@ On Windows 8, the shutdown sound was removed for further [performance reasons](h
 * Process determines if the Logoff or Shutdown sound should be played
 * Sound is played, then ShutdownBlockReason is removed and the process exits
 
-This is typically how `explorer.exe` was handling the thing on Windows 7, but you'll get yet another process sleeping in background, separate from `explorer.exe`. As such, this feature can be disabled entierely in the SoundManager settings.
+This is typically how `explorer.exe` was handling the thing on Windows 7, but you'll get yet another process sleeping in background, separate from `explorer.exe`. This feature can be disabled entierely in the SoundManager settings.
 
 SoundManager also allows patching the startup sound on Windows 8 and greater. When used in combination with the background sound player process, the system itself will play the native startup sound, and the background process from SoundManager will play the other sounds. This helps reducing latency in startup sound playback since the system will play the startup sound with high priority.
 
 ## Build instructions
 
-In order to maintain support for Windows XP SP3, SoundManager targets .NET Framework v4.0 and builds under Visual Studio 2010. If you want to build without support for Windows XP, you should be able to build using the latest version of [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/). The following instructions detail how to build with XP support.
+In order to maintain support for Windows XP SP3, SoundManager targets .NET Framework v4.0 and builds under Visual Studio 2010. If you want to build without support for Windows XP, you should be able to build by importing the project into the latest version of [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/). The following instructions detail how to build with XP support.
 
 For proper support of newer operating systems such as Windows 10, SoundManager needs APIs such as [Task Scheduler 2.0](https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-2-0-interfaces) and [ShutdownBlockReason](https://devblogs.microsoft.com/oldnewthing/20120614-00/?p=7373), which aren't present on XP, so building under Windows XP will not work. Building was tested successfully under Windows Vista, 7, 8, 10 and 11 using Visual Studio 2010.
 

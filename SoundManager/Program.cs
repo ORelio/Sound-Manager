@@ -9,7 +9,7 @@ namespace SoundManager
 {
     /// <summary>
     /// Application allowing to create, load and share Windows sound schemes
-    /// By ORelio - (c) 2009-2024 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2009-2025 - Available under the CDDL-1.0 license
     /// </summary>
     public static class Program
     {
