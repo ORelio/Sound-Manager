@@ -65,7 +65,7 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
     Fréquent  | Par défaut, Lancer/Fermer App          | 300 millisecondes
     Répétitif | Navigation, Menu, Menu Clic            | 100 millisecondes
 
-   En cas de doute, vous pouvez vous référer à la durée des sons du thème par défaut de Windows.
+   En cas de doute, vous pouvez vous référer à la durée des sons du thème par défaut de Windows XP ou Vista/7.
    Pensez à retirer le silence avant et après l'effet sonore s'il y en a un dans le fichier son.
 
 2. Volume sonore

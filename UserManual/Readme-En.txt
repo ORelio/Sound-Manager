@@ -55,7 +55,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
 1. Frequency and Duration
 
    Choose a duration that is appropriate for the frequency with which a sound event occurs.
-   This will help you avoid fatigue caused by playing too often a sound that is too long :
+   This will help you avoid fatigue caused by playing too often a sound that is too long:
 
     Frequency  | Sound Examples                        | Recommended Maximum Duration
     -----------+---------------------------------------+------------------------------
@@ -65,7 +65,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
     Frequent   | Default, Launch/Close App             | 300 milliseconds
     Repetitive | Navigate, Menu, Menu Click            | 100 milliseconds
 
-   If in doubt, you can refer to the sound durations inside the default Windows sound scheme.
+   If in doubt, you can refer to the sound durations inside the default Windows XP or Vista/7 sound scheme.
    Remember to remove silences before and after each sound effect if present in the sound files.
 
 2. Volume level
@@ -90,11 +90,11 @@ Here are some tips to make your sound scheme both useful and enjoyable:
 
 4. Recycling sounds
 
-   Ideally, you should define at Startup to Admin Access to have a fairly complete scheme.
+   Ideally, you should define sounds from Startup to Admin Access to have a fairly complete scheme.
    But if you create a scheme from existing files, you may be missing some to complete your scheme.
    Rather than leaving empty events, you can try recycling the sounds at your disposal:
     - Cut a portion of a longer event and use it on a shorter sound event
-    - Play a sound in reverse, e.g. Add Connect -> USB Remove (reversed), Log On -> Log Off (reversed)
+    - Play a sound in reverse, e.g. USB Connect -> USB Remove (reversed), Log On -> Log Off (reversed)
     - As a last resort, copy and paste sounds. Some tips to make this less noticeable:
        - Keep different sounds within the same group, e.g. inside Session Events or Dialogs
        - Copy and paste events of similar type but in different groups:
