@@ -236,17 +236,28 @@ namespace SoundManager
                     ? soundStartup
                     : soundLogon;
 
-            // Handle case where system has rebooted - startup sound
+            // Handle case where system has rebooted - startup sound instead of logon?
             if (bootTime != lastBootTime)
             {
                 File.WriteAllText(LastBootFile, bootTime);
-                if (SystemStartupSound.Enabled)
+                if (!SystemStartupSound.Enabled)
                 {
-                    soundToPlay = null; // Built-in system startup sound will play already
+                    // We need to emulate the startup sound
+                    soundToPlay = soundStartup;
                 }
-                else if (File.Exists(soundStartup.FilePath))
+                else // The system itself plays the startup sound
                 {
-                    soundToPlay = soundStartup; // We need to emulate the startup sound
+                    if (!AccountProperties.AccountHasPassword(Environment.UserName) || AccountProperties.AccountHasAutoLogon(Environment.UserName))
+                    {
+                        // Built-in system startup sound plays on logon when the account logs automatically
+                        soundToPlay = null;
+                    }
+                    else
+                    {
+                        // Built-in system startup sound already played on the logon screen
+                        // Once the user logs on after authenticating, the logon sound is supposed to play
+                        soundToPlay = soundLogon;
+                    }
                 }
             }
 

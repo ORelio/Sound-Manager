@@ -75,6 +75,7 @@
     <Compile Include="IconExtractor.cs" />
     <Compile Include="ImageresPatcher.cs" />
     <Compile Include="INIFile.cs" />
+    <Compile Include="AccountProperties.cs" />
     <Compile Include="Privilege20\NativeMethods.cs" />
     <Compile Include="Privilege20\Privilege.cs" />
     <Compile Include="Privilege20\SafeTokenHandle.cs" />

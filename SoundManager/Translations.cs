@@ -195,7 +195,7 @@ namespace SharpTools
                 translations["startup_patch_no_imageres_dll"] = "Le son de démarrage de Windows ne peut être patché car le fichier imageres.dll est introuvable.";
                 translations["startup_patch_not_possible"] = "Le son de démarrage de Windows ne peut pas être patché: opération non gérée pour le système actuel.";
                 translations["startup_patch_not_recommended_title"] = "Patch du son de démarrage non recommandé";
-                translations["startup_patch_not_recommended_text"] = "Patcher le son de démarrage aide à réduire le délai de lecture mais requiert les droits admin et pourrait ne plus marcher après une mise à jour majeure du système. Continuer ?";
+                translations["startup_patch_not_recommended_text"] = "Patcher le son de démarrage requiert les droits admin et pourrait ne plus marcher après une mise à jour majeure du système. Continuer ?";
                 translations["playing_shutdown_sound"] = "Lecture du son d'arrêt de l'ordinateur";
                 translations["playing_logoff_sound"] = "Lecture du son de fermeture de session";
                 translations["scheme_file_desc"] = "Fichier de Thème Sonore";
@@ -366,7 +366,7 @@ namespace SharpTools
                 translations["startup_patch_no_imageres_dll"] = "Cannot patch the startup sound: cannot find imageres.dll.";
                 translations["startup_patch_not_possible"] = "Cannot patch the startup sound: operation not supported for this operating system.";
                 translations["startup_patch_not_recommended_title"] = "Startup sound patch not recommended";
-                translations["startup_patch_not_recommended_text"] = "Patching the startup sound helps reducing playback delay, but requires admin rights and might break after a major system update. Proceed?";
+                translations["startup_patch_not_recommended_text"] = "Patching the startup sound requires admin privileges and might break after a major system update. Proceed?";
                 translations["playing_shutdown_sound"] = "Playing Shutdown sound";
                 translations["playing_logoff_sound"] = "Playing Logoff sound";
                 translations["scheme_file_desc"] = "Sound Scheme File";
