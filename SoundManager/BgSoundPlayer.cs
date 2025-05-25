@@ -247,7 +247,7 @@ namespace SoundManager
                 }
                 else // The system itself plays the startup sound
                 {
-                    if (!AccountProperties.AccountHasPassword(Environment.UserName) || AccountProperties.AccountHasAutoLogon(Environment.UserName))
+                    if (!AccountProperties.HasPassword(Environment.UserName) || AccountProperties.HasAutoLogon(Environment.UserName))
                     {
                         // Built-in system startup sound plays on logon when the account logs automatically
                         soundToPlay = null;

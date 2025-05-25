@@ -30,7 +30,7 @@ namespace SharpTools
         /// Works by trying to log in as the current user without a password
         /// </remarks>
         /// <seealso>https://stackoverflow.com/questions/6556594/how-to-check-if-windows-user-has-a-password-set</seealso>
-        public static bool AccountHasPassword(string username)
+        public static bool HasPassword(string username)
         {
             IntPtr logonToken;
             bool logonSuccess = LogonUser(username, null, "", LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, out logonToken);
@@ -51,7 +51,7 @@ namespace SharpTools
         /// <remarks>
         /// Works by inspecting Winlogon settings in the registry
         /// </remarks>
-        public static bool AccountHasAutoLogon(string username)
+        public static bool HasAutoLogon(string username)
         {
             string enabled = Winlogon.GetValue(Winlogon_AutologonEnable, "0") as string;
             if (enabled != "1")
