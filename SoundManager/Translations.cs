@@ -150,6 +150,8 @@ namespace SharpTools
                 translations["event_menucommand_desc"] = "Sélection d'une option dans un menu contextuel";
                 translations["event_select_name"] = "Sélection";
                 translations["event_select_desc"] = "Sélection d'un élément sur le bureau ou dans l'explorateur de fichiers";
+                translations["event_loadscheme_name"] = "Charger Thème";
+                translations["event_loadscheme_desc"] = "Chargement du thème sonore";
                 translations["system_event_disable_confirm_title"] = "Désactivation d'un son sur ce PC";
                 translations["system_event_disable_confirm_text"] = "Lorsqu'un son est désactivé sur ce PC, vous pouvez toujours l'importer, modifier, exporter, mais il ne sera pas lu sur ce PC.";
                 translations["system_event_disabled_label"] = "Désactivé";
@@ -321,6 +323,8 @@ namespace SharpTools
                 translations["event_menucommand_desc"] = "Selecting an option from a context menu";
                 translations["event_select_name"] = "Select";
                 translations["event_select_desc"] = "Selecting an item on the desktop or in the file explorer";
+                translations["event_loadscheme_name"] = "Load Scheme";
+                translations["event_loadscheme_desc"] = "Loading the Sound Scheme";
                 translations["system_event_disable_confirm_title"] = "Disable sound event";
                 translations["system_event_disable_confirm_text"] = "When a sound event is disabled on this PC, you can still import, edit, export it, but it will not be played on this PC.";
                 translations["system_event_disabled_label"] = "Disabled";

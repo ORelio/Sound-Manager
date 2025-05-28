@@ -229,5 +229,44 @@ namespace SoundManager
                 SaveSchemeInfo();
             }
         }
+
+        /// <summary>
+        /// Get a suitable sound event to play on scheme load: LoadScheme > Startup > Logon
+        /// </summary>
+        public static SoundEvent EventToPlayOnLoad
+        {
+            get
+            {
+                SoundEvent loadSchemeSound = SoundEvent.Get(SoundEvent.EventType.LoadScheme);
+                SoundEvent startupSound = SoundEvent.Get(SoundEvent.EventType.Startup);
+                SoundEvent logonSound = SoundEvent.Get(SoundEvent.EventType.Logon);
+
+                // Use LoadScheme sound for schemes having it
+                if (File.Exists(loadSchemeSound.FilePath) && !loadSchemeSound.Disabled)
+                    return loadSchemeSound;
+
+                // Fallback: For schemes lacking a startup sound, use logon sound
+                if (!File.Exists(startupSound.FilePath) && !logonSound.Disabled)
+                    return logonSound;
+
+                // Fallback: For schemes having a startup sound, use it unless it is Vista/7 (too common)
+                try
+                {
+                    using (var md5 = System.Security.Cryptography.MD5.Create())
+                    {
+                        using (var stream = File.OpenRead(startupSound.FilePath))
+                        {
+                            string startupHash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+                            if (startupHash == "155f2a0f886570157416ea85f4b4c613") // Windows Vista/7 Startup.wav
+                            {
+                                return logonSound; // Startup sound is too common, use logon sound instead
+                            }
+                        }
+                    }
+                }
+                catch { /* fall back to startup sound on error */ }
+                return startupSound;
+            }
+        }
     }
 }

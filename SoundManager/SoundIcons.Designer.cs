@@ -183,6 +183,16 @@ namespace SoundManager {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LoadScheme {
+            get {
+                object obj = ResourceManager.GetObject("LoadScheme", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logoff {
             get {
                 object obj = ResourceManager.GetObject("Logoff", resourceCulture);

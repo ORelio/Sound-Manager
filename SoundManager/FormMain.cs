@@ -480,7 +480,7 @@ namespace SoundManager
                 SoundArchive.Import(schemePath);
                 RefreshSchemeMetadata();
                 soundList.Select();
-                soundContextMenu_Play_Click(this, EventArgs.Empty);
+                PlaySoundEvent(SchemeMeta.EventToPlayOnLoad);
             }
             catch (Exception importException)
             {
@@ -519,7 +519,27 @@ namespace SoundManager
         }
 
         /// <summary>
-        /// Play a sound event
+        /// Play a sound event (internal)
+        /// </summary>
+        private void PlaySoundEvent(SoundEvent soundEvent)
+        {
+            if (File.Exists(soundEvent.FilePath))
+            {
+                try
+                {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(soundEvent.FilePath);
+                    player.Play();
+                }
+                catch (InvalidOperationException)
+                {
+                    //Not a WAV file
+                    File.Delete(soundEvent.FilePath);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Play a sound event using context menu
         /// </summary>
         private void soundContextMenu_Play_Click(object sender, EventArgs e)
         {
@@ -528,16 +548,7 @@ namespace SoundManager
                 SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
                 if (File.Exists(soundEvent.FilePath))
                 {
-                    try
-                    {
-                        System.Media.SoundPlayer player = new System.Media.SoundPlayer(soundEvent.FilePath);
-                        player.Play();
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        //Not a WAV file
-                        File.Delete(soundEvent.FilePath);
-                    }
+                    PlaySoundEvent(soundEvent);
                 }
                 else // No sound file associated with this event
                 {

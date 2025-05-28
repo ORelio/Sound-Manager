@@ -157,6 +157,9 @@
   <data name="Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SoundIcons\Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LoadScheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SoundIcons\LoadScheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Logoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SoundIcons\Logoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
