@@ -284,7 +284,7 @@
             this.soundList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.soundList.Location = new System.Drawing.Point(11, 119);
             this.soundList.Name = "soundList";
-            this.soundList.Size = new System.Drawing.Size(401, 297);
+            this.soundList.Size = new System.Drawing.Size(396, 292);
             this.soundList.TabIndex = 7;
             this.soundList.UseCompatibleStateImageBehavior = false;
             this.soundList.SelectedIndexChanged += new System.EventHandler(this.soundList_SelectedIndexChanged);
