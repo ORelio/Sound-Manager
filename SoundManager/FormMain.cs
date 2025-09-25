@@ -887,7 +887,7 @@ namespace SoundManager
             )
             {
                 Program.Uninstall();
-                Program.Setup(true, true);
+                Program.Setup(forceResetSounds: true, systemIntegration: true, offerImportCurrentScheme: false);
                 Process.Start(Application.ExecutablePath);
                 Close();
             }

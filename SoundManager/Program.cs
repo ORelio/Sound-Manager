@@ -28,7 +28,7 @@ namespace SoundManager
                 switch (args[0].ToLowerInvariant())
                 {
                     case RuntimeConfig.CmdArgumentSetup:
-                        Setup(false, true);
+                        Setup(forceResetSounds: false, systemIntegration: true, offerImportCurrentScheme: false);
                         Environment.Exit(0);
                         break;
 
@@ -78,7 +78,7 @@ namespace SoundManager
                 }
             }
 
-            Setup(false, false);
+            Setup(forceResetSounds: false, systemIntegration: false, offerImportCurrentScheme: importFile == null);
             Application.Run(new FormMain(importFile));
         }
 
@@ -87,18 +87,41 @@ namespace SoundManager
         /// </summary>
         /// <param name="forceResetSounds">Also reset all sounds to their default values</param>
         /// <param name="systemIntegration">Also setup maximum system integration</param>
-        public static void Setup(bool forceResetSounds, bool systemIntegration)
+        /// <param name="offerImportCurrentScheme">Offer to import the active scheme if changed externally</param>
+        public static void Setup(bool forceResetSounds, bool systemIntegration, bool offerImportCurrentScheme)
         {
             bool createDataDir = !Directory.Exists(RuntimeConfig.LocalDataFolder);
 
             if (createDataDir)
                 Directory.CreateDirectory(RuntimeConfig.LocalDataFolder);
 
+            SoundScheme activeScheme = SoundScheme.GetActiveScheme();
+            if (offerImportCurrentScheme && SoundScheme.AlreadySetup() && activeScheme != null && !activeScheme.IsSchemeManager)
+            {
+                if (MessageBox.Show(
+                    String.Format("{0}\n\n{1}", Translations.Get("auto_import_offer_text"), activeScheme.ToString()),
+                    Translations.Get("auto_import_offer_title"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    forceResetSounds = true;
+                }
+            }
+
             SoundScheme.Setup();
 
             if (forceResetSounds || createDataDir)
+            {
+                SchemeMeta.ResetAll();
+                if (activeScheme != null && !activeScheme.IsDefault)
+                {
+                    SchemeMeta.Name = activeScheme.ToString();
+                    SchemeMeta.Author = "";
+                    SchemeMeta.About = "";
+                }
                 foreach (SoundEvent soundEvent in SoundEvent.GetAll())
-                    SoundScheme.CopyDefault(soundEvent);
+                    SoundScheme.CopyDefault(soundEvent, activeScheme);
+            }
 
             SoundScheme.Apply(SoundScheme.GetSchemeSoundManager(), true);
 

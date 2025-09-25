@@ -53,9 +53,57 @@ namespace SoundManager
             return displayName;
         }
 
+        /// <summary>
+        /// Whether this sound scheme is the Sound Manager scheme
+        /// </summary>
+        /// <returns>TRUE if the sound scheme is the Sound Manager scheme</returns>
+        public bool IsSchemeManager
+        {
+            get
+            {
+                return this.internalName == SchemeManager;
+            }
+        }
+
+        /// <summary>
+        /// Whether the sound scheme is the system default scheme
+        /// </summary>
+        /// <returns>TRUE if the sound scheme is the default sound scheme</returns>
+        public bool IsDefault
+        {
+            get
+            {
+                return this.internalName == SchemeDefault;
+            }
+        }
+
         // ============================= //
         // == Sound scheme management == //
         // ============================= //
+
+        /// <summary>
+        /// Get active sound scheme for the current user
+        /// </summary>
+        /// <returns>Active Scheme or NULL if data not found</returns>
+        public static SoundScheme GetActiveScheme()
+        {
+            string internalName = RegCurrentUser.OpenSubKey(RegSchemes).GetValue(null) as string;
+            if (internalName != null)
+            {
+                foreach (SoundScheme scheme in GetSchemeList())
+                    if (scheme.internalName == internalName)
+                        return scheme;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Check if the "SoundManager" sound scheme already exists in registry
+        /// </summary>
+        public static bool AlreadySetup()
+        {
+            return RegCurrentUser.OpenSubKey(RegNames + SchemeManager, false) != null;
+        }
 
         /// <summary>
         /// Create the "SoundManager" sound scheme in registry
@@ -147,7 +195,7 @@ namespace SoundManager
         /// <summary>
         /// Get the list of all sound schemes in registry
         /// </summary>
-        /// <returns>A list of sound shemes, key is display name, value is internal name</returns>
+        /// <returns>An array of sound shemes</returns>
         public static SoundScheme[] GetSchemeList()
         {
             List<SoundScheme> schemes = new List<SoundScheme>();
@@ -289,8 +337,8 @@ namespace SoundManager
         /// </summary>
         public static void Uninstall()
         {
-            string currentScheme = RegCurrentUser.OpenSubKey(RegSchemes).GetValue(null) as string;
-            if (currentScheme == SchemeManager)
+            SoundScheme currentScheme = GetActiveScheme();
+            if (currentScheme != null && currentScheme.IsSchemeManager)
                 Apply(GetSchemeDefault(), true);
 
             RegistryKey apps = RegCurrentUser.OpenSubKey(RegApps);

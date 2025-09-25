@@ -240,6 +240,8 @@ namespace SharpTools
                 translations["download_schemes_no_tls_text"] = "La configuration HTTPS ne permet pas le téléchargement des thèmes. Afficher la liste dans votre navigateur ?";
                 translations["download_schemes_failed_title"] = "Échec du téléchargement";
                 translations["download_schemes_failed_text"] = "Le téléchargement des thèmes a échoué. Afficher la liste dans votre navigateur ?";
+                translations["auto_import_offer_title"] = "Importer ce thème sonore ?";
+                translations["auto_import_offer_text"] = "Le thème sonore du système a changé, souhaitez-vous l'importer ? Tout projet non sauvegardé sera perdu.";
                 //Ajouter de nouvelles traductions ici
             }
             //Add new languages here as 'else if' blocks
@@ -413,6 +415,8 @@ namespace SharpTools
                 translations["download_schemes_no_tls_text"] = "The current HTTPS configuration does not allow downloading. View scheme list in your web browser?";
                 translations["download_schemes_failed_title"] = "Download failed";
                 translations["download_schemes_failed_text"] = "Failed to download sound schemes. View scheme list in your web browser?";
+                translations["auto_import_offer_title"] = "Import this sound scheme?";
+                translations["auto_import_offer_text"] = "The system sound scheme has changed, would you like to import it? Any unsaved project will be lost.";
                 //Add new translations here
             }
         }
