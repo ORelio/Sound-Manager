@@ -93,7 +93,10 @@ namespace SoundManager
             bool createDataDir = !Directory.Exists(RuntimeConfig.LocalDataFolder);
 
             if (createDataDir)
+            {
                 Directory.CreateDirectory(RuntimeConfig.LocalDataFolder);
+                Directory.CreateDirectory(SoundEvent.DataDirectory);
+            }
 
             SoundScheme activeScheme = SoundScheme.GetActiveScheme();
             if (offerImportCurrentScheme && SoundScheme.AlreadySetup() && activeScheme != null && !activeScheme.IsSchemeManager)

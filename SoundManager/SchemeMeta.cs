@@ -169,7 +169,8 @@ namespace SoundManager
                     image.Save(SchemeImageFilePath + ".bmp");
                 }
 
-                File.Delete(SchemeImageFilePath);
+                if (File.Exists(SchemeImageFilePath))
+                    File.Delete(SchemeImageFilePath);
 
                 if (File.Exists(SchemeImageFilePath + ".bmp"))
                     File.Move(SchemeImageFilePath + ".bmp", SchemeImageFilePath);
