@@ -30,7 +30,7 @@ namespace SoundManager
         /// <summary>
         /// Current version of the program
         /// </summary>
-        public const string Version = "3.4.0";
+        public const string Version = "3.4.1";
 
         /// <summary>
         /// Command-line argument for performing automated post-setup operations

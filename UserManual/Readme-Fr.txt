@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.4.0 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.4.1 - Par ORelio - Microzoom.fr ====
 =========== https://microzoom.fr/gestionnaire-de-sons ===========
 =================================================================
 
@@ -124,6 +124,7 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
  - 3.3.0 : Retravaillé le système de patch du son de démarrage, ajoutant le support pour Windows 8, 10 et 11
  - 3.3.1 : Accès rapide au fichier de configuration avancé, meilleure compatibilité avec les lecteurs d'écran
  - 3.4.0 : Ajout de la possibilité de désactiver un son sur votre PC. Correction Email sous Win 8+, Ajout Rappel
+ - 3.4.1 : Améliore la sélection du son démarrage/logon. Ajout Chargement du thème. Import auto du thème système
 
 =====
  FAQ

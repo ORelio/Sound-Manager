@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.4.0 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.4.1 - By ORelio - Microzoom.fr ====
 ======= https://github.com/ORelio/Sound-Manager/ =======
 ========================================================
 
@@ -124,6 +124,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
  - 3.3.0 : Rework startup sound patching, adding support for Windows 8, 10 and 11
  - 3.3.1 : Add quick access to advanced config file, improve compatibility with screen readers
  - 3.4.0 : Add ability to disable some sounds on your PC, fix Email on Windows 8+, add Reminder
+ - 3.4.1 : Improve startup/logon sound behavior. Add Load Scheme. Offer to import system scheme
 
 =====
  FAQ
