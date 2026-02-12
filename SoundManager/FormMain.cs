@@ -4,6 +4,7 @@ using System.Linq;
 using System.Drawing;
 using System.Resources;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 using SharpTools;
 
@@ -23,6 +24,16 @@ namespace SoundManager
         /// Holds GUI icons for each sound event
         /// </summary>
         private ResourceManager soundIcons = new ResourceManager("SoundManager.SoundIcons", typeof(SoundManager.SoundIcons).Assembly);
+
+        /// <summary>
+        /// Lock for TemporarilyBlockSelectSound()
+        /// </summary>
+        private object selectSoundLock = new object();
+
+        /// <summary>
+        /// Thread for TemporarilyBlockSelectSound()
+        /// </summary>
+        private Thread selectSoundRestore = null;
 
         /// <summary>
         /// Initialize window contents
@@ -139,6 +150,10 @@ namespace SoundManager
                     comboBoxSystemSchemes.Items.Add(scheme);
             if (comboBoxSystemSchemes.Items.Count > 0)
                 comboBoxSystemSchemes.SelectedIndex = 0;
+
+            // Auto-restore Select sound file, see TemporarilyBlockSelectSound()
+
+            TemporarilyBlockSelectSound(restore: true);
 
             // Auto-import sound scheme passed as program argument
 
@@ -311,6 +326,25 @@ namespace SoundManager
         }
 
         /// <summary>
+        /// Prevent "Select" sound effect (mouse)
+        /// </summary>
+        private void soundList_MouseDown(object sender, MouseEventArgs e)
+        {
+            TemporarilyBlockSelectSound();
+        }
+
+        /// <summary>
+        /// Prevent "Select" sound effect (keyboard)
+        /// </summary>
+        private void soundList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Space)
+            {
+                TemporarilyBlockSelectSound();
+            }
+        }
+
+        /// <summary>
         /// Preview sound using the Space key
         /// </summary>
         private void soundList_KeyPress(object sender, KeyPressEventArgs e)
@@ -335,6 +369,71 @@ namespace SoundManager
         private void soundList_SelectedIndexChanged(object sender, EventArgs e)
         {
             soundContextMenu_Play_Click(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Temporarily block the "Select" sound to avoid playing it when selecting an item in the sound list
+        /// </summary>
+        /// <param name="restore">Force restore the sound - safety measure in case it did not restore automatically</param>
+        /// <remarks>
+        /// Selecting a a sound event in the sound list UI triggers a "Select" sound events from the system, that we can't disable directly.
+        /// Instead, temporarily make the Select sound file unavailable so the system cannot play it.
+        /// </remarks>
+        private void TemporarilyBlockSelectSound(bool restore = false)
+        {
+            SoundEvent selectSoundEvent = SoundEvent.Get(SoundEvent.EventType.Select);
+
+            if (restore)
+            {
+                if (File.Exists(selectSoundEvent.FilePath + ".tmp"))
+                {
+                    if (!File.Exists(selectSoundEvent.FilePath))
+                    {
+                        File.Move(selectSoundEvent.FilePath + ".tmp", selectSoundEvent.FilePath);
+                    }
+                    else
+                    {
+                        File.Delete(selectSoundEvent.FilePath + ".tmp");
+                    }
+                }
+            }
+            else
+            {
+                lock (selectSoundLock)
+                {
+                    if (!selectSoundEvent.Disabled && File.Exists(selectSoundEvent.FilePath))
+                    try
+                    {
+                        // Make sound file anavailable so the system cannot play it
+                        File.Move(selectSoundEvent.FilePath, selectSoundEvent.FilePath + ".tmp");
+
+                        // Sound file restore after a short delay
+                        Thread newRestoreThread = new System.Threading.Thread((object restoreThread) =>
+                        {
+                            System.Threading.Thread.Sleep(100);
+
+                            lock (selectSoundLock)
+                            {
+                                // Do not restore the sound if another thread was quickly launched after the current thread
+                                // This happens if quickly scrolling in the list.
+                                // The newer thread will take care of that.
+                                if (selectSoundRestore == restoreThread)
+                                {
+                                    TemporarilyBlockSelectSound(restore = true);
+                                }
+                            }
+                        });
+                        selectSoundRestore = newRestoreThread;
+                        newRestoreThread.Start(newRestoreThread);
+                    }
+                    catch (IOException)
+                    {
+                        // Could not move file.
+                        // May happen if quickly scrolling in the list, so the file is still being moved on disk.
+                        // In that case, it is safe to just do nothing.
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -509,6 +608,7 @@ namespace SoundManager
         /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
+            TemporarilyBlockSelectSound(restore: true);
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension);
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -558,27 +658,7 @@ namespace SoundManager
             {
                 SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
                 if (File.Exists(soundEvent.FilePath))
-                {
                     PlaySoundEvent(soundEvent);
-                }
-                else // No sound file associated with this event
-                {
-                    // The ListView UI element triggers the "Select" sound event when selected.
-                    // If we do not play anything, Windows attempts to play the "Select" sound event, but we do not want that.
-                    // As a workaround, play a random WAV file but immediately stop it so the sound will not be heard.
-                    SoundEvent eventWithFile = SoundEvent.GetAll().FirstOrDefault(evt => File.Exists(evt.FilePath));
-                    if (eventWithFile != null) // If no event has a file, then "Select" has no file as well so we are done.
-                    {
-                        string dummyFilePath = eventWithFile.FilePath;
-                        try
-                        {
-                            System.Media.SoundPlayer dummyPlayer = new System.Media.SoundPlayer(dummyFilePath);
-                            dummyPlayer.Play();
-                            dummyPlayer.Stop();
-                        }
-                        catch { /* Avoid crashing if file is invalid */ }
-                    }
-                }
             }
         }
 

@@ -13,7 +13,7 @@ namespace SoundManager
     {
         private static readonly SoundEvent[] allEvents;
         public static readonly string DataDirectory = Path.Combine(RuntimeConfig.LocalDataFolder, "Media");
-        public enum EventType { Startup, Shutdown, Logon, Logoff, LoadScheme }; // Events needing special treatment
+        public enum EventType { Startup, Shutdown, Logon, Logoff, LoadScheme, Select }; // Events needing special treatment
 
         /// <summary>
         /// Get all supported event types supported by the application
@@ -173,7 +173,7 @@ namespace SoundManager
                 new SoundEvent("UnMaximize",        new []{ ".Default\\RestoreDown" },           null,                           null                ),
                 new SoundEvent("Menu",              new []{ ".Default\\MenuPopup" },             null,                           null                ),
                 new SoundEvent("MenuCommand",       new []{ ".Default\\MenuCommand" },           null,                           null                ),
-                new SoundEvent("Select",            new []{ ".Default\\CCSelect" },              null,                           null                ),
+                new SoundEvent("Select",            new []{ ".Default\\CCSelect" },              null,                           EventType.Select    ),
                 new SoundEvent("LoadScheme",        new []{ ".Default\\ChangeTheme" },           null,                           EventType.LoadScheme),
                 // ====================================================================================================================================================
                 //     Sound names above should not be modified to retain compatibility with existing sound archives, internal icons and translation entries
