@@ -311,6 +311,17 @@ namespace SoundManager
         }
 
         /// <summary>
+        /// Preview sound using the Space key
+        /// </summary>
+        private void soundList_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == ' ')
+            {
+                soundContextMenu_Play_Click(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
         /// Change sound on double click
         /// </summary>
         private void soundList_MouseDoubleClick(object sender, MouseEventArgs e)

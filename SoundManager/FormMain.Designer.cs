@@ -290,6 +290,7 @@
             this.soundList.SelectedIndexChanged += new System.EventHandler(this.soundList_SelectedIndexChanged);
             this.soundList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.soundList_MouseClick);
             this.soundList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundList_MouseDoubleClick);
+            this.soundList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(soundList_KeyPress);
             // 
             // tabPageSettings
             // 
