@@ -66,6 +66,7 @@ namespace SoundManager
             soundContextMenu_Reset.Text = Translations.Get("sound_reset");
             soundContextMenu_Remove.Text = Translations.Get("sound_remove");
             soundContextMenu_Disable.Text = Translations.Get("system_event_disable");
+            soundContextMenu_ToggleView.Text = Translations.Get("scheme_view_list");
             groupBoxImport.Text = Translations.Get("box_import_system_scheme");
             groupBoxSystemIntegration.Text = Translations.Get("box_system_integration");
             checkBoxPatchImageres.Text = Translations.Get("check_box_imageres_patch");
@@ -130,7 +131,7 @@ namespace SoundManager
 
             // Sound event list
 
-            soundList.View = View.LargeIcon;
+            soundList.View = Settings.SchemeItemsListView ? View.Tile : View.LargeIcon;
             soundList.MultiSelect = false;
             soundList.LargeImageList = new ImageList();
             soundList.LargeImageList.ImageSize = new Size(32, 32);
@@ -309,6 +310,7 @@ namespace SoundManager
         private void ShowSoundContextMenu(SoundEvent soundEvent, Point positionOnScreen)
         {
             soundContextMenu_Disable.Text = Translations.Get(soundEvent.Disabled ? "system_event_enable" : "system_event_disable");
+            soundContextMenu_ToggleView.Text = Translations.Get(Settings.SchemeItemsListView ? "scheme_view_tiles" : "scheme_view_list");
             soundContextMenu.Show(positionOnScreen);
         }
 
@@ -704,6 +706,16 @@ namespace SoundManager
                 SoundScheme.CopyDefault(soundEvent);
                 soundContextMenu_Play_Click(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Toggle sound scheme display mode between Tiles (default) and List (more accessible)
+        /// </summary>
+        private void soundContextMenu_ToggleView_Click(object sender, EventArgs e)
+        {
+            Settings.SchemeItemsListView = !Settings.SchemeItemsListView;
+            soundList.View = Settings.SchemeItemsListView ? View.Tile : View.LargeIcon;
+            Settings.Save();
         }
 
         /// <summary>

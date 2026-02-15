@@ -174,6 +174,8 @@ namespace SharpTools
                 translations["scheme_load_failed_title"] = "Echec de chargement du thème";
                 translations["scheme_export_failed_text"] = "L'export du thème a échoué :";
                 translations["scheme_export_failed_title"] = "Echec de l'export du thème";
+                translations["scheme_view_list"] = "Affichage Liste";
+                translations["scheme_view_tiles"] = "Affichage Mosaïques";
                 translations["browse_failed_text"] = "Le démarrage de l'Explorateur Windows a échoué :";
                 translations["browse_failed_title"] = "Echec de la navigation";
                 translations["reset_warn_text"] = "Le thème par défaut va être chargé et les sons actuels seront perdus.";
@@ -349,6 +351,8 @@ namespace SharpTools
                 translations["scheme_load_failed_title"] = "Scheme load failure";
                 translations["scheme_export_failed_text"] = "This sound scheme failed to export:";
                 translations["scheme_export_failed_title"] = "Scheme load failure";
+                translations["scheme_view_list"] = "Switch to List view";
+                translations["scheme_view_tiles"] = "Switch to Tiles view";
                 translations["browse_failed_text"] = "Failed to launch Windows Explorer:";
                 translations["browse_failed_title"] = "Failed to browse to location";
                 translations["reset_warn_text"] = "The default sound scheme will be loaded and the current sounds will be lost.";

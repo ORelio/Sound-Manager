@@ -40,6 +40,11 @@ namespace SoundManager
         public static HashSet<string> DisabledSoundEvents { get { return _disabledSoundEvents; } }
 
         /// <summary>
+        /// Specify whether the User Interface should display the sound scheme items as list, which is useful for accessibility purposes.
+        /// </summary>
+        public static bool SchemeItemsListView { get; set; }
+
+        /// <summary>
         /// Static class initializer to automatically load settings
         /// </summary>
         static Settings()
@@ -86,6 +91,10 @@ namespace SoundManager
                                             if (SoundEvent.GetAll().Any(e => e.InternalName == soundName))
                                                 DisabledSoundEvents.Add(soundName);
                                         break;
+
+                                    case "schemeitemslistview":
+                                        SchemeItemsListView = INIFile.Str2Bool(setting.Value);
+                                        break;
                                 }
                             }
                             break;
@@ -96,6 +105,8 @@ namespace SoundManager
             {
                 PatchStartupSound = ImageresPatcher.IsPatchingRequired;
                 MissingSoundUseDefault = true;
+                SchemeItemsListView = WindowsParameters.IsScreenReaderActive;
+                Save();
             }
         }
 
@@ -112,6 +123,7 @@ namespace SoundManager
             settings["Main"]["ConvertProprietaryFiles"] = ConvertProprietaryFiles.ToString();
             settings["Main"]["PreferStartupSoundOnLogon"] = PreferStartupSoundOnLogon.ToString();
             settings["Main"]["DisabledSoundEvents"] = String.Join(",", DisabledSoundEvents);
+            settings["Main"]["SchemeItemsListView"] = SchemeItemsListView.ToString();
 
             INIFile.WriteFile(RuntimeConfig.SettingsFile, settings, RuntimeConfig.AppInternalName + " Configuration File", false);
         }
