@@ -106,14 +106,9 @@ namespace SoundManager
         public static readonly bool RunningInPortableMode = !File.Exists(UninstallProgramExe);
 
         /// <summary>
-        /// Determine whether the program is running on Windows 11, which spoofs Windows 10.0 in its NT Kernel version
-        /// </summary>
-        public static readonly bool RunningWindows11 = WindowsVersion.FriendlyName.ToLowerInvariant().Contains("windows 11");
-
-        /// <summary>
         /// Current system (Windows NT) version. Windows 11 spoofs Windows 10.0, so its version string is "10.0_11" to tell it apart from Windows 10. 
         /// </summary>
-        public static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (RunningWindows11 ? "_11" : "");
+        public static readonly string WindowsNtVersion = String.Format("{0}.{1}", WindowsVersion.WinMajorVersion, WindowsVersion.WinMinorVersion) + (WindowsVersion.Is11 ? "_11" : "");
 
         /// <summary>
         /// Path to the local Sound Schemes Folder. Contains Schemes downloaded using the DownloadSchemes tool.

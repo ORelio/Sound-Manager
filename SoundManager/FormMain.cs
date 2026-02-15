@@ -403,25 +403,26 @@ namespace SoundManager
             {
                 lock (selectSoundLock)
                 {
-                    if (!selectSoundEvent.Disabled && File.Exists(selectSoundEvent.FilePath))
+                    if (!selectSoundEvent.Disabled && (File.Exists(selectSoundEvent.FilePath) || File.Exists(selectSoundEvent.FilePath + ".tmp")))
                     try
                     {
                         // Make sound file anavailable so the system cannot play it
-                        File.Move(selectSoundEvent.FilePath, selectSoundEvent.FilePath + ".tmp");
+                        if (File.Exists(selectSoundEvent.FilePath))
+                            File.Move(selectSoundEvent.FilePath, selectSoundEvent.FilePath + ".tmp");
 
-                        // Sound file restore after a short delay
-                        Thread newRestoreThread = new System.Threading.Thread((object restoreThread) =>
+                        // Restore sound file after a short delay
+                        Thread newRestoreThread = new Thread((object currentThread) =>
                         {
-                            System.Threading.Thread.Sleep(100);
+                            Thread.Sleep(50);
 
                             lock (selectSoundLock)
                             {
                                 // Do not restore the sound if another thread was quickly launched after the current thread
                                 // This happens if quickly scrolling in the list.
                                 // The newer thread will take care of that.
-                                if (selectSoundRestore == restoreThread)
+                                if (selectSoundRestore == currentThread)
                                 {
-                                    TemporarilyBlockSelectSound(restore = true);
+                                    TemporarilyBlockSelectSound(restore: true);
                                 }
                             }
                         });
@@ -659,8 +660,27 @@ namespace SoundManager
             if (soundList.FocusedItem != null)
             {
                 SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
-                if (File.Exists(soundEvent.FilePath))
-                    PlaySoundEvent(soundEvent);
+                if (soundEvent.Type.HasValue && soundEvent.Type == SoundEvent.EventType.Select)
+                {
+                    // Play "Select" after it is unblocked, see TemporarilyBlockSelectSound()
+                    new Thread(() => {
+                        Thread selectSoundRestoreThread;
+                        lock (selectSoundLock)
+                        {
+                            selectSoundRestoreThread = selectSoundRestore;
+                        }
+                        if (selectSoundRestoreThread != null)
+                            selectSoundRestoreThread.Join();
+                        if (File.Exists(soundEvent.FilePath))
+                            PlaySoundEvent(soundEvent);
+                    }).Start();
+                }
+                else
+                {
+                    // Play any other sound immediately
+                    if (File.Exists(soundEvent.FilePath))
+                        PlaySoundEvent(soundEvent);
+                }
             }
         }
 
