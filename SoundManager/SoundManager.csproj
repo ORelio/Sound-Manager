@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExceptionLogger.cs" />
     <Compile Include="FileRecycler.cs" />
     <Compile Include="FileSystemAdmin.cs" />
     <Compile Include="BgSoundPlayer.cs">

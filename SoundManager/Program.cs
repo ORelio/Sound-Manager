@@ -19,6 +19,9 @@ namespace SoundManager
         [STAThread]
         static void Main(string[] args)
         {
+            if (RuntimeConfig.Version.ToLowerInvariant().Contains("test"))
+                ExceptionLogger.StartLogging(Application.ExecutablePath + ".debug.log", RuntimeConfig.Version);
+
             string importFile = null;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

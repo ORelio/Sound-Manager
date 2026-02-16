@@ -226,6 +226,30 @@ namespace SoundManager
         }
 
         /// <summary>
+        /// Show standard Windows Forms dialog from a thread.
+        /// </summary>
+        /// <remarks>
+        /// When an exception occurs in Windows Forms, a standard dialog is shown to the user.
+        /// When the exception occurs from a thread, app will crash without this dialog.
+        /// This method allows invoking the same dialog from a thread.
+        /// </remarks>
+        /// <param name="error">Exception to display</param>
+        void HandleThreadException(Exception error)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<Exception>(HandleThreadException), error);
+            }
+            else
+            {
+                if (new ThreadExceptionDialog(error).ShowDialog(this) == DialogResult.Abort)
+                {
+                    Close();
+                }
+            }
+        }
+
+        /// <summary>
         /// Lock/Unlock buttons on tab change
         /// </summary>
         void mainTabs_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -413,17 +437,24 @@ namespace SoundManager
                         // Restore sound file after a short delay
                         Thread newRestoreThread = new Thread((object currentThread) =>
                         {
-                            Thread.Sleep(50);
-
-                            lock (selectSoundLock)
+                            try
                             {
-                                // Do not restore the sound if another thread was quickly launched after the current thread
-                                // This happens if quickly scrolling in the list.
-                                // The newer thread will take care of that.
-                                if (selectSoundRestore == currentThread)
+                                Thread.Sleep(50);
+
+                                lock (selectSoundLock)
                                 {
-                                    TemporarilyBlockSelectSound(restore: true);
+                                    // Do not restore the sound if another thread was quickly launched after the current thread
+                                    // This happens if quickly scrolling in the list.
+                                    // The newer thread will take care of that.
+                                    if (selectSoundRestore == currentThread)
+                                    {
+                                        TemporarilyBlockSelectSound(restore: true);
+                                    }
                                 }
+                            }
+                            catch (Exception error)
+                            {
+                                HandleThreadException(error);
                             }
                         });
                         selectSoundRestore = newRestoreThread;
@@ -664,15 +695,22 @@ namespace SoundManager
                 {
                     // Play "Select" after it is unblocked, see TemporarilyBlockSelectSound()
                     new Thread(() => {
-                        Thread selectSoundRestoreThread;
-                        lock (selectSoundLock)
+                        try
                         {
-                            selectSoundRestoreThread = selectSoundRestore;
+                            Thread selectSoundRestoreThread;
+                            lock (selectSoundLock)
+                            {
+                                selectSoundRestoreThread = selectSoundRestore;
+                            }
+                            if (selectSoundRestoreThread != null)
+                                selectSoundRestoreThread.Join();
+                            if (File.Exists(soundEvent.FilePath))
+                                PlaySoundEvent(soundEvent);
                         }
-                        if (selectSoundRestoreThread != null)
-                            selectSoundRestoreThread.Join();
-                        if (File.Exists(soundEvent.FilePath))
-                            PlaySoundEvent(soundEvent);
+                        catch (Exception error)
+                        {
+                            HandleThreadException(error);
+                        }
                     }).Start();
                 }
                 else
