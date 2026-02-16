@@ -106,7 +106,6 @@ namespace SoundManager
                 PatchStartupSound = ImageresPatcher.IsPatchingRequired;
                 MissingSoundUseDefault = true;
                 SchemeItemsListView = WindowsParameters.IsScreenReaderActive;
-                Save();
             }
         }
 
