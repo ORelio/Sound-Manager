@@ -4,7 +4,6 @@ using System.Linq;
 using System.Drawing;
 using System.Resources;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows.Forms;
 using SharpTools;
 
@@ -26,14 +25,9 @@ namespace SoundManager
         private ResourceManager soundIcons = new ResourceManager("SoundManager.SoundIcons", typeof(SoundManager.SoundIcons).Assembly);
 
         /// <summary>
-        /// Lock for TemporarilyBlockSelectSound()
+        /// Allow checking that FormMain is currently open
         /// </summary>
-        private object selectSoundLock = new object();
-
-        /// <summary>
-        /// Thread for TemporarilyBlockSelectSound()
-        /// </summary>
-        private Thread selectSoundRestore = null;
+        public static bool IsOpen = false;
 
         /// <summary>
         /// Initialize window contents
@@ -152,10 +146,6 @@ namespace SoundManager
             if (comboBoxSystemSchemes.Items.Count > 0)
                 comboBoxSystemSchemes.SelectedIndex = 0;
 
-            // Auto-restore Select sound file, see TemporarilyBlockSelectSound()
-
-            TemporarilyBlockSelectSound(restore: true);
-
             // Auto-import sound scheme passed as program argument
 
             if (importFile != null && File.Exists(importFile))
@@ -173,6 +163,17 @@ namespace SoundManager
                 }
                 else Environment.Exit(0);
             }
+
+            // Temporarily disable problematic sounds while the SoundManager UI is shown, reenable them on exit
+
+            IsOpen = true;
+            SoundScheme.Setup();
+            SoundScheme.Apply(SoundScheme.GetSchemeSoundManager(), Settings.MissingSoundUseDefault);
+            this.FormClosed += new FormClosedEventHandler((object sender, FormClosedEventArgs e) => {
+                IsOpen = false;
+                SoundScheme.Setup();
+                SoundScheme.Apply(SoundScheme.GetSchemeSoundManager(), Settings.MissingSoundUseDefault);
+            });
         }
 
         /// <summary>
@@ -222,30 +223,6 @@ namespace SoundManager
             {
                 item.Text += String.Format("\n({0})", Translations.Get("system_event_disabled_label"));
                 item.ToolTipText += String.Format(" ({0})", Translations.Get("system_event_disabled_desc"));
-            }
-        }
-
-        /// <summary>
-        /// Show standard Windows Forms dialog from a thread.
-        /// </summary>
-        /// <remarks>
-        /// When an exception occurs in Windows Forms, a standard dialog is shown to the user.
-        /// When the exception occurs from a thread, app will crash without this dialog.
-        /// This method allows invoking the same dialog from a thread.
-        /// </remarks>
-        /// <param name="error">Exception to display</param>
-        void HandleThreadException(Exception error)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<Exception>(HandleThreadException), error);
-            }
-            else
-            {
-                if (new ThreadExceptionDialog(error).ShowDialog(this) == DialogResult.Abort)
-                {
-                    Close();
-                }
             }
         }
 
@@ -352,25 +329,6 @@ namespace SoundManager
         }
 
         /// <summary>
-        /// Prevent "Select" sound effect (mouse)
-        /// </summary>
-        private void soundList_MouseDown(object sender, MouseEventArgs e)
-        {
-            TemporarilyBlockSelectSound();
-        }
-
-        /// <summary>
-        /// Prevent "Select" sound effect (keyboard)
-        /// </summary>
-        private void soundList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode != Keys.Space)
-            {
-                TemporarilyBlockSelectSound();
-            }
-        }
-
-        /// <summary>
         /// Preview sound using the Space key
         /// </summary>
         private void soundList_KeyPress(object sender, KeyPressEventArgs e)
@@ -395,79 +353,6 @@ namespace SoundManager
         private void soundList_SelectedIndexChanged(object sender, EventArgs e)
         {
             soundContextMenu_Play_Click(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Temporarily block the "Select" sound to avoid playing it when selecting an item in the sound list
-        /// </summary>
-        /// <param name="restore">Force restore the sound - safety measure in case it did not restore automatically</param>
-        /// <remarks>
-        /// Selecting a a sound event in the sound list UI triggers a "Select" sound events from the system, that we can't disable directly.
-        /// Instead, temporarily make the Select sound file unavailable so the system cannot play it.
-        /// </remarks>
-        private void TemporarilyBlockSelectSound(bool restore = false)
-        {
-            SoundEvent selectSoundEvent = SoundEvent.Get(SoundEvent.EventType.Select);
-
-            if (restore)
-            {
-                if (File.Exists(selectSoundEvent.FilePath + ".tmp"))
-                {
-                    if (!File.Exists(selectSoundEvent.FilePath))
-                    {
-                        File.Move(selectSoundEvent.FilePath + ".tmp", selectSoundEvent.FilePath);
-                    }
-                    else
-                    {
-                        File.Delete(selectSoundEvent.FilePath + ".tmp");
-                    }
-                }
-            }
-            else
-            {
-                lock (selectSoundLock)
-                {
-                    if (!selectSoundEvent.Disabled && (File.Exists(selectSoundEvent.FilePath) || File.Exists(selectSoundEvent.FilePath + ".tmp")))
-                    try
-                    {
-                        // Make sound file anavailable so the system cannot play it
-                        if (File.Exists(selectSoundEvent.FilePath))
-                            File.Move(selectSoundEvent.FilePath, selectSoundEvent.FilePath + ".tmp");
-
-                        // Restore sound file after a short delay
-                        Thread newRestoreThread = new Thread((object currentThread) =>
-                        {
-                            try
-                            {
-                                Thread.Sleep(50);
-
-                                lock (selectSoundLock)
-                                {
-                                    // Do not restore the sound if another thread was quickly launched after the current thread
-                                    // This happens if quickly scrolling in the list.
-                                    // The newer thread will take care of that.
-                                    if (selectSoundRestore == currentThread)
-                                    {
-                                        TemporarilyBlockSelectSound(restore: true);
-                                    }
-                                }
-                            }
-                            catch (Exception error)
-                            {
-                                HandleThreadException(error);
-                            }
-                        });
-                        selectSoundRestore = newRestoreThread;
-                        newRestoreThread.Start(newRestoreThread);
-                    }
-                    catch (IOException)
-                    {
-                        // Could not move file.
-                        // May happen if quickly scrolling in the list, so the file is still being moved on disk.
-                        // In that case, it is safe to just do nothing.
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -642,7 +527,6 @@ namespace SoundManager
         /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            TemporarilyBlockSelectSound(restore: true);
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension);
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -691,34 +575,8 @@ namespace SoundManager
             if (soundList.FocusedItem != null)
             {
                 SoundEvent soundEvent = soundList.FocusedItem.Tag as SoundEvent;
-                if (soundEvent.Type.HasValue && soundEvent.Type == SoundEvent.EventType.Select)
-                {
-                    // Play "Select" after it is unblocked, see TemporarilyBlockSelectSound()
-                    new Thread(() => {
-                        try
-                        {
-                            Thread selectSoundRestoreThread;
-                            lock (selectSoundLock)
-                            {
-                                selectSoundRestoreThread = selectSoundRestore;
-                            }
-                            if (selectSoundRestoreThread != null)
-                                selectSoundRestoreThread.Join();
-                            if (File.Exists(soundEvent.FilePath))
-                                PlaySoundEvent(soundEvent);
-                        }
-                        catch (Exception error)
-                        {
-                            HandleThreadException(error);
-                        }
-                    }).Start();
-                }
-                else
-                {
-                    // Play any other sound immediately
-                    if (File.Exists(soundEvent.FilePath))
-                        PlaySoundEvent(soundEvent);
-                }
+                if (File.Exists(soundEvent.FilePath))
+                    PlaySoundEvent(soundEvent);
             }
         }
 

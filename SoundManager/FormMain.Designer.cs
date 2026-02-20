@@ -298,10 +298,8 @@
             this.soundList.UseCompatibleStateImageBehavior = false;
             this.soundList.SelectedIndexChanged += new System.EventHandler(this.soundList_SelectedIndexChanged);
             this.soundList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.soundList_MouseClick);
-            this.soundList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.soundList_MouseDown);
             this.soundList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundList_MouseDoubleClick);
             this.soundList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(soundList_KeyPress);
-            this.soundList.KeyDown += new System.Windows.Forms.KeyEventHandler(soundList_KeyDown);
             // 
             // tabPageSettings
             // 

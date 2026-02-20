@@ -116,11 +116,14 @@ namespace SoundManager
 
             foreach (SoundEvent soundEvent in SoundEvent.GetAll())
             {
+                // Temporarily disable "Select" while FormMain is open, regardless of Disabled status
+                bool tempDisable = (soundEvent.Type == SoundEvent.EventType.Select && FormMain.IsOpen);
+
                 foreach (string registryKey in soundEvent.RegistryKeys)
                 {
                     string eventKeyPath = RegApps + registryKey + '\\' + SchemeManager;
                     RegistryKey eventKey = RegCurrentUser.OpenSubKey(eventKeyPath, true) ?? RegCurrentUser.CreateSubKey(eventKeyPath);
-                    eventKey.SetValue(null, soundEvent.Disabled ? EventDisabledPlaceholder : soundEvent.FilePath);
+                    eventKey.SetValue(null, (soundEvent.Disabled || tempDisable) ? EventDisabledPlaceholder : soundEvent.FilePath);
                     eventKey.Close();
                 }
             }
