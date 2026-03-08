@@ -19,7 +19,7 @@ namespace SoundManager
         [STAThread]
         static void Main(string[] args)
         {
-            if (RuntimeConfig.Version.ToLowerInvariant().Contains("test"))
+            if (RuntimeConfig.Version.ToLowerInvariant().Contains("test") || args.Contains(RuntimeConfig.CmdArgumentDebug))
                 ExceptionLogger.StartLogging(Application.ExecutablePath + ".debug.log", RuntimeConfig.Version);
 
             string importFile = null;
@@ -43,6 +43,10 @@ namespace SoundManager
                     case RuntimeConfig.CmdArgumentBgSoundPlayer:
                         Application.Run(new BgSoundPlayer());
                         Environment.Exit(0);
+                        break;
+
+                    case RuntimeConfig.CmdArgumentDebug:
+                        // Already handled above
                         break;
 
                     default:

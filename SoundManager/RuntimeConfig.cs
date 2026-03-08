@@ -48,6 +48,11 @@ namespace SoundManager
         public const string CmdArgumentBgSoundPlayer = "--bg-sounds";
 
         /// <summary>
+        /// Command-line argument for generating debug log
+        /// </summary>
+        public const string CmdArgumentDebug = "--debug";
+
+        /// <summary>
         /// Minimum supported system version (Windows NT 5.1 = Windows XP)
         /// </summary>
         public const string SupportedWindowsVersionMin = "5.1";
