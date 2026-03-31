@@ -11,12 +11,13 @@ Toutes les versions de Windows de Windows XP SP3 à Windows 11 sont prises en ch
 Les principales fonctionnalités sont :
  - Lecture des sons manquants sous Windows 8 et supérieur
  - Exporter et importer les thème sonore via des fichiers archives
- - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
- - Importer les archives propriétaires au format "soundpack"
  - Charger et tester des sons pour chaque évènement système
  - Définir des informations telles qu'une image, auteur, description pour votre thème
  - Conversion automatique des sons au format WAV (Windows 7+)
  - Patch du son de démarrage de Windows (droits Admin requis, Windows Vista+)
+ - Importer les thèmes sonores créés via l'option "Sons" du panneau de configuration
+ - Importer les archives propriétaires au format "soundpack"
+ - Exporter un thème sonore au format "themepack" installable (Windows 7+)
 
 =============
  Utilisation

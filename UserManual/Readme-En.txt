@@ -11,12 +11,13 @@ All Windows versions from Windows XP SP3 to Windows 11 are supported.
 Main features are the following:
  - Play missing sounds on Windows 8 and greater
  - Export and import sound schemes using archive files
- - Import sound schemes created with the Sound applet
- - Import proprietary "soundpack" archive files
  - Load and test sound files for each event
  - Define metadata such as thumbnail, author, description
  - Auto-convert sounds to WAV format (Windows 7+)
  - Patch built-in startup sound (Admin required, Windows Vista+)
+ - Import sound schemes created with the Sound applet
+ - Import proprietary "soundpack" archive files
+ - Export sound schemes as installable "themepack" files (Windows 7+)
 
 ============
  How to use
