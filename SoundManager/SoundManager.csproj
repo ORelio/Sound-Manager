@@ -84,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NativeResource.cs" />
     <Compile Include="RuntimeConfig.cs" />
+    <Compile Include="SoundArchiveThemepack.cs" />
     <Compile Include="WindowsParameters.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShellFileType.cs" />

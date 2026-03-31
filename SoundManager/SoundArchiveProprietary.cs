@@ -17,7 +17,7 @@ namespace SoundManager
     /// We use the same approach as with the RAR file format, only allowing to unpack proprietary files supplied by the user.
     /// Generating proprietary files is not implemented here, requiring to purchase the original proprietary sotfware.
     /// </remarks>
-    class SoundArchiveProprietary
+    static class SoundArchiveProprietary
     {
         public static readonly string FileIconPath = Path.Combine(RuntimeConfig.AppFolder, "SoundSchemeProprietary.ico");
         public const string FileExtension = "soundpack";

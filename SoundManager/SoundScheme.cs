@@ -21,7 +21,7 @@ namespace SoundManager
 
         private const string RegSchemes = "AppEvents\\Schemes";
         private const string RegNames = RegSchemes + "\\Names\\";
-        private const string RegApps = RegSchemes + "\\Apps\\";
+        public const string RegApps = RegSchemes + "\\Apps\\";
 
         private const string EventDisabledPlaceholder = "<DISABLED>";
 

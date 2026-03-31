@@ -76,19 +76,29 @@ namespace SoundManager
         public static readonly string SettingsFile = Path.Combine(LocalDataFolder, AppInternalName + ".ini");
 
         /// <summary>
-        /// GitHub User name for repository holding the sound schemes library
+        /// GitHub User name for repository holding the project and sound schemes repositories
         /// </summary>
-        public const string SchemesRepositoryUsername = "ORelio";
+        public const string ProjectRepositoryUsername = "ORelio";
 
         /// <summary>
-        /// GitHub Repository name holding the sound schemes library
+        /// GitHub Repository name for the project
+        /// </summary>
+        public const string ProjectRepositoryName = "Sound-Manager";
+
+        /// <summary>
+        /// Direct link to the project's GitHub Repository
+        /// </summary>
+        public const string ProjectRepositoryUrl = "https://github.com/" + ProjectRepositoryUsername + "/" + ProjectRepositoryName + "/";
+
+        /// <summary>
+        /// GitHub Repository name for the sound schemes library
         /// </summary>
         public const string SchemesRepositoryName = "Sound-Manager-Schemes";
 
         /// <summary>
         /// Direct link to the GitHub Repository holding the sound schemes library
         /// </summary>
-        public const string SchemesRepositoryUrl = "https://github.com/" + SchemesRepositoryUsername + "/" + SchemesRepositoryName + "/";
+        public const string SchemesRepositoryUrl = "https://github.com/" + ProjectRepositoryUsername + "/" + SchemesRepositoryName + "/";
 
         /// <summary>
         /// Path to the SoundManager executable (SoundManager.exe)

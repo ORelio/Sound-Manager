@@ -528,12 +528,21 @@ namespace SoundManager
         private void buttonExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = String.Concat(Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension);
+            dlg.Filter = String.Concat(
+                Translations.Get("browse_scheme_files"), "|*.", SoundArchive.FileExtension, "|",
+                Translations.Get("scheme_file_themepack_desc"), "|*.", SoundArchiveThemepack.FileExtension);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    SoundArchive.Export(dlg.FileName);
+                    if (dlg.FileName.ToLower().EndsWith("." + SoundArchiveThemepack.FileExtension))
+                    {
+                        SoundArchiveThemepack.Export(dlg.FileName);
+                    }
+                    else
+                    {
+                        SoundArchive.Export(dlg.FileName);
+                    }
                 }
                 catch (Exception exportException)
                 {

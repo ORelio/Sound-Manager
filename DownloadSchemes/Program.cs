@@ -191,7 +191,7 @@ namespace DownloadSchemes
             }
             else
             {
-                IEnumerable<string> urls = GitHubApi.ListFilesInRepo(RuntimeConfig.SchemesRepositoryUsername, RuntimeConfig.SchemesRepositoryName, "/", true).Where(item => item.EndsWith(".ths"));
+                IEnumerable<string> urls = GitHubApi.ListFilesInRepo(RuntimeConfig.ProjectRepositoryUsername, RuntimeConfig.SchemesRepositoryName, "/", true).Where(item => item.EndsWith(".ths"));
                 File.WriteAllLines(SchemesListTempFile, urls);
                 return urls;
             }
