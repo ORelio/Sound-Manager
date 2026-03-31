@@ -1,5 +1,5 @@
 =================================================================
-==== Gestionnaire de Sons v3.4.1 - Par ORelio - Microzoom.fr ====
+==== Gestionnaire de Sons v3.5.0 - Par ORelio - Microzoom.fr ====
 =========== https://microzoom.fr/gestionnaire-de-sons ===========
 =================================================================
 
@@ -61,12 +61,13 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
     ----------+----------------------------------------+--------------------------
     Très Rare | Démarrage, Arrêt, Erreur USB, Batterie | 10 secondes
     Rare      | Connexion, Déconnexion, Corbeille      | 5 secondes
-    Régulie   | Information, Erreur, USB, Accès Admin  | 1 seconde
+    Régulier  | Information, Erreur, USB, Accès Admin  | 1 seconde
     Fréquent  | Par défaut, Lancer/Fermer App          | 300 millisecondes
     Répétitif | Navigation, Menu, Menu Clic            | 100 millisecondes
 
    En cas de doute, vous pouvez vous référer à la durée des sons du thème par défaut de Windows XP ou Vista/7.
    Pensez à retirer le silence avant et après l'effet sonore s'il y en a un dans le fichier son.
+   Un programme gratuit et libre pour éditer vos fichiers son : Audacity https://www.audacityteam.org/
 
 2. Volume sonore
 
@@ -93,7 +94,7 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
    Idéalement, il faut définir au moins les sons allant de Démarrage à Accès Admin pour avoir un thème à peu près complet.
    Mais si vous créez un thème à partir de fichiers existants, il peut vous en manquer pour compléter votre thème.
    Plutôt que de laisser des évènements vides, vous pouvez essayer de recycler les sons à votre disposition :
-    - Découper une portion d'un plus long et l'utiliser sur un évènement sonore plus court
+    - Découper une portion d'un évènement sonore plus long et l'utiliser sur un évènement sonore plus court
     - Lire un son à l'envers, ex Ajout USB -> Retrait USB (à l'envers), Connexion -> Déconnexion (à l'envers)
     - En dernier recours, vous pouvez copier-coller des sons. Quelques conseils pour que cela se remarque moins :
        - Garder des sons différents au sein d'un même groupe, par exemple Evènements de session ou Boites de dialogue
@@ -125,17 +126,23 @@ Voici quelques conseils pour que votre thème sonore joigne l'utile à l'agréab
  - 3.3.1 : Accès rapide au fichier de configuration avancé, meilleure compatibilité avec les lecteurs d'écran
  - 3.4.0 : Ajout de la possibilité de désactiver un son sur votre PC. Correction Email sous Win 8+, Ajout Rappel
  - 3.4.1 : Améliore la sélection du son démarrage/logon. Ajout Chargement du thème. Import auto du thème système
+ - 3.5.0 : Ajout de l'export au format "themepack", d'une vue liste pour l'accessibilité, et de l'option --debug
 
 =====
  FAQ
 =====
 
-Q: Lorsque le patch du son de démarrage est activé, celui-ci n'est pas correctement mis à jour ?
-R: Les fichiers système peuvent être en cours d'utilisation, essayez de redémarrer et réappliquer le thème sonore.
-R: Une mise à jour majeure du système peut également enlever le patch, essayez de désactiver et réactiver l'option.
+Q : Lorsque le patch du son de démarrage est activé, celui-ci n'est pas correctement mis à jour ?
+R : Les fichiers système peuvent être en cours d'utilisation, essayez de redémarrer et réappliquer le thème sonore.
+R : Une mise à jour majeure du système peut également enlever le patch, essayez de désactiver et réactiver l'option.
 
-Q: Il y a des évènements sonores qui ne me plaisent pas. Comment les enlever ?
-R: Clic droit sur l'évènement sonore non souhaité > Désactiver sur ce PC
+Q : Il y a des évènements sonores qui ne me plaisent pas. Comment les enlever ?
+R : Clic droit sur l'évènement sonore non souhaité > Désactiver sur ce PC
+R : Les sons "Lancer App"/"Fermer App" ont tendance à se lire intempestivement et sont désactivables de cette manière.
+
+Q : Peut-on installer un thème sonore nativement sur le système, sans passer par le Gestionnaire de Sons ?
+R : Vous pouvez exporter un thème sonore au format "themepack", installable nativement sous Windows 7 et supérieur.
+R : Ce format comporte des limitations : Moins évolutif, change le fond d'écran, n'installe pas le son de Démarrage.
 
 Q : En utilisant le thème Windows XP, le son de démarrage devrait se lire à l'ouverture de session. Comment faire ?
 R : Paramètres > Fichier de config. > régler « PreferStartupSoundOnLogon=True » et enregistrer
@@ -158,5 +165,5 @@ le Gestionnaire de Sons a été conçu en utilisant les ressources suivantes :
  - Icône Clipping Sound par RAD.E8
 
 +--------------------+
-| © 2009-2025 ORelio |
+| © 2009-2026 ORelio |
 +--------------------+

@@ -10,7 +10,7 @@ namespace SharpTools
 {
     /// <summary>
     /// Programatically interact with on-screen windows using Windows API
-    /// By ORelio - (c) 2013-2024 - Available under the CDDL-1.0 license
+    /// By ORelio - (c) 2013-2026 - Available under the CDDL-1.0 license
     /// </summary>
     public static class WindowManager
     {

@@ -1,5 +1,5 @@
 ========================================================
-==== SoundManager v3.4.1 - By ORelio - Microzoom.fr ====
+==== SoundManager v3.5.0 - By ORelio - Microzoom.fr ====
 ======= https://github.com/ORelio/Sound-Manager/ =======
 ========================================================
 
@@ -67,6 +67,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
 
    If in doubt, you can refer to the sound durations inside the default Windows XP or Vista/7 sound scheme.
    Remember to remove silences before and after each sound effect if present in the sound files.
+   A free program for editing your audio files: Audacity https://www.audacityteam.org/
 
 2. Volume level
 
@@ -125,6 +126,7 @@ Here are some tips to make your sound scheme both useful and enjoyable:
  - 3.3.1 : Add quick access to advanced config file, improve compatibility with screen readers
  - 3.4.0 : Add ability to disable some sounds on your PC, fix Email on Windows 8+, add Reminder
  - 3.4.1 : Improve startup/logon sound behavior. Add Load Scheme. Offer to import system scheme
+ - 3.5.0 : Add "themepack" export file format, list view for accessibility, and --debug option
 
 =====
  FAQ
@@ -135,11 +137,16 @@ A: System files may be in use, try rebooting and reapplying the sound scheme.
 A: A major system update may also revert or break the patch, try disabling and enabling the setting.
 
 Q: There are some sound events I don't like. How to mute them?
-R: Right click on undesired sound event > Disable on this PC
+A: Right click on undesired sound event > Disable on this PC
+A: The "Launch App"/"Close App" sounds tend to play unexpectedly and can be disabled this way.
+
+Q: Can I install a sound scheme natively on the system, without using SoundManager?
+A: You can export a sound scheme in "themepack" format, which can be installed natively on Windows 7+
+A: This format has limitations: Less future-proof, changes wallpaper, doesn't install Startup sound.
 
 Q: When using the Windows XP sound scheme, the startup sound should also play on logon. How to do this?
-R: Settings > Edit config file > set "PreferStartupSoundOnLogon=True" and save
-R: If you do not see the setting, you can add it below the others
+A: Settings > Edit config file > set "PreferStartupSoundOnLogon=True" and save
+A: If you do not see the setting, you can add it below the others
 
 Q: Is there any source code for versions 1.x and 2.x?
 A: No, these versions were created using Game Maker and a bunch of batch files.
@@ -158,5 +165,5 @@ The SoundManager program has been created using the following resources:
  - Clipping Sound Icon by RAD.E8
 
 +--------------------+
-| © 2009-2025 ORelio |
+| © 2009-2026 ORelio |
 +--------------------+
