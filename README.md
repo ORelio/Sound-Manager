@@ -15,12 +15,13 @@ Main features are the following:
 
 * Play missing sounds on Windows 8 and greater
 * Export and import sound schemes using archive files
-* Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
-* Import proprietary "soundpack" archive files
 * Load and test sound files for each event
 * Define metadata such as thumbnail, author, description
 * Auto-convert sounds to WAV format (Windows 7+)
 * Patch built-in startup sound (Admin required, Windows Vista+)
+* Import sound schemes created with the [Sound applet](https://www.thewindowsclub.com/change-sounds-in-windows)
+* Import proprietary "soundpack" archive files
+* Export sound schemes as installable "themepack" files (Windows 7+)
 
 ## User Manual
 
@@ -70,7 +71,7 @@ SoundManager can optionally [patch imageres.dll](https://www.sevenforums.com/tut
 
 This feature requires administrator privileges. If enabled, SoundManager will show an [UAC](https://en.wikipedia.org/wiki/User_Account_Control) prompt on launch. Due to `imageres.dll` files being used by the system, SoundManager might not be able to patch the startup sound more than once between each system reboot. Also, major system updates might revert the startup sound to its original state and/or break the patch mechanism.
 
-Initially implemented using [Resource Hacker](https://www.angusj.com/resourcehacker/), SoundManager now patches the DLL directly using the Windows API ([BeginUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648030%28v=vs.85%29.aspx), [UpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648049%28v=vs.85%29.aspx), [EndUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648032%28v=vs.85%29.aspx)) to replace the startup sound. This allows seamless patching on newer system versions that implement a [distinct resource file for the DLL](https://answers.microsoft.com/en-us/windows/forum/all/workaround-for-changing-the-windows-1011-startup/b15dd438-42c7-471c-bc86-2e5fb0fa4037) `imageres.dll.mun`.
+Initially implemented using [Resource Hacker](https://www.angusj.com/resourcehacker/), SoundManager now patches the DLL directly using the Windows API ([BeginUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648030%28v=vs.85%29.aspx), [UpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648049%28v=vs.85%29.aspx), [EndUpdateResource](http://msdn.microsoft.com/en-us/library/windows/desktop/ms648032%28v=vs.85%29.aspx)) to replace the startup sound. This allows seamless patching on newer system versions that implement a [distinct resource file for the DLL](https://learn.microsoft.com/en-us/answers/questions/4067434/how-would-one-change-the-boot-up-sound-on-windows?page=1#answers) `imageres.dll.mun`.
 
 ### Windows 8+ shutdown, login, logoff sounds
 
@@ -104,7 +105,7 @@ For proper support of newer operating systems such as Windows 10, SoundManager n
 
 ### Compiling
 
-This section assumes you already have the `Sound-Manager` git repository cloned or [manually downloaded](https://github.com/seediffusion/Sound-Manager/archive/refs/heads/master.zip). In the following instructions, "project folder" refers to the main folder of the `Sound-Manager` repository, where `README.md` and `SoundManager.sln` are housed.
+This section assumes you already have the `Sound-Manager` git repository cloned or [manually downloaded](https://github.com/ORelio/Sound-Manager/archive/refs/heads/master.zip). In the following instructions, "project folder" refers to the main folder of the `Sound-Manager` repository, where `README.md` and `SoundManager.sln` are housed.
 
 1. Navigate to the project folder and open `SoundManager.sln file`
   * If your system isn't configured to [show file extensions](https://www.thewindowsclub.com/show-file-extensions-in-windows), you won't see the `.sln` part of the filename.
