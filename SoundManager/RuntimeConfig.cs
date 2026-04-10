@@ -116,6 +116,11 @@ namespace SoundManager
         public static readonly string UninstallProgramExe = Path.Combine(AppFolder, "Uninstall.exe");
 
         /// <summary>
+        /// Path to the Schemes download utility
+        /// </summary>
+        public static readonly string DownloadSchemesExe = Path.Combine(AppFolder, "DownloadSchemes.exe");
+
+        /// <summary>
         /// Determine whether the program is running in Portable mode
         /// </summary>
         public static readonly bool RunningInPortableMode = !File.Exists(UninstallProgramExe);

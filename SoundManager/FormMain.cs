@@ -1011,9 +1011,9 @@ namespace SoundManager
         /// <param name="e"></param>
         private void buttonDownloadSchemes_Click(object sender, EventArgs e)
         {
-            if (File.Exists("DownloadSchemes.exe"))
+            if (File.Exists(RuntimeConfig.DownloadSchemesExe))
             {
-                Process.Start("DownloadSchemes.exe");
+                Process.Start(RuntimeConfig.DownloadSchemesExe);
             }
             else
             {
