@@ -107,16 +107,16 @@ For proper support of newer operating systems such as Windows 10, SoundManager n
 
 This section assumes you already have the `Sound-Manager` git repository cloned or [manually downloaded](https://github.com/ORelio/Sound-Manager/archive/refs/heads/master.zip). In the following instructions, "project folder" refers to the main folder of the `Sound-Manager` repository, where `README.md` and `SoundManager.sln` are housed.
 
-1. Navigate to the project folder and open `SoundManager.sln file`
+1. Navigate to the project folder and open `SoundManager.sln` file
   * If your system isn't configured to [show file extensions](https://www.thewindowsclub.com/show-file-extensions-in-windows), you won't see the `.sln` part of the filename.
   * If VS 2010 doesn't open automatically, select Visual C# 2010 in the "open with" dialog.
 2. Once the project is open, set the build target to `Release` instead of `Debug` in the dropdown menu next to the Build button. You can leave `Debug` while making changes in the code and using the debugger in Visual Studio.
 3. Hit `Shift+Control+B` to build the entire `SoundManager` solution. This should only take a few seconds to compile.
-4. Assuming there were no errors during compilation, hit Alt + F4 to close VS 2010.
-5. If everything worked properly, you should see:
+4. Assuming there were no errors during compilation, hit `Alt+F4` to close VS 2010.
+5. If everything worked properly, you should get:
   * `SoundManager.exe` in `<ProjectFolder>\SoundManager\bin\Release`
-  * `DownloadSchemes.exe` in `<ProjectFolder>\DownloadSchemes\bin\Release`.
-6. Copy the following items into `<ProjectFolder>\SoundManager\bin\Release`.
+  * `DownloadSchemes.exe` in `<ProjectFolder>\DownloadSchemes\bin\Release`
+6. Copy the following items into `<ProjectFolder>\SoundManager\bin\Release`:
   * `<ProjectFolder>\SoundManager\Lang`
   * `<ProjectFolder>\UserManual\Readme-En.txt`
   * `<ProjectFolder>\UserManual\Readme-Fr.txt`
