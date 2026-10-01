@@ -165,6 +165,8 @@ namespace SharpTools
                 translations["default_scheme_about"] = "https://www.microsoft.com/";
                 translations["sound_load_failed_text"] = "Le chargement du fichier son a échoué :";
                 translations["sound_load_failed_title"] = "Echec de chargement du son";
+                translations["sound_load_unsupported_format_text"] = "Ce format de fichier n'est pas pris en charge, essayez d'abord de le convertir en WAV.";
+                translations["sound_load_unsupported_format_title"] = "Format de fichier non pris en charge";
                 translations["sound_file_too_long"] = "Le fichier son a une durée trop élevée.";
                 translations["image_load_failed_text"] = "Le chargement de l'image a échoué :";
                 translations["image_load_failed_title"] = "Echec de chargement de l'image";
@@ -343,6 +345,8 @@ namespace SharpTools
                 translations["default_scheme_about"] = "https://www.microsoft.com/";
                 translations["sound_load_failed_text"] = "This sound file failed to load:";
                 translations["sound_load_failed_title"] = "Sound load failure";
+                translations["sound_load_unsupported_format_text"] = "This file format is unsupported, try converting it to WAV first.";
+                translations["sound_load_unsupported_format_title"] = "Unsupported file format";
                 translations["sound_file_too_long"] = "The sound file duration is too long.";
                 translations["image_load_failed_text"] = "This image failed to load:";
                 translations["image_load_failed_title"] = "Image load failure";

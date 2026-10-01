@@ -474,12 +474,24 @@ namespace SoundManager
             }
             catch (Exception loadException)
             {
-                MessageBox.Show(
-                    Translations.Get("sound_load_failed_text") + '\n' + loadException.Message,
-                    Translations.Get("sound_load_failed_title"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                if (loadException is System.Runtime.InteropServices.COMException && loadException.Message.Contains("0xC00D36C4"))
+                {
+                    MessageBox.Show(
+                        Translations.Get("sound_load_unsupported_format_text"),
+                        Translations.Get("sound_load_unsupported_format_title"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                else
+                {
+                    MessageBox.Show(
+                        Translations.Get("sound_load_failed_text") + '\n' + loadException.Message,
+                        Translations.Get("sound_load_failed_title"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
         }
 
