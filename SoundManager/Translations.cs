@@ -10,12 +10,21 @@ namespace SharpTools
     /// Allows to localize the app in different languages
     /// </summary>
     /// <remarks>
-    /// By ORelio (c) 2015-2018 - CDDL 1.0
+    /// By ORelio (c) 2015-2026 - CDDL 1.0
     /// </remarks>
     public static class Translations
     {
         private static Dictionary<string, string> translations;
-        public static readonly string SystemLanguage = CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
+
+        /// <summary>
+        /// Holds the exact language code for the system, e.g. "en-US" or "en-GB".
+        /// </summary>
+        public static readonly string SystemLanguageExact = CultureInfo.CurrentCulture.Name;
+
+        /// <summary>
+        /// Holds the generic language code for the system, e.g. "eng" for "en-US" or "en-GB".
+        /// </summary>
+        public static readonly string SystemLanguageGeneric = CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
 
         /// <summary>
         /// Return a tranlation for the requested text
@@ -39,15 +48,23 @@ namespace SharpTools
             translations = new Dictionary<string, string>();
 
             /*
-             * External translation files
-             * These files are loaded from the installation directory as:
-             * Lang/abc.ini, e.g. Lang/eng.ini which is the default language file
-             * Useful for adding new translations of fixing typos without recompiling
+             * Load an external translation file from the installation directory with the following priority:
+             * 1. Exact language code for the system (e.g. "en-US" or "en-GB")
+             * 2. Generic language code for the system (e.g. "eng")
+             * 3. Lang/eng.ini (default translation file)
              */
 
             string langDir = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "Lang" + Path.DirectorySeparatorChar;
-            string langFileSystemLanguage = langDir + SystemLanguage + ".ini";
-            string langFile = File.Exists(langFileSystemLanguage) ? langFileSystemLanguage : langDir + "eng.ini";
+            string langFile = langDir + "eng.ini";
+            foreach (string langCode in new[] {SystemLanguageExact, SystemLanguageGeneric})
+            {
+                string langFileCandidate = langDir + langCode + ".ini";
+                if (File.Exists(langFileCandidate))
+                {
+                    langFile = langFileCandidate;
+                    break;
+                }
+            }
 
             if (File.Exists(langFile))
             {
@@ -67,14 +84,15 @@ namespace SharpTools
 
             /* 
              * Hardcoded translation data
-             * This data is used as fallback if no translation file could be loaded
-             * Useful for standalone exe portable apps
+             * This data is used as fallback if no translation file could be loaded, including the default "eng.ini".
+             * May also be used for standalone exe portable apps
              */
 
-            else if (SystemLanguage == "fra")
+            else if (SystemLanguageGeneric == "fra")
             {
                 translations["app_name"] = "Gestionnaire de Sons";
                 translations["app_desc"] = "Créez et partagez des thèmes sonores pour Windows !";
+                translations["translation_name"] = "Français";
                 translations["translation_author"] = ""; //"Traduit par VOUS"
                 translations["no_image"] = "(Aucun visuel)";
                 translations["meta_name"] = "Nom";
@@ -255,6 +273,7 @@ namespace SharpTools
             {
                 translations["app_name"] = "Sound Manager";
                 translations["app_desc"] = "Manage and share Windows sound schemes !";
+                translations["translation_name"] = "English";
                 translations["translation_author"] = ""; //"Translated by YOU"
                 translations["no_image"] = "(No image)";
                 translations["meta_name"] = "Name";

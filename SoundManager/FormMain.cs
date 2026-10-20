@@ -1009,7 +1009,7 @@ namespace SoundManager
         /// </summary>
         private void buttonWebsite_Click(object sender, EventArgs e)
         {
-            if (Translations.SystemLanguage == "fra")
+            if (Translations.SystemLanguageGeneric == "fra")
             {
                 Process.Start("https://microzoom.fr/gestionnaire-de-sons");
             }
